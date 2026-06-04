@@ -35,19 +35,28 @@
   .divider::after { background: linear-gradient(to left, transparent, var(--gold-dim)); }
   .divider-gem { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); }
 
-  .api-banner {
+  /* API Keys Panel */
+  .keys-panel {
     background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 16px 22px; margin-bottom: 18px; position: relative; overflow: hidden;
+    padding: 20px 24px; margin-bottom: 18px; position: relative; overflow: hidden;
   }
-  .api-banner::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
-  .api-row { display: flex; align-items: center; gap: 12px; }
-  .api-row label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.3em; color: var(--gold-dim); white-space: nowrap; flex-shrink: 0; text-transform: uppercase; }
-  .api-key-input { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 300; padding: 8px 12px; outline: none; transition: border-color 0.2s; }
-  .api-key-input:focus { border-color: var(--gold-dim); }
-  .api-key-input::placeholder { color: var(--text-dim); opacity: 0.5; }
-  .api-key-note { font-size: 10px; color: var(--text-dim); margin-top: 7px; font-style: italic; opacity: 0.7; }
-  .api-key-note a { color: var(--gold-dim); text-decoration: none; }
-  .api-key-note a:hover { color: var(--gold); }
+  .keys-panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .keys-title { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.35em; color: var(--gold); text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
+  .keys-saved-badge { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.02em; color: #7ec98a; background: rgba(126,201,138,0.1); border: 1px solid rgba(126,201,138,0.25); border-radius: 2px; padding: 2px 8px; display: none; }
+  .keys-saved-badge.show { display: inline-block; }
+  .key-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .key-row:last-of-type { margin-bottom: 0; }
+  .key-row label { font-family: 'Cinzel', serif; font-size: 8.5px; letter-spacing: 0.28em; color: var(--gold-dim); white-space: nowrap; flex-shrink: 0; text-transform: uppercase; width: 100px; }
+  .key-input { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 300; padding: 8px 12px; outline: none; transition: border-color 0.2s; }
+  .key-input:focus { border-color: var(--gold-dim); }
+  .key-input::placeholder { color: var(--text-dim); opacity: 0.45; }
+  .key-input.saved { border-color: rgba(126,201,138,0.35); }
+  .keys-actions { display: flex; gap: 8px; margin-top: 14px; }
+  .keys-btn { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-dim); font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.2em; padding: 8px 16px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; }
+  .keys-btn:hover { background: var(--surface-hover); color: var(--gold-light); border-color: var(--gold-dim); }
+  .keys-btn.primary { background: rgba(201,168,76,0.1); border-color: var(--gold-dim); color: var(--gold-light); }
+  .keys-btn.primary:hover { background: rgba(201,168,76,0.18); border-color: var(--gold); }
+  .keys-note { font-size: 10px; color: var(--text-dim); margin-top: 10px; font-style: italic; opacity: 0.65; }
 
   .form-card {
     background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
@@ -58,13 +67,13 @@
   .field { display: flex; flex-direction: column; gap: 7px; }
   .field.full { grid-column: 1 / -1; }
   label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; }
-  input, textarea {
+  input[type=text], input[type=password], textarea {
     background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
     color: var(--text); font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 300;
     padding: 10px 12px; outline: none; transition: border-color 0.2s, background 0.2s; width: 100%;
   }
-  input::placeholder, textarea::placeholder { color: var(--text-dim); opacity: 0.6; }
-  input:focus, textarea:focus { border-color: var(--gold-dim); background: var(--surface-hover); }
+  input[type=text]::placeholder, textarea::placeholder { color: var(--text-dim); opacity: 0.6; }
+  input[type=text]:focus, textarea:focus { border-color: var(--gold-dim); background: var(--surface-hover); }
   textarea { resize: vertical; min-height: 64px; line-height: 1.5; }
 
   .tone-grid, .voice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
@@ -102,65 +111,36 @@
   .result-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 18px; opacity: 0.7; }
   .result-text { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 300; line-height: 1.85; color: var(--text); }
 
-  /* Session player */
-  .session-player {
-    margin-top: 24px; background: var(--bg3); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 20px 24px; display: none;
-  }
+  .session-player { margin-top: 24px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; display: none; }
   .session-player.show { display: block; }
   .session-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
   .session-title { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; }
   .loop-counter { font-family: 'Cormorant Garamond', serif; font-size: 13px; color: var(--text-dim); font-style: italic; }
-
-  /* Loop dots */
   .loop-dots { display: flex; gap: 10px; margin-bottom: 18px; }
-  .loop-dot {
-    width: 28px; height: 28px; border-radius: 50%;
-    border: 1px solid var(--border); background: var(--surface);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Cinzel', serif; font-size: 9px; color: var(--text-dim);
-    transition: all 0.4s;
-  }
+  .loop-dot { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-size: 9px; color: var(--text-dim); transition: all 0.4s; }
   .loop-dot.active { border-color: var(--gold); background: rgba(201,168,76,0.15); color: var(--gold); animation: dotPulse 1s ease-in-out infinite; }
   .loop-dot.done { border-color: var(--gold-dim); background: rgba(201,168,76,0.08); color: var(--gold-dim); animation: none; }
-
-  /* Progress bar */
   .progress-wrap { margin-bottom: 16px; }
   .progress-label { display: flex; justify-content: space-between; font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-dim); margin-bottom: 6px; letter-spacing: 0.04em; }
   .progress-track { width: 100%; height: 3px; background: var(--surface); border-radius: 2px; overflow: hidden; }
   .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold-dim), var(--gold)); border-radius: 2px; width: 0%; transition: width 0.3s linear; }
-
-  /* Alpha wave indicator */
   .alpha-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
   .alpha-label { font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-dim); letter-spacing: 0.04em; display: flex; align-items: center; gap: 8px; }
-  .alpha-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold-dim); animation: none; }
+  .alpha-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold-dim); }
   .alpha-dot.pulsing { background: var(--gold); animation: alphaPulse 1.1s ease-in-out infinite; }
   .alpha-vol { display: flex; align-items: center; gap: 8px; }
   .alpha-vol label { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.25em; color: var(--gold-dim); }
-  input[type=range] {
-    -webkit-appearance: none; width: 80px; height: 3px;
-    background: var(--border); border-radius: 2px; outline: none; padding: 0; border: none;
-  }
+  input[type=range] { -webkit-appearance: none; width: 80px; height: 3px; background: var(--border); border-radius: 2px; outline: none; padding: 0; border: none; }
   input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); cursor: pointer; }
-
   .session-controls { display: flex; gap: 8px; flex-wrap: wrap; }
-  .ctrl-btn {
-    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-    color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300;
-    padding: 8px 16px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.03em;
-  }
+  .ctrl-btn { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300; padding: 8px 16px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.03em; }
   .ctrl-btn:hover { background: var(--surface-hover); color: var(--gold-light); border-color: var(--gold-dim); }
   .ctrl-btn.primary { background: rgba(201,168,76,0.12); border-color: var(--gold-dim); color: var(--gold-light); }
   .ctrl-btn.primary:hover { background: rgba(201,168,76,0.18); border-color: var(--gold); }
   .ctrl-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
   .actions-row { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
-  .action-btn {
-    display: flex; align-items: center; gap: 6px;
-    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-    color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300;
-    padding: 8px 14px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.03em;
-  }
+  .action-btn { display: flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300; padding: 8px 14px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.03em; }
   .action-btn:hover { background: var(--surface-hover); color: var(--gold-light); border-color: var(--gold-dim); }
   .action-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
@@ -175,7 +155,7 @@
   .library-item:hover { border-color: var(--gold-dim); }
   .library-item-meta { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.3em; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 8px; }
   .library-item-text { font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 300; line-height: 1.7; color: var(--text); }
-  .library-item-actions { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  .library-item-actions { display: flex; gap: 10px; margin-top: 10px; }
   .lib-action { font-size: 11px; font-family: 'Inter', sans-serif; color: var(--text-dim); background: none; border: none; cursor: pointer; padding: 0; transition: color 0.2s; }
   .lib-action:hover { color: var(--gold); }
   .lib-action.delete:hover { color: #c0675f; }
@@ -186,12 +166,9 @@
   @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.2); } }
   @keyframes dotPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.4); } 50% { box-shadow: 0 0 0 5px rgba(201,168,76,0); } }
   @keyframes alphaPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
-
   @media (max-width: 520px) {
     .form-card, .result-card { padding: 22px 18px; }
     .fields-grid, .tone-grid, .voice-grid { grid-template-columns: repeat(2, 1fr); }
-    .loop-dots { gap: 6px; }
-    .loop-dot { width: 24px; height: 24px; font-size: 8px; }
   }
 </style>
 </head>
@@ -204,12 +181,25 @@
     <p class="subtitle">"Whatever the mind can conceive and believe, it can achieve."</p>
   </div>
 
-  <div class="api-banner">
-    <div class="api-row">
-      <label>ElevenLabs Key</label>
-      <input type="password" class="api-key-input" id="elevenKey" placeholder="Paste your ElevenLabs API key..." autocomplete="off">
+  <!-- API Keys Panel -->
+  <div class="keys-panel">
+    <div class="keys-title">
+      API Keys
+      <span class="keys-saved-badge" id="savedBadge">✓ Keys Saved</span>
     </div>
-    <p class="api-key-note">Free tier at <a href="https://elevenlabs.io" target="_blank">elevenlabs.io</a> — key stays in your browser only.</p>
+    <div class="key-row">
+      <label>Anthropic</label>
+      <input type="password" class="key-input" id="anthropicKey" placeholder="sk-ant-..." autocomplete="off">
+    </div>
+    <div class="key-row">
+      <label>ElevenLabs</label>
+      <input type="password" class="key-input" id="elevenKey" placeholder="your ElevenLabs key..." autocomplete="off">
+    </div>
+    <div class="keys-actions">
+      <button class="keys-btn primary" onclick="saveKeys()">Save Keys</button>
+      <button class="keys-btn" onclick="clearKeys()">Clear</button>
+    </div>
+    <p class="keys-note">Keys are saved to your browser only — never transmitted anywhere except their respective APIs.</p>
   </div>
 
   <div class="form-card">
@@ -260,19 +250,16 @@
     </div>
   </div>
 
-  <!-- Result -->
   <div class="result-wrap" id="resultWrap">
     <div class="result-card">
       <div class="result-label">✦ Your Autosuggestion</div>
       <div class="result-text" id="resultText"></div>
 
-      <!-- Session Player -->
       <div class="session-player" id="sessionPlayer">
         <div class="session-header">
           <div class="session-title">✦ Imprinting Session</div>
           <div class="loop-counter" id="loopCounter">Ready</div>
         </div>
-
         <div class="loop-dots" id="loopDots">
           <div class="loop-dot" id="dot-1">1</div>
           <div class="loop-dot" id="dot-2">2</div>
@@ -280,15 +267,10 @@
           <div class="loop-dot" id="dot-4">4</div>
           <div class="loop-dot" id="dot-5">5</div>
         </div>
-
         <div class="progress-wrap">
-          <div class="progress-label">
-            <span id="progressLabel">—</span>
-            <span id="timeLabel">—</span>
-          </div>
+          <div class="progress-label"><span id="progressLabel">—</span><span id="timeLabel">—</span></div>
           <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
         </div>
-
         <div class="alpha-row">
           <div class="alpha-label">
             <div class="alpha-dot" id="alphaDot"></div>
@@ -299,7 +281,6 @@
             <input type="range" id="alphaVol" min="0" max="100" value="30" oninput="setAlphaVolume(this.value)">
           </div>
         </div>
-
         <div class="session-controls">
           <button class="ctrl-btn primary" id="playBtn" onclick="startSession()">▶ Begin Session</button>
           <button class="ctrl-btn" id="pauseBtn" onclick="pauseSession()" disabled>⏸ Pause</button>
@@ -316,7 +297,6 @@
     </div>
   </div>
 
-  <!-- Library -->
   <div class="library-wrap" id="libraryWrap">
     <div class="library-header">
       <div class="library-title">✦ Your Library</div>
@@ -328,21 +308,21 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  // ── State ──────────────────────────────────────────────────────────────────
-  let selectedTone     = 'Classic Napoleon Hill';
-  let selectedVoiceId  = 'pNInz6obpgDQGcFmaJgB';
-  let selectedVoiceName= 'Adam';
-  let currentText      = '';
-  let audioBlob        = null;   // cached ElevenLabs audio
-  let audioCtx         = null;
-  let alphaNodes       = {};     // { leftOsc, rightOsc, gainNode }
-  let voiceSource      = null;
-  let voiceBuffer      = null;
-  let sessionActive    = false;
-  let sessionPaused    = false;
-  let currentLoop      = 0;
-  let totalLoops       = 5;
-  let progressTimer    = null;
+  // ── State ──────────────────────────────────────────────
+  let selectedTone      = 'Classic Napoleon Hill';
+  let selectedVoiceId   = 'pNInz6obpgDQGcFmaJgB';
+  let selectedVoiceName = 'Adam';
+  let currentText       = '';
+  let audioBlob         = null;
+  let voiceBuffer       = null;
+  let audioCtx          = null;
+  let alphaNodes        = {};
+  let voiceSource       = null;
+  let sessionActive     = false;
+  let sessionPaused     = false;
+  let currentLoop       = 0;
+  let totalLoops        = 5;
+  let progressTimer     = null;
   let library = [];
   try { library = JSON.parse(localStorage.getItem('autosuggestion_library') || '[]'); } catch(e) {}
 
@@ -353,7 +333,45 @@
     'Aligning your thoughts with your destiny...'
   ];
 
-  // ── UI bindings ────────────────────────────────────────────────────────────
+  // ── Load saved keys on startup ─────────────────────────
+  function loadKeys() {
+    const ak = localStorage.getItem('as_anthropic_key');
+    const ek = localStorage.getItem('as_eleven_key');
+    if (ak) {
+      document.getElementById('anthropicKey').value = ak;
+      document.getElementById('anthropicKey').classList.add('saved');
+    }
+    if (ek) {
+      document.getElementById('elevenKey').value = ek;
+      document.getElementById('elevenKey').classList.add('saved');
+    }
+    if (ak || ek) document.getElementById('savedBadge').classList.add('show');
+  }
+
+  function saveKeys() {
+    const ak = document.getElementById('anthropicKey').value.trim();
+    const ek = document.getElementById('elevenKey').value.trim();
+    if (ak) { localStorage.setItem('as_anthropic_key', ak); document.getElementById('anthropicKey').classList.add('saved'); }
+    if (ek) { localStorage.setItem('as_eleven_key', ek); document.getElementById('elevenKey').classList.add('saved'); }
+    document.getElementById('savedBadge').classList.add('show');
+    showToast('Keys saved — you\'re all set ✦');
+  }
+
+  function clearKeys() {
+    localStorage.removeItem('as_anthropic_key');
+    localStorage.removeItem('as_eleven_key');
+    document.getElementById('anthropicKey').value = '';
+    document.getElementById('elevenKey').value = '';
+    document.getElementById('anthropicKey').classList.remove('saved');
+    document.getElementById('elevenKey').classList.remove('saved');
+    document.getElementById('savedBadge').classList.remove('show');
+    showToast('Keys cleared');
+  }
+
+  function getAnthropicKey() { return document.getElementById('anthropicKey').value.trim(); }
+  function getElevenKey()    { return document.getElementById('elevenKey').value.trim(); }
+
+  // ── Tone & voice buttons ───────────────────────────────
   document.querySelectorAll('.tone-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('active'));
@@ -373,8 +391,7 @@
     });
   });
 
-  // ── Helpers ────────────────────────────────────────────────────────────────
-  function getKey() { return document.getElementById('elevenKey').value.trim(); }
+  // ── Helpers ────────────────────────────────────────────
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg; t.classList.add('show');
@@ -398,14 +415,21 @@
     currentLoop = 0; sessionActive = false; sessionPaused = false;
     if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
   }
+  function formatTime(s) {
+    const m = Math.floor(s / 60); const sec = Math.floor(s % 60);
+    return m > 0 ? `${m}:${sec.toString().padStart(2,'0')}` : `${sec}s`;
+  }
 
-  // ── Generate text ──────────────────────────────────────────────────────────
+  // ── Generate text ──────────────────────────────────────
   async function generate() {
     const goal = document.getElementById('goal').value.trim();
     const amount = document.getElementById('amount').value.trim();
     const timeframe = document.getElementById('timeframe').value.trim();
     const emotion = document.getElementById('emotion').value.trim();
     if (!goal) { showToast('Please describe your goal or desire'); return; }
+
+    const ak = getAnthropicKey();
+    if (!ak) { showToast('Please enter and save your Anthropic API key'); return; }
 
     const btn = document.getElementById('generateBtn');
     const loadingWrap = document.getElementById('loadingWrap');
@@ -431,10 +455,15 @@ Rules:
     try {
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': ak,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
         body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, messages: [{ role: 'user', content: prompt }] })
       });
-      if (!res.ok) throw new Error(`API ${res.status}`);
+      if (!res.ok) { const e = await res.json().catch(()=>{}); throw new Error(e?.error?.message || `API ${res.status}`); }
       const data = await res.json();
       currentText = data.content?.[0]?.text?.trim() || '';
       loadingWrap.classList.remove('show'); btn.disabled = false;
@@ -449,7 +478,7 @@ Rules:
       } else { showToast('Something went wrong — please try again'); }
     } catch(e) {
       loadingWrap.classList.remove('show'); btn.disabled = false;
-      showToast("Error generating — open this inside Claude.ai's artifact viewer");
+      showToast(e.message || 'Error generating text');
     }
   }
 
@@ -459,10 +488,10 @@ Rules:
     navigator.clipboard.writeText(currentText).then(() => showToast('Copied to clipboard'));
   }
 
-  // ── ElevenLabs fetch ───────────────────────────────────────────────────────
+  // ── ElevenLabs fetch ───────────────────────────────────
   async function fetchElevenLabsAudio(text, voiceId) {
-    const key = getKey();
-    if (!key) { showToast('Enter your ElevenLabs API key above'); return null; }
+    const key = getElevenKey();
+    if (!key) { showToast('Please enter and save your ElevenLabs key'); return null; }
     const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
       method: 'POST',
       headers: { 'xi-api-key': key, 'Content-Type': 'application/json', 'Accept': 'audio/mpeg' },
@@ -476,7 +505,7 @@ Rules:
     return await res.blob();
   }
 
-  // ── Prepare voice (fetch + decode) ─────────────────────────────────────────
+  // ── Prepare voice ──────────────────────────────────────
   async function prepareSession() {
     if (!currentText) { showToast('Generate your autosuggestion first'); return; }
     const btn = document.getElementById('prepareBtn');
@@ -484,83 +513,67 @@ Rules:
     try {
       audioBlob = await fetchElevenLabsAudio(currentText, selectedVoiceId);
       if (!audioBlob) { btn.disabled = false; btn.textContent = '⏳ Prepare Voice'; return; }
-      // Decode to AudioBuffer for seamless looping
       const arrayBuf = await audioBlob.arrayBuffer();
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       voiceBuffer = await audioCtx.decodeAudioData(arrayBuf);
-      btn.textContent = '✓ Voice Ready — Begin Session';
+      btn.textContent = '✓ Voice Ready';
       btn.disabled = false;
-      document.getElementById('playBtn').classList.add('primary');
-      showToast('Voice ready! Hit Begin Session.');
+      showToast('Voice ready — hit Begin Session ✦');
     } catch(e) {
       btn.disabled = false; btn.textContent = '⏳ Prepare Voice';
       showToast(e.message || 'Voice fetch failed');
     }
   }
 
-  // ── Alpha wave binaural generator ──────────────────────────────────────────
-  // Left ear: 200 Hz carrier, Right ear: 210 Hz → 10 Hz alpha beat
+  // ── Alpha waves ────────────────────────────────────────
   function startAlphaWaves() {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const gainNode = audioCtx.createGain();
-    const vol = document.getElementById('alphaVol').value / 100 * 0.12; // keep subtle
+    const vol = document.getElementById('alphaVol').value / 100 * 0.12;
     gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-    gainNode.gain.linearRampToValueAtTime(vol, audioCtx.currentTime + 3); // fade in
+    gainNode.gain.linearRampToValueAtTime(vol, audioCtx.currentTime + 3);
     gainNode.connect(audioCtx.destination);
-
-    // Left channel: 200 Hz
     const merger = audioCtx.createChannelMerger(2);
     merger.connect(gainNode);
-
     const leftOsc = audioCtx.createOscillator();
     leftOsc.type = 'sine'; leftOsc.frequency.value = 200;
     const leftGain = audioCtx.createGain(); leftGain.gain.value = 1;
     leftOsc.connect(leftGain); leftGain.connect(merger, 0, 0);
-
-    // Right channel: 210 Hz (10 Hz beat = alpha)
     const rightOsc = audioCtx.createOscillator();
     rightOsc.type = 'sine'; rightOsc.frequency.value = 210;
     const rightGain = audioCtx.createGain(); rightGain.gain.value = 1;
     rightOsc.connect(rightGain); rightGain.connect(merger, 0, 1);
-
     leftOsc.start(); rightOsc.start();
-    alphaNodes = { leftOsc, rightOsc, gainNode, merger };
+    alphaNodes = { leftOsc, rightOsc, gainNode };
     document.getElementById('alphaDot').classList.add('pulsing');
   }
 
   function stopAlphaWaves() {
     if (alphaNodes.gainNode && audioCtx) {
       alphaNodes.gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
-      setTimeout(() => {
-        try { alphaNodes.leftOsc.stop(); alphaNodes.rightOsc.stop(); } catch(e) {}
-        alphaNodes = {};
-      }, 1600);
+      setTimeout(() => { try { alphaNodes.leftOsc.stop(); alphaNodes.rightOsc.stop(); } catch(e) {} alphaNodes = {}; }, 1600);
     }
     document.getElementById('alphaDot').classList.remove('pulsing');
   }
 
   function setAlphaVolume(val) {
     if (alphaNodes.gainNode && audioCtx) {
-      const vol = val / 100 * 0.12;
-      alphaNodes.gainNode.gain.linearRampToValueAtTime(vol, audioCtx.currentTime + 0.1);
+      alphaNodes.gainNode.gain.linearRampToValueAtTime(val / 100 * 0.12, audioCtx.currentTime + 0.1);
     }
   }
 
-  // ── Session playback ───────────────────────────────────────────────────────
+  // ── Session playback ───────────────────────────────────
   async function startSession() {
     if (!voiceBuffer) {
-      // Auto-prepare if not done yet
       await prepareSession();
       if (!voiceBuffer) return;
     }
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (audioCtx.state === 'suspended') await audioCtx.resume();
-
     sessionActive = true; sessionPaused = false; currentLoop = 0;
     document.getElementById('playBtn').disabled = true;
     document.getElementById('pauseBtn').disabled = false;
     document.getElementById('stopBtn').disabled = false;
-
     startAlphaWaves();
     playLoop();
   }
@@ -570,7 +583,6 @@ Rules:
       if (currentLoop >= totalLoops) finishSession();
       return;
     }
-
     currentLoop++;
     for (let i = 1; i <= 5; i++) {
       if (i < currentLoop) setDot(i, 'done');
@@ -578,15 +590,10 @@ Rules:
       else setDot(i, '');
     }
     document.getElementById('loopCounter').textContent = `Loop ${currentLoop} of ${totalLoops}`;
-
     const duration = voiceBuffer.duration;
     const startTime = audioCtx.currentTime;
-
-    // Create source for this loop
     voiceSource = audioCtx.createBufferSource();
     voiceSource.buffer = voiceBuffer;
-
-    // Voice gain — slight fade in/out per loop
     const vGain = audioCtx.createGain();
     vGain.gain.setValueAtTime(0, startTime);
     vGain.gain.linearRampToValueAtTime(0.9, startTime + 0.3);
@@ -594,28 +601,21 @@ Rules:
     vGain.gain.linearRampToValueAtTime(0, startTime + duration);
     voiceSource.connect(vGain); vGain.connect(audioCtx.destination);
     voiceSource.start(startTime);
-
-    // Progress bar
     if (progressTimer) clearInterval(progressTimer);
-    const elapsed0 = 0;
     document.getElementById('progressFill').style.width = '0%';
     document.getElementById('progressLabel').textContent = `Loop ${currentLoop} / ${totalLoops}`;
-
     progressTimer = setInterval(() => {
       if (sessionPaused) return;
       const elapsed = audioCtx.currentTime - startTime;
       const pct = Math.min((elapsed / duration) * 100, 100);
       document.getElementById('progressFill').style.width = pct + '%';
-      const rem = Math.max(0, duration - elapsed);
-      document.getElementById('timeLabel').textContent = formatTime(rem) + ' remaining';
+      document.getElementById('timeLabel').textContent = formatTime(Math.max(0, duration - elapsed)) + ' remaining';
     }, 200);
-
     voiceSource.onended = () => {
       if (!sessionActive) return;
       clearInterval(progressTimer);
       document.getElementById('progressFill').style.width = '100%';
       setDot(currentLoop, 'done');
-      // Brief pause between loops
       setTimeout(() => { if (sessionActive && !sessionPaused) playLoop(); }, 800);
     };
   }
@@ -623,13 +623,11 @@ Rules:
   function pauseSession() {
     if (!audioCtx) return;
     if (!sessionPaused) {
-      audioCtx.suspend();
-      sessionPaused = true;
+      audioCtx.suspend(); sessionPaused = true;
       document.getElementById('pauseBtn').textContent = '▶ Resume';
       document.getElementById('alphaDot').classList.remove('pulsing');
     } else {
-      audioCtx.resume();
-      sessionPaused = false;
+      audioCtx.resume(); sessionPaused = false;
       document.getElementById('pauseBtn').textContent = '⏸ Pause';
       document.getElementById('alphaDot').classList.add('pulsing');
     }
@@ -639,7 +637,7 @@ Rules:
     sessionActive = false;
     if (voiceSource) { try { voiceSource.stop(); } catch(e) {} voiceSource = null; }
     stopAlphaWaves();
-    if (audioCtx) { audioCtx.suspend(); }
+    if (audioCtx) audioCtx.suspend();
     if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
     resetSessionUI();
   }
@@ -660,12 +658,7 @@ Rules:
     showToast('Session complete — your desire is imprinted ✦');
   }
 
-  function formatTime(s) {
-    const m = Math.floor(s / 60); const sec = Math.floor(s % 60);
-    return m > 0 ? `${m}:${sec.toString().padStart(2,'0')}` : `${sec}s`;
-  }
-
-  // ── Library ────────────────────────────────────────────────────────────────
+  // ── Library ────────────────────────────────────────────
   function saveToLibrary() {
     if (!currentText) return;
     const entry = {
@@ -710,6 +703,8 @@ Rules:
     renderLibrary();
   }
 
+  // ── Init ───────────────────────────────────────────────
+  loadKeys();
   renderLibrary();
 </script>
 </body>
