@@ -25,18 +25,12 @@
   .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold-dim)); }
   .divider::after { background: linear-gradient(to left, transparent, var(--gold-dim)); }
   .divider-gem { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); }
-
-  /* Nav tabs */
   .nav-tabs { display: flex; gap: 0; margin-bottom: 24px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
   .nav-tab { flex: 1; padding: 10px; font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim); background: var(--surface); border: none; cursor: pointer; transition: all 0.2s; text-align: center; }
   .nav-tab:hover { background: var(--surface-hover); color: var(--text); }
   .nav-tab.active { background: rgba(201,168,76,0.12); color: var(--gold-light); border-bottom: 1px solid var(--gold); }
-
-  /* Pages */
   .page { display: none; }
   .page.active { display: block; }
-
-  /* Keys panel */
   .keys-panel { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 18px; position: relative; overflow: hidden; }
   .keys-panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
   .keys-title { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.35em; color: var(--gold); text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
@@ -55,9 +49,9 @@
   .keys-btn.primary { background: rgba(201,168,76,0.1); border-color: var(--gold-dim); color: var(--gold-light); }
   .keys-btn.primary:hover { background: rgba(201,168,76,0.18); border-color: var(--gold); }
   .keys-note { font-size: 10px; color: var(--text-dim); margin-top: 10px; font-style: italic; opacity: 0.65; }
-
-  .form-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 30px 36px; position: relative; overflow: hidden; }
+  .form-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 30px 36px; position: relative; overflow: hidden; margin-bottom: 18px; }
   .form-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .card-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.35em; color: var(--gold); text-transform: uppercase; margin-bottom: 18px; opacity: 0.8; }
   .fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
   .field { display: flex; flex-direction: column; gap: 7px; }
   .field.full { grid-column: 1 / -1; }
@@ -73,23 +67,31 @@
   .voice-btn .v-name { display: block; font-weight: 400; font-size: 12px; margin-bottom: 1px; }
   .voice-btn .v-desc { display: block; font-size: 10px; opacity: 0.6; }
   .voice-btn.active .v-desc { opacity: 0.85; }
-  .btn-generate { width: 100%; margin-top: 24px; padding: 15px; background: linear-gradient(135deg, #b8912e, #e8c97a, #b8912e); background-size: 200% 100%; border: none; border-radius: var(--radius); color: #0a0805; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: background-position 0.4s, transform 0.15s, box-shadow 0.2s; }
-  .btn-generate:hover { background-position: right center; box-shadow: 0 0 28px rgba(201,168,76,0.22); transform: translateY(-1px); }
-  .btn-generate:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+  .btn-primary { width: 100%; margin-top: 24px; padding: 15px; background: linear-gradient(135deg, #b8912e, #e8c97a, #b8912e); background-size: 200% 100%; border: none; border-radius: var(--radius); color: #0a0805; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: background-position 0.4s, transform 0.15s, box-shadow 0.2s; }
+  .btn-primary:hover { background-position: right center; box-shadow: 0 0 28px rgba(201,168,76,0.22); transform: translateY(-1px); }
+  .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
   .loading-wrap { display: none; text-align: center; padding: 36px 0; flex-direction: column; align-items: center; gap: 14px; }
   .loading-wrap.show { display: flex; }
   .flame { font-size: 30px; animation: pulse 1.2s ease-in-out infinite; }
   .loading-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: var(--text-dim); }
-
-  .result-wrap { margin-top: 24px; display: none; opacity: 0; transition: opacity 0.5s; }
+  .result-wrap { margin-top: 0; display: none; opacity: 0; transition: opacity 0.5s; }
   .result-wrap.show { display: block; }
   .result-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 30px 36px; position: relative; overflow: hidden; }
   .result-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
   .result-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 18px; opacity: 0.7; }
   .result-text { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 300; line-height: 1.85; color: var(--text); }
 
-  /* Session player */
-  .session-player { margin-top: 24px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; display: none; }
+  /* Voice switcher on result */
+  .voice-switch-row { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .voice-switch-label { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.3em; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 10px; }
+  .voice-switch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .vs-btn { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 10px; padding: 7px 4px; cursor: pointer; transition: all 0.2s; text-align: center; line-height: 1.3; }
+  .vs-btn:hover { background: var(--surface-hover); color: var(--text); }
+  .vs-btn.active { background: rgba(201,168,76,0.12); border-color: var(--gold); color: var(--gold-light); }
+  .vs-btn .vn { display: block; font-weight: 400; font-size: 11px; }
+  .vs-btn .vd { display: block; font-size: 9px; opacity: 0.6; }
+
+  .session-player { margin-top: 20px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; display: none; }
   .session-player.show { display: block; }
   .session-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
   .session-title { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; }
@@ -121,8 +123,7 @@
   .action-btn:hover { background: var(--surface-hover); color: var(--gold-light); border-color: var(--gold-dim); }
   .action-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  /* ── GRIMOIRE (Library) ── */
-  .grimoire { padding: 0; }
+  /* Grimoire */
   .grimoire-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
   .grimoire-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; color: var(--text); }
   .grimoire-title em { font-style: italic; color: var(--gold-light); }
@@ -130,18 +131,13 @@
   .grim-btn { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-dim); font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.2em; padding: 7px 14px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; }
   .grim-btn:hover { background: var(--surface-hover); color: var(--gold-light); border-color: var(--gold-dim); }
   .grim-btn.active { background: rgba(201,168,76,0.12); border-color: var(--gold); color: var(--gold-light); }
-
-  /* Now Imprinting panel */
   .now-imprinting { background: var(--bg2); border: 1px solid var(--gold-dim); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 24px; position: relative; overflow: hidden; display: none; }
   .now-imprinting.show { display: block; }
   .now-imprinting::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
-
-  /* Orb */
   .orb-wrap { display: flex; justify-content: center; margin-bottom: 20px; }
   .orb { width: 64px; height: 64px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #e8c97a, #8a6f34, #2a1f08); box-shadow: 0 0 0 0 rgba(201,168,76,0); transition: box-shadow 0.3s; position: relative; }
   .orb.playing { animation: orbPulse 2s ease-in-out infinite; }
   .orb::after { content: ''; position: absolute; inset: 4px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.3); }
-
   .ni-meta { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; text-align: center; opacity: 0.7; }
   .ni-text { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 300; line-height: 1.7; color: var(--text); margin-bottom: 18px; text-align: center; font-style: italic; }
   .ni-progress-track { width: 100%; height: 2px; background: var(--surface); border-radius: 2px; margin-bottom: 6px; }
@@ -152,12 +148,7 @@
   .ni-btn:hover { border-color: var(--gold-dim); color: var(--gold-light); background: var(--surface); }
   .ni-btn.main { width: 48px; height: 48px; font-size: 16px; border-color: var(--gold-dim); color: var(--gold-light); background: rgba(201,168,76,0.08); }
   .ni-btn.main:hover { background: rgba(201,168,76,0.18); border-color: var(--gold); }
-  .ni-btn.active-mode { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.1); }
-  .ni-mode-row { display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .ni-mode-label { font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-dim); }
-  .ni-queue { font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-dim); text-align: center; margin-top: 10px; letter-spacing: 0.03em; }
-
-  /* Scroll entries */
+  .ni-queue { font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-dim); text-align: center; margin-top: 10px; }
   .scroll-list { display: flex; flex-direction: column; gap: 2px; }
   .scroll-entry { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; transition: all 0.2s; cursor: pointer; position: relative; overflow: hidden; }
   .scroll-entry::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: transparent; transition: background 0.2s; }
@@ -170,7 +161,7 @@
   .scroll-entry.playing .scroll-entry-text { color: var(--gold-light); }
   .scroll-entry-meta { font-family: 'Cinzel', serif; font-size: 7.5px; letter-spacing: 0.25em; color: var(--gold-dim); text-transform: uppercase; margin-top: 6px; }
   .scroll-entry-actions { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
-  .se-btn { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 12px; padding: 4px; transition: color 0.2s; line-height: 1; }
+  .se-btn { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 12px; padding: 4px; transition: color 0.2s; }
   .se-btn:hover { color: var(--gold); }
   .se-btn.delete:hover { color: #c0675f; }
   .playing-indicator { display: none; align-items: center; gap: 3px; margin-right: 4px; }
@@ -179,17 +170,13 @@
   .bar:nth-child(1) { height: 8px; animation-delay: 0s; }
   .bar:nth-child(2) { height: 14px; animation-delay: 0.15s; }
   .bar:nth-child(3) { height: 10px; animation-delay: 0.3s; }
-
   .empty-grimoire { text-align: center; padding: 60px 20px; }
   .empty-grimoire-icon { font-size: 40px; margin-bottom: 16px; opacity: 0.4; }
   .empty-grimoire-text { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 300; color: var(--text-dim); font-style: italic; }
   .empty-grimoire-sub { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-dim); opacity: 0.6; margin-top: 8px; }
-
   .loading-overlay { text-align: center; padding: 40px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: var(--text-dim); }
-
   .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(16px); background: var(--bg3); border: 1px solid var(--gold-dim); border-radius: var(--radius); color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.2em; padding: 10px 22px; opacity: 0; transition: all 0.3s; z-index: 100; pointer-events: none; white-space: nowrap; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
   @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.2); } }
   @keyframes dotPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.4); } 50% { box-shadow: 0 0 0 5px rgba(201,168,76,0); } }
   @keyframes alphaPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
@@ -197,7 +184,7 @@
   @keyframes barDance { 0%,100% { transform: scaleY(0.5); } 50% { transform: scaleY(1); } }
   @media (max-width: 520px) {
     .form-card, .result-card { padding: 22px 18px; }
-    .fields-grid, .tone-grid, .voice-grid { grid-template-columns: repeat(2, 1fr); }
+    .fields-grid, .tone-grid, .voice-grid, .voice-switch-grid { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 </head>
@@ -211,9 +198,10 @@
   </div>
 
   <div class="nav-tabs">
-    <button class="nav-tab active" onclick="showPage('generate')">✦ Generate</button>
-    <button class="nav-tab" onclick="showPage('grimoire')">📜 Grimoire</button>
-    <button class="nav-tab" onclick="showPage('settings')">⚙ Settings</button>
+    <button class="nav-tab active" onclick="showPage('generate', this)">✦ Generate</button>
+    <button class="nav-tab" onclick="showPage('custom', this)">✍ Custom</button>
+    <button class="nav-tab" onclick="showPage('grimoire', this)">📜 Grimoire</button>
+    <button class="nav-tab" onclick="showPage('settings', this)">⚙ Settings</button>
   </div>
 
   <!-- ── GENERATE PAGE ── -->
@@ -249,7 +237,7 @@
         </div>
         <div class="field full">
           <label>Voice</label>
-          <div class="voice-grid">
+          <div class="voice-grid" id="genVoiceGrid">
             <button class="voice-btn active" data-voice="MqDiOA32qyUugsYsKa2Q"><span class="v-name">My Voice</span><span class="v-desc">Your clone ✦</span></button>
             <button class="voice-btn" data-voice="pNInz6obpgDQGcFmaJgB"><span class="v-name">Adam</span><span class="v-desc">Deep &amp; authoritative</span></button>
             <button class="voice-btn" data-voice="21m00Tcm4TlvDq8ikWAM"><span class="v-name">Rachel</span><span class="v-desc">Calm &amp; warm</span></button>
@@ -259,7 +247,7 @@
           </div>
         </div>
       </div>
-      <button class="btn-generate" id="generateBtn" onclick="generate()">✦ Generate My Autosuggestion</button>
+      <button class="btn-primary" id="generateBtn" onclick="generate()">✦ Generate My Autosuggestion</button>
       <div class="loading-wrap" id="loadingWrap">
         <div class="flame">🔥</div>
         <p class="loading-text" id="loadingText">Imprinting your desire upon the subconscious mind...</p>
@@ -270,6 +258,20 @@
       <div class="result-card">
         <div class="result-label">✦ Your Autosuggestion</div>
         <div class="result-text" id="resultText"></div>
+
+        <!-- Inline voice switcher — change voice without regenerating text -->
+        <div class="voice-switch-row">
+          <div class="voice-switch-label">Change Voice</div>
+          <div class="voice-switch-grid" id="resultVoiceGrid">
+            <button class="vs-btn active" data-voice="MqDiOA32qyUugsYsKa2Q" data-name="My Voice"><span class="vn">My Voice</span><span class="vd">Your clone ✦</span></button>
+            <button class="vs-btn" data-voice="pNInz6obpgDQGcFmaJgB" data-name="Adam"><span class="vn">Adam</span><span class="vd">Deep &amp; auth.</span></button>
+            <button class="vs-btn" data-voice="21m00Tcm4TlvDq8ikWAM" data-name="Rachel"><span class="vn">Rachel</span><span class="vd">Calm &amp; warm</span></button>
+            <button class="vs-btn" data-voice="AZnzlk1XvdvUeBnXmlld" data-name="Domi"><span class="vn">Domi</span><span class="vd">Strong</span></button>
+            <button class="vs-btn" data-voice="EXAVITQu4vr4xnSDxMaL" data-name="Bella"><span class="vn">Bella</span><span class="vd">Soft &amp; soothing</span></button>
+            <button class="vs-btn" data-voice="ErXwobaYiN019PkySvjV" data-name="Antoni"><span class="vn">Antoni</span><span class="vd">Smooth</span></button>
+          </div>
+        </div>
+
         <div class="session-player" id="sessionPlayer">
           <div class="session-header">
             <div class="session-title">✦ Imprinting Session</div>
@@ -296,9 +298,9 @@
             <button class="ctrl-btn" id="stopBtn" onclick="stopSession()" disabled>⏹ Stop</button>
           </div>
         </div>
+
         <div class="actions-row">
           <button class="action-btn" onclick="copyText()">📋 Copy</button>
-          <button class="action-btn" id="prepareBtn" onclick="prepareSession()">⏳ Prepare Voice</button>
           <button class="action-btn" id="saveBtn" onclick="saveToGrimoire()">📜 Save to Grimoire</button>
           <button class="action-btn" onclick="regenerate()">↻ Regenerate</button>
         </div>
@@ -306,36 +308,95 @@
     </div>
   </div>
 
+  <!-- ── CUSTOM TEXT PAGE ── -->
+  <div class="page" id="page-custom">
+    <div class="form-card">
+      <div class="card-label">✍ Write Your Own Autosuggestion</div>
+      <div class="field full" style="margin-bottom:18px;">
+        <label>Your Autosuggestion</label>
+        <textarea id="customText" placeholder="Write your own affirmation in first person... I am, I have, I attract..." rows="6"></textarea>
+      </div>
+      <div class="field full">
+        <label>Voice</label>
+        <div class="voice-grid" id="customVoiceGrid">
+          <button class="voice-btn active" data-voice="MqDiOA32qyUugsYsKa2Q"><span class="v-name">My Voice</span><span class="v-desc">Your clone ✦</span></button>
+          <button class="voice-btn" data-voice="pNInz6obpgDQGcFmaJgB"><span class="v-name">Adam</span><span class="v-desc">Deep &amp; authoritative</span></button>
+          <button class="voice-btn" data-voice="21m00Tcm4TlvDq8ikWAM"><span class="v-name">Rachel</span><span class="v-desc">Calm &amp; warm</span></button>
+          <button class="voice-btn" data-voice="AZnzlk1XvdvUeBnXmlld"><span class="v-name">Domi</span><span class="v-desc">Strong &amp; confident</span></button>
+          <button class="voice-btn" data-voice="EXAVITQu4vr4xnSDxMaL"><span class="v-name">Bella</span><span class="v-desc">Soft &amp; soothing</span></button>
+          <button class="voice-btn" data-voice="ErXwobaYiN019PkySvjV"><span class="v-name">Antoni</span><span class="v-desc">Smooth &amp; measured</span></button>
+        </div>
+      </div>
+      <button class="btn-primary" id="customBtn" onclick="prepareCustom()">▶ Prepare &amp; Preview</button>
+      <div class="loading-wrap" id="customLoadingWrap">
+        <div class="flame">🔥</div>
+        <p class="loading-text">Preparing your voice...</p>
+      </div>
+    </div>
+
+    <div class="result-wrap" id="customResultWrap">
+      <div class="result-card">
+        <div class="result-label">✦ Your Custom Autosuggestion</div>
+        <div class="result-text" id="customResultText"></div>
+        <div class="session-player" id="customSessionPlayer">
+          <div class="session-header">
+            <div class="session-title">✦ Imprinting Session</div>
+            <div class="loop-counter" id="customLoopCounter">Ready</div>
+          </div>
+          <div class="loop-dots">
+            <div class="loop-dot" id="cdot-1">1</div>
+            <div class="loop-dot" id="cdot-2">2</div>
+            <div class="loop-dot" id="cdot-3">3</div>
+            <div class="loop-dot" id="cdot-4">4</div>
+            <div class="loop-dot" id="cdot-5">5</div>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span id="customProgressLabel">—</span><span id="customTimeLabel">—</span></div>
+            <div class="progress-track"><div class="progress-fill" id="customProgressFill"></div></div>
+          </div>
+          <div class="alpha-row">
+            <div class="alpha-label"><div class="alpha-dot" id="customAlphaDot"></div>Alpha waves &nbsp;·&nbsp; 10 Hz binaural</div>
+            <div class="alpha-vol"><label>Volume</label><input type="range" id="customAlphaVol" min="0" max="100" value="30" oninput="setCustomAlphaVolume(this.value)"></div>
+          </div>
+          <div class="session-controls">
+            <button class="ctrl-btn primary" id="customPlayBtn" onclick="startCustomSession()">▶ Begin Session</button>
+            <button class="ctrl-btn" id="customPauseBtn" onclick="pauseCustomSession()" disabled>⏸ Pause</button>
+            <button class="ctrl-btn" id="customStopBtn" onclick="stopCustomSession()" disabled>⏹ Stop</button>
+          </div>
+        </div>
+        <div class="actions-row">
+          <button class="action-btn" onclick="copyCustomText()">📋 Copy</button>
+          <button class="action-btn" id="customSaveBtn" onclick="saveCustomToGrimoire()">📜 Save to Grimoire</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ── GRIMOIRE PAGE ── -->
   <div class="page" id="page-grimoire">
-    <div class="grimoire">
-      <div class="grimoire-header">
-        <div class="grimoire-title">Your <em>Grimoire</em></div>
-        <div class="grimoire-controls">
-          <button class="grim-btn active" id="modeSeq" onclick="setPlayMode('sequential')">In Order</button>
-          <button class="grim-btn" id="modeShuffle" onclick="setPlayMode('shuffle')">Shuffle</button>
-          <button class="grim-btn" id="modeRepeat" onclick="setPlayMode('repeat')">Repeat</button>
-          <button class="grim-btn" onclick="playAll()">▶ Play All</button>
-        </div>
+    <div class="grimoire-header">
+      <div class="grimoire-title">Your <em>Grimoire</em></div>
+      <div class="grimoire-controls">
+        <button class="grim-btn active" id="modeSeq" onclick="setPlayMode('sequential')">In Order</button>
+        <button class="grim-btn" id="modeShuffle" onclick="setPlayMode('shuffle')">Shuffle</button>
+        <button class="grim-btn" id="modeRepeat" onclick="setPlayMode('repeat')">Repeat</button>
+        <button class="grim-btn" onclick="playAll()">▶ Play All</button>
       </div>
-
-      <!-- Now Imprinting -->
-      <div class="now-imprinting" id="nowImprinting">
-        <div class="ni-meta" id="niMeta">Now Imprinting</div>
-        <div class="orb-wrap"><div class="orb" id="orb"></div></div>
-        <div class="ni-text" id="niText"></div>
-        <div class="ni-progress-track"><div class="ni-progress-fill" id="niProgress"></div></div>
-        <div class="ni-time"><span id="niElapsed">0:00</span><span id="niRemaining">0:00</span></div>
-        <div class="ni-controls">
-          <button class="ni-btn" onclick="prevTrack()" title="Previous">&#9664;&#9664;</button>
-          <button class="ni-btn main" id="niPlayBtn" onclick="toggleLibraryPlay()">&#9646;&#9646;</button>
-          <button class="ni-btn" onclick="nextTrack()" title="Next">&#9654;&#9654;</button>
-        </div>
-        <div class="ni-queue" id="niQueue"></div>
-      </div>
-
-      <div id="grimoireContent"><div class="loading-overlay">Loading your grimoire...</div></div>
     </div>
+    <div class="now-imprinting" id="nowImprinting">
+      <div class="ni-meta" id="niMeta">Now Imprinting</div>
+      <div class="orb-wrap"><div class="orb" id="orb"></div></div>
+      <div class="ni-text" id="niText"></div>
+      <div class="ni-progress-track"><div class="ni-progress-fill" id="niProgress"></div></div>
+      <div class="ni-time"><span id="niElapsed">0:00</span><span id="niRemaining">0:00</span></div>
+      <div class="ni-controls">
+        <button class="ni-btn" onclick="prevTrack()">&#9664;&#9664;</button>
+        <button class="ni-btn main" id="niPlayBtn" onclick="toggleLibraryPlay()">&#9646;&#9646;</button>
+        <button class="ni-btn" onclick="nextTrack()">&#9654;&#9654;</button>
+      </div>
+      <div class="ni-queue" id="niQueue"></div>
+    </div>
+    <div id="grimoireContent"><div class="loading-overlay">Loading your grimoire...</div></div>
   </div>
 
   <!-- ── SETTINGS PAGE ── -->
@@ -356,11 +417,11 @@
 
 <script>
 // ── Config ──────────────────────────────────────────────
-const SUPABASE_URL  = 'https://lrcwmgoizevjcuwwzfij.supabase.co';
-const SUPABASE_KEY  = 'sb_publishable_n6sb4NaOOOXnTNkk_o8VPA_qLpOCCz-';
-const BUCKET        = 'autosuggestions';
+const SUPABASE_URL = 'https://lrcwmgoizevjcuwwzfij.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_n6sb4NaOOOXnTNkk_o8VPA_qLpOCCz-';
+const BUCKET       = 'autosuggestions';
 
-// ── State ───────────────────────────────────────────────
+// ── Generate page state ─────────────────────────────────
 let selectedTone      = 'Classic Napoleon Hill';
 let selectedVoiceId   = 'MqDiOA32qyUugsYsKa2Q';
 let selectedVoiceName = 'My Voice';
@@ -373,22 +434,35 @@ let voiceSource       = null;
 let sessionActive     = false;
 let sessionPaused     = false;
 let currentLoop       = 0;
-let totalLoops        = 5;
+const totalLoops      = 5;
 let progressTimer     = null;
 
-// Library player state
-let grimoire          = [];       // loaded from Supabase
-let playlist          = [];       // current ordered/shuffled list
-let playIndex         = -1;
-let playMode          = 'sequential'; // sequential | shuffle | repeat
-let libAudioCtx       = null;
-let libSource         = null;
-let libBuffer         = null;
-let libPlaying        = false;
-let libPaused         = false;
-let libProgressTimer  = null;
-let libStartTime      = 0;
-let libPauseOffset    = 0;
+// ── Custom page state ───────────────────────────────────
+let customVoiceId     = 'MqDiOA32qyUugsYsKa2Q';
+let customVoiceName   = 'My Voice';
+let customAudioBlob   = null;
+let customVoiceBuffer = null;
+let customAudioCtx    = null;
+let customAlphaNodes  = {};
+let customVoiceSrc    = null;
+let customSessionAct  = false;
+let customSessionPaused = false;
+let customLoop        = 0;
+let customProgressTimer = null;
+
+// ── Grimoire state ──────────────────────────────────────
+let grimoire     = [];
+let playlist     = [];
+let playIndex    = -1;
+let playMode     = 'sequential';
+let libAudioCtx  = null;
+let libSource    = null;
+let libBuffer    = null;
+let libPlaying   = false;
+let libPaused    = false;
+let libProgressTimer = null;
+let libStartTime = 0;
+let libPauseOffset = 0;
 
 const loadingMsgs = [
   'Imprinting your desire upon the subconscious mind...',
@@ -397,75 +471,24 @@ const loadingMsgs = [
   'Aligning your thoughts with your destiny...'
 ];
 
-// ── Supabase helpers ─────────────────────────────────────
-async function sbFetch(path, opts = {}) {
-  const res = await fetch(`${SUPABASE_URL}${path}`, {
-    ...opts,
-    headers: {
-      'apikey': SUPABASE_KEY,
-      'Authorization': `Bearer ${SUPABASE_KEY}`,
-      'Content-Type': 'application/json',
-      ...(opts.headers || {})
-    }
-  });
-  return res;
+// ── Helpers ─────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
 }
-
-async function loadGrimoire() {
-  try {
-    const res = await sbFetch('/rest/v1/autosuggestions?order=created_at.desc', { method: 'GET', headers: { 'Content-Type': 'application/json' } });
-    if (!res.ok) throw new Error('Load failed');
-    grimoire = await res.json();
-    renderGrimoire();
-  } catch(e) {
-    document.getElementById('grimoireContent').innerHTML = '<div class="loading-overlay">Could not load grimoire — check your connection.</div>';
-  }
+function formatTime(s) {
+  s = Math.max(0, s); const m = Math.floor(s/60); const sec = Math.floor(s%60);
+  return `${m}:${sec.toString().padStart(2,'0')}`;
 }
-
-async function uploadAudio(blob, filename) {
-  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${filename}`, {
-    method: 'POST',
-    headers: {
-      'apikey': SUPABASE_KEY,
-      'Authorization': `Bearer ${SUPABASE_KEY}`,
-      'Content-Type': 'audio/mpeg',
-      'x-upsert': 'true'
-    },
-    body: blob
-  });
-  if (!res.ok) throw new Error('Audio upload failed');
-  return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${filename}`;
-}
-
-async function insertRecord(record) {
-  const res = await sbFetch('/rest/v1/autosuggestions', {
-    method: 'POST',
-    headers: { 'Prefer': 'return=representation' },
-    body: JSON.stringify(record)
-  });
-  if (!res.ok) { const e = await res.json(); throw new Error(e?.message || 'Insert failed'); }
-  return await res.json();
-}
-
-async function deleteRecord(id, audioUrl) {
-  // Delete audio file
-  const filename = audioUrl?.split(`/${BUCKET}/`)[1];
-  if (filename) {
-    await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${filename}`, {
-      method: 'DELETE',
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
-    });
-  }
-  // Delete DB record
-  await sbFetch(`/rest/v1/autosuggestions?id=eq.${id}`, { method: 'DELETE' });
-}
+function getAnthropicKey() { return document.getElementById('anthropicKey').value.trim(); }
+function getElevenKey()    { return document.getElementById('elevenKey').value.trim(); }
 
 // ── Nav ──────────────────────────────────────────────────
-function showPage(page) {
+function showPage(page, tabEl) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById(`page-${page}`).classList.add('active');
-  event.target.classList.add('active');
+  if (tabEl) tabEl.classList.add('active');
   if (page === 'grimoire') loadGrimoire();
 }
 
@@ -491,39 +514,8 @@ function clearKeys() {
   document.getElementById('savedBadge').classList.remove('show');
   showToast('Keys cleared');
 }
-function getAnthropicKey() { return document.getElementById('anthropicKey').value.trim(); }
-function getElevenKey()    { return document.getElementById('elevenKey').value.trim(); }
 
-// ── UI helpers ───────────────────────────────────────────
-function showToast(msg) {
-  const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
-function setDot(n, state) {
-  const d = document.getElementById(`dot-${n}`);
-  d.className = 'loop-dot' + (state === 'active' ? ' active' : state === 'done' ? ' done' : '');
-}
-function resetSessionUI() {
-  for (let i = 1; i <= 5; i++) setDot(i, '');
-  document.getElementById('loopCounter').textContent = 'Ready';
-  document.getElementById('progressFill').style.width = '0%';
-  document.getElementById('progressLabel').textContent = '—';
-  document.getElementById('timeLabel').textContent = '—';
-  document.getElementById('playBtn').disabled = false;
-  document.getElementById('playBtn').textContent = '▶ Begin Session';
-  document.getElementById('pauseBtn').disabled = true;
-  document.getElementById('stopBtn').disabled = true;
-  document.getElementById('alphaDot').classList.remove('pulsing');
-  currentLoop = 0; sessionActive = false; sessionPaused = false;
-  if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
-}
-function formatTime(s) {
-  s = Math.max(0, s);
-  const m = Math.floor(s / 60); const sec = Math.floor(s % 60);
-  return `${m}:${sec.toString().padStart(2,'0')}`;
-}
-
-// ── Tone & voice buttons ─────────────────────────────────
+// ── Tone buttons ─────────────────────────────────────────
 document.querySelectorAll('.tone-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('active'));
@@ -531,52 +523,83 @@ document.querySelectorAll('.tone-btn').forEach(btn => {
   });
 });
 
-
-// ── Clear audio completely ────────────────────────────────
-function clearAudio() {
-  // Stop any active session first
-  if (sessionActive) stopSession();
-  // Kill any playing voice source
-  if (voiceSource) { try { voiceSource.stop(); } catch(e) {} voiceSource = null; }
-  // Close and null the audio context so nothing can bleed through
-  if (audioCtx) { try { audioCtx.close(); } catch(e) {} audioCtx = null; }
-  audioBlob = null;
-  voiceBuffer = null;
-}
-
-document.querySelectorAll('.voice-btn').forEach(btn => {
+// ── Generate page voice buttons ──────────────────────────
+document.querySelectorAll('#genVoiceGrid .voice-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.voice-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#genVoiceGrid .voice-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     selectedVoiceId = btn.dataset.voice;
     selectedVoiceName = btn.querySelector('.v-name').textContent;
-    clearAudio();
-    document.getElementById('prepareBtn').textContent = '⏳ Prepare Voice';
-    document.getElementById('prepareBtn').disabled = false;
-    resetSessionUI();
-    showToast(`Voice switched to ${selectedVoiceName}`);
+    // Also sync result voice switcher
+    document.querySelectorAll('#resultVoiceGrid .vs-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.voice === selectedVoiceId);
+    });
+    killGenerateAudio();
   });
 });
 
-// ── Generate ─────────────────────────────────────────────
+// ── Result voice switcher (change voice WITHOUT regenerating text) ──
+document.querySelectorAll('#resultVoiceGrid .vs-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (btn.dataset.voice === selectedVoiceId) return; // already selected
+    document.querySelectorAll('#resultVoiceGrid .vs-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedVoiceId = btn.dataset.voice;
+    selectedVoiceName = btn.dataset.name;
+    // sync top voice grid too
+    document.querySelectorAll('#genVoiceGrid .voice-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.voice === selectedVoiceId);
+    });
+    killGenerateAudio();
+    resetSessionUI();
+    showToast(`Voice → ${selectedVoiceName}`);
+  });
+});
+
+// ── Custom page voice buttons ─────────────────────────────
+document.querySelectorAll('#customVoiceGrid .voice-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#customVoiceGrid .voice-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    customVoiceId = btn.dataset.voice;
+    customVoiceName = btn.querySelector('.v-name').textContent;
+    killCustomAudio();
+  });
+});
+
+// ── Kill audio helpers ───────────────────────────────────
+function killGenerateAudio() {
+  if (sessionActive) { sessionActive = false; }
+  if (voiceSource) { try { voiceSource.stop(); } catch(e) {} voiceSource = null; }
+  if (audioCtx) { try { audioCtx.close(); } catch(e) {} audioCtx = null; }
+  stopAlphaWaves();
+  audioBlob = null; voiceBuffer = null;
+}
+function killCustomAudio() {
+  if (customSessionAct) { customSessionAct = false; }
+  if (customVoiceSrc) { try { customVoiceSrc.stop(); } catch(e) {} customVoiceSrc = null; }
+  if (customAudioCtx) { try { customAudioCtx.close(); } catch(e) {} customAudioCtx = null; }
+  stopCustomAlphaWaves();
+  customAudioBlob = null; customVoiceBuffer = null;
+}
+
+// ── Generate text ─────────────────────────────────────────
 async function generate() {
   const goal = document.getElementById('goal').value.trim();
-  const amount = document.getElementById('amount').value.trim();
-  const timeframe = document.getElementById('timeframe').value.trim();
-  const emotion = document.getElementById('emotion').value.trim();
   if (!goal) { showToast('Please describe your goal or desire'); return; }
   const ak = getAnthropicKey();
   if (!ak) { showToast('Add your Anthropic key in Settings'); return; }
-
+  killGenerateAudio();
   const btn = document.getElementById('generateBtn');
   document.getElementById('loadingText').textContent = loadingMsgs[Math.floor(Math.random() * loadingMsgs.length)];
-
-
+  btn.disabled = true; document.getElementById('loadingWrap').classList.add('show');
+  document.getElementById('resultWrap').classList.remove('show');
+  const amount = document.getElementById('amount').value.trim();
+  const timeframe = document.getElementById('timeframe').value.trim();
+  const emotion = document.getElementById('emotion').value.trim();
   const prompt = `You are an expert in Napoleon Hill's "Think and Grow Rich," specifically the Autosuggestion chapter. Generate a powerful 4-5 sentence personal autosuggestion.
-
 Goal/Desire: ${goal}${amount ? '\nAmount/Metric: ' + amount : ''}${timeframe ? '\nTimeframe: ' + timeframe : ''}${emotion ? '\nDominant Emotion: ' + emotion : ''}
 Tone Style: ${selectedTone}
-
 Rules:
 - Write in first person (I am, I have, I attract)
 - Be specific, vivid, and emotionally charged
@@ -585,8 +608,7 @@ Rules:
 - Match the tone style exactly
 - 4-5 sentences only — no preamble, no explanation, just the autosuggestion
 - End with a declaration of deep conviction or gratitude
-- Output plain text only — no markdown, no hashtags, no bullet points, no formatting whatsoever`;
-
+- Output plain text only — no markdown, no hashtags, no bullet points, no special formatting`;
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -595,14 +617,13 @@ Rules:
     });
     if (!res.ok) { const e = await res.json().catch(()=>{}); throw new Error(e?.error?.message || `API ${res.status}`); }
     const data = await res.json();
-    currentText = data.content?.[0]?.text?.trim().replace(/^#+\s*/gm, '').replace(/\*\*/g, '') || '';
+    currentText = data.content?.[0]?.text?.trim().replace(/^#+\s*/gm,'').replace(/\*\*/g,'') || '';
     document.getElementById('loadingWrap').classList.remove('show'); btn.disabled = false;
     if (currentText) {
       document.getElementById('resultText').textContent = currentText;
       const rw = document.getElementById('resultWrap');
       rw.classList.add('show'); setTimeout(() => { rw.style.opacity = '1'; }, 10);
       document.getElementById('sessionPlayer').classList.add('show');
-      document.getElementById('prepareBtn').textContent = '⏳ Prepare Voice';
       resetSessionUI();
     } else { showToast('Something went wrong — try again'); }
   } catch(e) {
@@ -610,14 +631,10 @@ Rules:
     showToast(e.message || 'Error generating text');
   }
 }
+function regenerate() { killGenerateAudio(); generate(); }
+function copyText() { if (currentText) navigator.clipboard.writeText(currentText).then(() => showToast('Copied')); }
 
-function regenerate() { stopSession(); generate(); }
-function copyText() {
-  if (!currentText) return;
-  navigator.clipboard.writeText(currentText).then(() => showToast('Copied'));
-}
-
-// ── ElevenLabs ───────────────────────────────────────────
+// ── ElevenLabs fetch ──────────────────────────────────────
 async function fetchElevenLabsAudio(text, voiceId) {
   const key = getElevenKey();
   if (!key) { showToast('Add your ElevenLabs key in Settings'); return null; }
@@ -630,24 +647,47 @@ async function fetchElevenLabsAudio(text, voiceId) {
   return await res.blob();
 }
 
-// ── Prepare voice ─────────────────────────────────────────
-async function prepareSession() {
-  if (!currentText) { showToast('Generate your autosuggestion first'); return; }
-  clearAudio();
-  const btn = document.getElementById('prepareBtn');
-  btn.disabled = true; btn.textContent = '⏳ Fetching voice...';
-  try {
-    audioBlob = await fetchElevenLabsAudio(currentText, selectedVoiceId);
-    if (!audioBlob) { btn.disabled = false; btn.textContent = '⏳ Prepare Voice'; return; }
-    const arrayBuf = await audioBlob.arrayBuffer();
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    voiceBuffer = await audioCtx.decodeAudioData(arrayBuf);
-    btn.textContent = '✓ Voice Ready'; btn.disabled = false;
-    showToast('Voice ready — hit Begin Session ✦');
-  } catch(e) {
-    btn.disabled = false; btn.textContent = '⏳ Prepare Voice';
-    showToast(e.message || 'Voice fetch failed');
+// ── Supabase upload (fixed) ───────────────────────────────
+async function uploadAudio(blob, filename) {
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${filename}`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'audio/mpeg',
+      'x-upsert': 'true'
+    },
+    body: blob
+  });
+  if (!res.ok) {
+    const err = await res.text().catch(() => 'unknown');
+    throw new Error(`Storage upload failed: ${err}`);
   }
+  return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${filename}`;
+}
+
+async function insertRecord(record) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/autosuggestions`, {
+    method: 'POST',
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
+    body: JSON.stringify(record)
+  });
+  if (!res.ok) { const e = await res.json().catch(()=>{}); throw new Error(e?.message || 'DB insert failed'); }
+  return await res.json();
+}
+
+async function deleteRecord(id, audioUrl) {
+  const filename = audioUrl?.split(`/${BUCKET}/`)[1];
+  if (filename) {
+    await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${filename}`, {
+      method: 'DELETE',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+  }
+  await fetch(`${SUPABASE_URL}/rest/v1/autosuggestions?id=eq.${id}`, {
+    method: 'DELETE',
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+  });
 }
 
 // ── Save to Grimoire ──────────────────────────────────────
@@ -655,69 +695,80 @@ async function saveToGrimoire() {
   if (!currentText) return;
   const btn = document.getElementById('saveBtn');
   btn.disabled = true; btn.textContent = '⏳ Saving...';
-
   try {
-    // Fetch audio if not already fetched
     if (!audioBlob) audioBlob = await fetchElevenLabsAudio(currentText, selectedVoiceId);
     if (!audioBlob) { btn.disabled = false; btn.textContent = '📜 Save to Grimoire'; return; }
-
-    const filename = `${Date.now()}_${selectedVoiceId}.mp3`;
+    const filename = `${Date.now()}_${selectedVoiceId.slice(0,8)}.mp3`;
     const audioUrl = await uploadAudio(audioBlob, filename);
-
-    const record = {
-      text: currentText,
-      goal: document.getElementById('goal').value.trim(),
-      tone: selectedTone,
-      voice_id: selectedVoiceId,
-      voice_name: selectedVoiceName,
-      audio_url: audioUrl,
-      created_at: new Date().toISOString()
-    };
-    await insertRecord(record);
-    btn.textContent = '✓ Saved'; btn.disabled = false;
+    await insertRecord({ text: currentText, goal: document.getElementById('goal').value.trim(), tone: selectedTone, voice_id: selectedVoiceId, voice_name: selectedVoiceName, audio_url: audioUrl, created_at: new Date().toISOString() });
+    btn.textContent = '✓ Saved!'; setTimeout(() => { btn.textContent = '📜 Save to Grimoire'; btn.disabled = false; }, 2000);
     showToast('Saved to your Grimoire ✦');
-    setTimeout(() => { btn.textContent = '📜 Save to Grimoire'; }, 2000);
   } catch(e) {
     btn.disabled = false; btn.textContent = '📜 Save to Grimoire';
     showToast(e.message || 'Save failed');
   }
 }
 
-// ── Alpha waves ───────────────────────────────────────────
+// ── Alpha waves (generate page) ───────────────────────────
 function startAlphaWaves() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (!audioCtx) return;
   const gainNode = audioCtx.createGain();
   const vol = document.getElementById('alphaVol').value / 100 * 0.12;
   gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
   gainNode.gain.linearRampToValueAtTime(vol, audioCtx.currentTime + 3);
   gainNode.connect(audioCtx.destination);
   const merger = audioCtx.createChannelMerger(2); merger.connect(gainNode);
-  const leftOsc = audioCtx.createOscillator(); leftOsc.type = 'sine'; leftOsc.frequency.value = 200;
-  const leftGain = audioCtx.createGain(); leftGain.gain.value = 1;
-  leftOsc.connect(leftGain); leftGain.connect(merger, 0, 0);
-  const rightOsc = audioCtx.createOscillator(); rightOsc.type = 'sine'; rightOsc.frequency.value = 210;
-  const rightGain = audioCtx.createGain(); rightGain.gain.value = 1;
-  rightOsc.connect(rightGain); rightGain.connect(merger, 0, 1);
-  leftOsc.start(); rightOsc.start();
-  alphaNodes = { leftOsc, rightOsc, gainNode };
+  const lo = audioCtx.createOscillator(); lo.type = 'sine'; lo.frequency.value = 200;
+  const lg = audioCtx.createGain(); lg.gain.value = 1; lo.connect(lg); lg.connect(merger,0,0);
+  const ro = audioCtx.createOscillator(); ro.type = 'sine'; ro.frequency.value = 210;
+  const rg = audioCtx.createGain(); rg.gain.value = 1; ro.connect(rg); rg.connect(merger,0,1);
+  lo.start(); ro.start();
+  alphaNodes = { lo, ro, gainNode };
   document.getElementById('alphaDot').classList.add('pulsing');
 }
 function stopAlphaWaves() {
   if (alphaNodes.gainNode && audioCtx) {
-    alphaNodes.gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
-    setTimeout(() => { try { alphaNodes.leftOsc.stop(); alphaNodes.rightOsc.stop(); } catch(e) {} alphaNodes = {}; }, 1600);
+    try { alphaNodes.gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.5); } catch(e) {}
+    setTimeout(() => { try { alphaNodes.lo.stop(); alphaNodes.ro.stop(); } catch(e) {} alphaNodes = {}; }, 600);
   }
   document.getElementById('alphaDot').classList.remove('pulsing');
 }
 function setAlphaVolume(val) {
-  if (alphaNodes.gainNode && audioCtx) alphaNodes.gainNode.gain.linearRampToValueAtTime(val / 100 * 0.12, audioCtx.currentTime + 0.1);
+  if (alphaNodes.gainNode && audioCtx) alphaNodes.gainNode.gain.linearRampToValueAtTime(val/100*0.12, audioCtx.currentTime+0.1);
 }
 
-// ── Session (generate page) ───────────────────────────────
+// ── Session player (generate page) ───────────────────────
+function setDot(n, state) {
+  const d = document.getElementById(`dot-${n}`);
+  d.className = 'loop-dot' + (state==='active'?' active':state==='done'?' done':'');
+}
+function resetSessionUI() {
+  for (let i=1;i<=5;i++) setDot(i,'');
+  document.getElementById('loopCounter').textContent = 'Ready';
+  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('progressLabel').textContent = '—';
+  document.getElementById('timeLabel').textContent = '—';
+  document.getElementById('playBtn').disabled = false;
+  document.getElementById('playBtn').textContent = '▶ Begin Session';
+  document.getElementById('pauseBtn').disabled = true;
+  document.getElementById('stopBtn').disabled = true;
+  document.getElementById('alphaDot').classList.remove('pulsing');
+  currentLoop = 0; sessionActive = false; sessionPaused = false;
+  if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
+}
 async function startSession() {
-  if (!voiceBuffer) { await prepareSession(); if (!voiceBuffer) return; }
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (!currentText) return;
+  killGenerateAudio();
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   if (audioCtx.state === 'suspended') await audioCtx.resume();
+  document.getElementById('playBtn').disabled = true;
+  document.getElementById('playBtn').textContent = '⏳ Preparing...';
+  try {
+    audioBlob = await fetchElevenLabsAudio(currentText, selectedVoiceId);
+    if (!audioBlob) { resetSessionUI(); return; }
+    const buf = await audioBlob.arrayBuffer();
+    voiceBuffer = await audioCtx.decodeAudioData(buf);
+  } catch(e) { showToast(e.message || 'Voice fetch failed'); resetSessionUI(); return; }
   sessionActive = true; sessionPaused = false; currentLoop = 0;
   document.getElementById('playBtn').disabled = true;
   document.getElementById('pauseBtn').disabled = false;
@@ -727,66 +778,225 @@ async function startSession() {
 function playLoop() {
   if (!sessionActive || currentLoop >= totalLoops) { if (currentLoop >= totalLoops) finishSession(); return; }
   currentLoop++;
-  for (let i = 1; i <= 5; i++) { if (i < currentLoop) setDot(i,'done'); else if (i === currentLoop) setDot(i,'active'); else setDot(i,''); }
+  for (let i=1;i<=5;i++) { if (i<currentLoop) setDot(i,'done'); else if (i===currentLoop) setDot(i,'active'); else setDot(i,''); }
   document.getElementById('loopCounter').textContent = `Loop ${currentLoop} of ${totalLoops}`;
   const duration = voiceBuffer.duration; const startTime = audioCtx.currentTime;
   voiceSource = audioCtx.createBufferSource(); voiceSource.buffer = voiceBuffer;
-  const vGain = audioCtx.createGain();
-  vGain.gain.setValueAtTime(0, startTime); vGain.gain.linearRampToValueAtTime(0.9, startTime + 0.3);
-  vGain.gain.setValueAtTime(0.9, startTime + duration - 0.5); vGain.gain.linearRampToValueAtTime(0, startTime + duration);
-  voiceSource.connect(vGain); vGain.connect(audioCtx.destination); voiceSource.start(startTime);
+  const vg = audioCtx.createGain();
+  vg.gain.setValueAtTime(0,startTime); vg.gain.linearRampToValueAtTime(0.9,startTime+0.3);
+  vg.gain.setValueAtTime(0.9,startTime+duration-0.5); vg.gain.linearRampToValueAtTime(0,startTime+duration);
+  voiceSource.connect(vg); vg.connect(audioCtx.destination); voiceSource.start(startTime);
   if (progressTimer) clearInterval(progressTimer);
   document.getElementById('progressFill').style.width = '0%';
   document.getElementById('progressLabel').textContent = `Loop ${currentLoop} / ${totalLoops}`;
   progressTimer = setInterval(() => {
     if (sessionPaused) return;
-    const elapsed = audioCtx.currentTime - startTime;
-    document.getElementById('progressFill').style.width = Math.min((elapsed / duration) * 100, 100) + '%';
-    document.getElementById('timeLabel').textContent = formatTime(duration - elapsed) + ' remaining';
+    const el = audioCtx.currentTime - startTime;
+    document.getElementById('progressFill').style.width = Math.min((el/duration)*100,100)+'%';
+    document.getElementById('timeLabel').textContent = formatTime(duration-el)+' remaining';
   }, 200);
   voiceSource.onended = () => {
     if (!sessionActive) return;
-    clearInterval(progressTimer); document.getElementById('progressFill').style.width = '100%';
-    setDot(currentLoop, 'done'); setTimeout(() => { if (sessionActive && !sessionPaused) playLoop(); }, 800);
+    clearInterval(progressTimer); document.getElementById('progressFill').style.width='100%';
+    setDot(currentLoop,'done'); setTimeout(()=>{ if(sessionActive&&!sessionPaused) playLoop(); },800);
   };
 }
 function pauseSession() {
   if (!audioCtx) return;
-  if (!sessionPaused) { audioCtx.suspend(); sessionPaused = true; document.getElementById('pauseBtn').textContent = '▶ Resume'; document.getElementById('alphaDot').classList.remove('pulsing'); }
-  else { audioCtx.resume(); sessionPaused = false; document.getElementById('pauseBtn').textContent = '⏸ Pause'; document.getElementById('alphaDot').classList.add('pulsing'); }
+  if (!sessionPaused) { audioCtx.suspend(); sessionPaused=true; document.getElementById('pauseBtn').textContent='▶ Resume'; document.getElementById('alphaDot').classList.remove('pulsing'); }
+  else { audioCtx.resume(); sessionPaused=false; document.getElementById('pauseBtn').textContent='⏸ Pause'; document.getElementById('alphaDot').classList.add('pulsing'); }
 }
 function stopSession() {
-  sessionActive = false;
-  if (voiceSource) { try { voiceSource.stop(); } catch(e) {} voiceSource = null; }
+  sessionActive=false;
+  if (voiceSource) { try{voiceSource.stop();}catch(e){} voiceSource=null; }
   stopAlphaWaves();
   if (audioCtx) audioCtx.suspend();
-  if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
+  if (progressTimer) { clearInterval(progressTimer); progressTimer=null; }
   resetSessionUI();
 }
 function finishSession() {
-  sessionActive = false; stopAlphaWaves();
-  for (let i = 1; i <= 5; i++) setDot(i, 'done');
-  document.getElementById('loopCounter').textContent = 'Session Complete ✦';
-  document.getElementById('progressFill').style.width = '100%';
-  document.getElementById('progressLabel').textContent = 'All 5 loops complete';
-  document.getElementById('timeLabel').textContent = '—';
-  document.getElementById('playBtn').disabled = false; document.getElementById('playBtn').textContent = '↻ Repeat Session';
-  document.getElementById('pauseBtn').disabled = true; document.getElementById('stopBtn').disabled = true;
-  if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
+  sessionActive=false; stopAlphaWaves();
+  for(let i=1;i<=5;i++) setDot(i,'done');
+  document.getElementById('loopCounter').textContent='Session Complete ✦';
+  document.getElementById('progressFill').style.width='100%';
+  document.getElementById('progressLabel').textContent='All 5 loops complete';
+  document.getElementById('timeLabel').textContent='—';
+  document.getElementById('playBtn').disabled=false; document.getElementById('playBtn').textContent='↻ Repeat Session';
+  document.getElementById('pauseBtn').disabled=true; document.getElementById('stopBtn').disabled=true;
+  if(progressTimer){clearInterval(progressTimer);progressTimer=null;}
   showToast('Session complete — your desire is imprinted ✦');
 }
 
-// ── Grimoire renderer ─────────────────────────────────────
+// ── Custom page ───────────────────────────────────────────
+function copyCustomText() { const t=document.getElementById('customText').value.trim(); if(t) navigator.clipboard.writeText(t).then(()=>showToast('Copied')); }
+
+async function prepareCustom() {
+  const text = document.getElementById('customText').value.trim();
+  if (!text) { showToast('Write your autosuggestion first'); return; }
+  killCustomAudio();
+  const btn = document.getElementById('customBtn');
+  btn.disabled=true; document.getElementById('customLoadingWrap').classList.add('show');
+  document.getElementById('customResultWrap').classList.remove('show');
+  try {
+    customAudioBlob = await fetchElevenLabsAudio(text, customVoiceId);
+    if (!customAudioBlob) { btn.disabled=false; document.getElementById('customLoadingWrap').classList.remove('show'); return; }
+    customAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const buf = await customAudioBlob.arrayBuffer();
+    customVoiceBuffer = await customAudioCtx.decodeAudioData(buf);
+    document.getElementById('customResultText').textContent = text;
+    document.getElementById('customLoadingWrap').classList.remove('show'); btn.disabled=false;
+    const rw = document.getElementById('customResultWrap');
+    rw.classList.add('show'); setTimeout(()=>{rw.style.opacity='1';},10);
+    document.getElementById('customSessionPlayer').classList.add('show');
+    resetCustomSessionUI();
+    showToast('Voice ready — begin your session ✦');
+  } catch(e) {
+    btn.disabled=false; document.getElementById('customLoadingWrap').classList.remove('show');
+    showToast(e.message||'Voice fetch failed');
+  }
+}
+
+function setCDot(n, state) {
+  const d=document.getElementById(`cdot-${n}`);
+  d.className='loop-dot'+(state==='active'?' active':state==='done'?' done':'');
+}
+function resetCustomSessionUI() {
+  for(let i=1;i<=5;i++) setCDot(i,'');
+  document.getElementById('customLoopCounter').textContent='Ready';
+  document.getElementById('customProgressFill').style.width='0%';
+  document.getElementById('customProgressLabel').textContent='—';
+  document.getElementById('customTimeLabel').textContent='—';
+  document.getElementById('customPlayBtn').disabled=false; document.getElementById('customPlayBtn').textContent='▶ Begin Session';
+  document.getElementById('customPauseBtn').disabled=true; document.getElementById('customStopBtn').disabled=true;
+  document.getElementById('customAlphaDot').classList.remove('pulsing');
+  customLoop=0; customSessionAct=false; customSessionPaused=false;
+  if(customProgressTimer){clearInterval(customProgressTimer);customProgressTimer=null;}
+}
+
+function startCustomAlphaWaves() {
+  if(!customAudioCtx) return;
+  const gn=customAudioCtx.createGain(); const vol=document.getElementById('customAlphaVol').value/100*0.12;
+  gn.gain.setValueAtTime(0,customAudioCtx.currentTime); gn.gain.linearRampToValueAtTime(vol,customAudioCtx.currentTime+3);
+  gn.connect(customAudioCtx.destination);
+  const mg=customAudioCtx.createChannelMerger(2); mg.connect(gn);
+  const lo=customAudioCtx.createOscillator(); lo.type='sine'; lo.frequency.value=200;
+  const lg=customAudioCtx.createGain(); lg.gain.value=1; lo.connect(lg); lg.connect(mg,0,0);
+  const ro=customAudioCtx.createOscillator(); ro.type='sine'; ro.frequency.value=210;
+  const rg=customAudioCtx.createGain(); rg.gain.value=1; ro.connect(rg); rg.connect(mg,0,1);
+  lo.start(); ro.start();
+  customAlphaNodes={lo,ro,gainNode:gn};
+  document.getElementById('customAlphaDot').classList.add('pulsing');
+}
+function stopCustomAlphaWaves() {
+  if(customAlphaNodes.gainNode&&customAudioCtx){
+    try{customAlphaNodes.gainNode.gain.linearRampToValueAtTime(0,customAudioCtx.currentTime+0.5);}catch(e){}
+    setTimeout(()=>{try{customAlphaNodes.lo.stop();customAlphaNodes.ro.stop();}catch(e){}customAlphaNodes={};},600);
+  }
+  document.getElementById('customAlphaDot').classList.remove('pulsing');
+}
+function setCustomAlphaVolume(val) {
+  if(customAlphaNodes.gainNode&&customAudioCtx) customAlphaNodes.gainNode.gain.linearRampToValueAtTime(val/100*0.12,customAudioCtx.currentTime+0.1);
+}
+
+async function startCustomSession() {
+  if(!customVoiceBuffer){showToast('Prepare voice first');return;}
+  if(customAudioCtx.state==='suspended') await customAudioCtx.resume();
+  customSessionAct=true; customSessionPaused=false; customLoop=0;
+  document.getElementById('customPlayBtn').disabled=true;
+  document.getElementById('customPauseBtn').disabled=false;
+  document.getElementById('customStopBtn').disabled=false;
+  startCustomAlphaWaves(); playCustomLoop();
+}
+function playCustomLoop() {
+  if(!customSessionAct||customLoop>=totalLoops){if(customLoop>=totalLoops)finishCustomSession();return;}
+  customLoop++;
+  for(let i=1;i<=5;i++){if(i<customLoop)setCDot(i,'done');else if(i===customLoop)setCDot(i,'active');else setCDot(i,'');}
+  document.getElementById('customLoopCounter').textContent=`Loop ${customLoop} of ${totalLoops}`;
+  const dur=customVoiceBuffer.duration; const st=customAudioCtx.currentTime;
+  customVoiceSrc=customAudioCtx.createBufferSource(); customVoiceSrc.buffer=customVoiceBuffer;
+  const vg=customAudioCtx.createGain();
+  vg.gain.setValueAtTime(0,st); vg.gain.linearRampToValueAtTime(0.9,st+0.3);
+  vg.gain.setValueAtTime(0.9,st+dur-0.5); vg.gain.linearRampToValueAtTime(0,st+dur);
+  customVoiceSrc.connect(vg); vg.connect(customAudioCtx.destination); customVoiceSrc.start(st);
+  if(customProgressTimer) clearInterval(customProgressTimer);
+  document.getElementById('customProgressFill').style.width='0%';
+  document.getElementById('customProgressLabel').textContent=`Loop ${customLoop} / ${totalLoops}`;
+  customProgressTimer=setInterval(()=>{
+    if(customSessionPaused)return;
+    const el=customAudioCtx.currentTime-st;
+    document.getElementById('customProgressFill').style.width=Math.min((el/dur)*100,100)+'%';
+    document.getElementById('customTimeLabel').textContent=formatTime(dur-el)+' remaining';
+  },200);
+  customVoiceSrc.onended=()=>{
+    if(!customSessionAct)return;
+    clearInterval(customProgressTimer); document.getElementById('customProgressFill').style.width='100%';
+    setCDot(customLoop,'done'); setTimeout(()=>{if(customSessionAct&&!customSessionPaused)playCustomLoop();},800);
+  };
+}
+function pauseCustomSession() {
+  if(!customAudioCtx)return;
+  if(!customSessionPaused){customAudioCtx.suspend();customSessionPaused=true;document.getElementById('customPauseBtn').textContent='▶ Resume';document.getElementById('customAlphaDot').classList.remove('pulsing');}
+  else{customAudioCtx.resume();customSessionPaused=false;document.getElementById('customPauseBtn').textContent='⏸ Pause';document.getElementById('customAlphaDot').classList.add('pulsing');}
+}
+function stopCustomSession() {
+  customSessionAct=false;
+  if(customVoiceSrc){try{customVoiceSrc.stop();}catch(e){}customVoiceSrc=null;}
+  stopCustomAlphaWaves();
+  if(customAudioCtx)customAudioCtx.suspend();
+  if(customProgressTimer){clearInterval(customProgressTimer);customProgressTimer=null;}
+  resetCustomSessionUI();
+}
+function finishCustomSession() {
+  customSessionAct=false; stopCustomAlphaWaves();
+  for(let i=1;i<=5;i++)setCDot(i,'done');
+  document.getElementById('customLoopCounter').textContent='Session Complete ✦';
+  document.getElementById('customProgressFill').style.width='100%';
+  document.getElementById('customProgressLabel').textContent='All 5 loops complete';
+  document.getElementById('customTimeLabel').textContent='—';
+  document.getElementById('customPlayBtn').disabled=false; document.getElementById('customPlayBtn').textContent='↻ Repeat Session';
+  document.getElementById('customPauseBtn').disabled=true; document.getElementById('customStopBtn').disabled=true;
+  if(customProgressTimer){clearInterval(customProgressTimer);customProgressTimer=null;}
+  showToast('Session complete — your desire is imprinted ✦');
+}
+
+async function saveCustomToGrimoire() {
+  const text = document.getElementById('customText').value.trim();
+  if(!text||!customAudioBlob) return;
+  const btn=document.getElementById('customSaveBtn');
+  btn.disabled=true; btn.textContent='⏳ Saving...';
+  try {
+    const filename=`${Date.now()}_${customVoiceId.slice(0,8)}.mp3`;
+    const audioUrl=await uploadAudio(customAudioBlob,filename);
+    await insertRecord({text,goal:'Custom',tone:'Custom',voice_id:customVoiceId,voice_name:customVoiceName,audio_url:audioUrl,created_at:new Date().toISOString()});
+    btn.textContent='✓ Saved!'; setTimeout(()=>{btn.textContent='📜 Save to Grimoire';btn.disabled=false;},2000);
+    showToast('Saved to your Grimoire ✦');
+  } catch(e) {
+    btn.disabled=false; btn.textContent='📜 Save to Grimoire';
+    showToast(e.message||'Save failed');
+  }
+}
+
+// ── Grimoire ──────────────────────────────────────────────
+async function loadGrimoire() {
+  document.getElementById('grimoireContent').innerHTML='<div class="loading-overlay">Loading your grimoire...</div>';
+  try {
+    const res=await fetch(`${SUPABASE_URL}/rest/v1/autosuggestions?order=created_at.desc`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}});
+    if(!res.ok) throw new Error('Load failed');
+    grimoire=await res.json(); renderGrimoire();
+  } catch(e) {
+    document.getElementById('grimoireContent').innerHTML='<div class="loading-overlay">Could not load grimoire.</div>';
+  }
+}
 function renderGrimoire() {
-  const el = document.getElementById('grimoireContent');
-  if (!grimoire.length) {
-    el.innerHTML = `<div class="empty-grimoire"><div class="empty-grimoire-icon">📜</div><div class="empty-grimoire-text">Your grimoire is empty</div><div class="empty-grimoire-sub">Generate and save your first autosuggestion</div></div>`;
+  const el=document.getElementById('grimoireContent');
+  if(!grimoire.length){
+    el.innerHTML=`<div class="empty-grimoire"><div class="empty-grimoire-icon">📜</div><div class="empty-grimoire-text">Your grimoire is empty</div><div class="empty-grimoire-sub">Generate and save your first autosuggestion</div></div>`;
     return;
   }
-  el.innerHTML = `<div class="scroll-list">${grimoire.map((item, idx) => `
+  el.innerHTML=`<div class="scroll-list">${grimoire.map((item,idx)=>`
     <div class="scroll-entry" id="entry-${item.id}" onclick="playFromGrimoire(${idx})">
       <div class="scroll-entry-top">
-        <div>
+        <div style="flex:1">
           <div style="display:flex;align-items:center;gap:8px;">
             <div class="playing-indicator"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
             <div class="scroll-entry-text">${item.text}</div>
@@ -794,158 +1004,101 @@ function renderGrimoire() {
           <div class="scroll-entry-meta">${item.tone} &nbsp;·&nbsp; ${item.voice_name} &nbsp;·&nbsp; ${new Date(item.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</div>
         </div>
         <div class="scroll-entry-actions" onclick="event.stopPropagation()">
-          <button class="se-btn" onclick="copyEntry('${item.id}')" title="Copy">📋</button>
-          <button class="se-btn delete" onclick="deleteEntry('${item.id}','${item.audio_url}')" title="Delete">✕</button>
+          <button class="se-btn" onclick="copyGrimoireEntry('${item.id}')">📋</button>
+          <button class="se-btn delete" onclick="deleteEntry('${item.id}','${item.audio_url}')">✕</button>
         </div>
       </div>
     </div>`).join('')}</div>`;
 }
-
-// ── Grimoire playback ─────────────────────────────────────
 function setPlayMode(mode) {
-  playMode = mode;
-  ['modeSeq','modeShuffle','modeRepeat'].forEach(id => document.getElementById(id).classList.remove('active'));
-  document.getElementById(mode === 'sequential' ? 'modeSeq' : mode === 'shuffle' ? 'modeShuffle' : 'modeRepeat').classList.add('active');
+  playMode=mode;
+  ['modeSeq','modeShuffle','modeRepeat'].forEach(id=>document.getElementById(id).classList.remove('active'));
+  document.getElementById(mode==='sequential'?'modeSeq':mode==='shuffle'?'modeShuffle':'modeRepeat').classList.add('active');
 }
-
 function buildPlaylist(startIdx) {
-  if (playMode === 'shuffle') {
-    playlist = [...grimoire].sort(() => Math.random() - 0.5);
-    playIndex = 0;
-  } else {
-    playlist = [...grimoire];
-    playIndex = startIdx;
-  }
+  if(playMode==='shuffle'){playlist=[...grimoire].sort(()=>Math.random()-0.5);playIndex=0;}
+  else{playlist=[...grimoire];playIndex=startIdx;}
 }
-
-function playAll() { if (!grimoire.length) { showToast('Your grimoire is empty'); return; } buildPlaylist(0); playTrack(playIndex); }
-
+function playAll() { if(!grimoire.length){showToast('Your grimoire is empty');return;} buildPlaylist(0); playTrack(0); }
 function playFromGrimoire(idx) { buildPlaylist(idx); playTrack(playIndex); }
 
 async function playTrack(idx) {
-  if (idx < 0 || idx >= playlist.length) { stopLibrary(); return; }
-  const item = playlist[idx];
-
-  // Stop current
+  if(idx<0||idx>=playlist.length){stopLibrary();return;}
+  const item=playlist[idx];
   stopLibraryAudio();
-
-  // Update UI
-  document.querySelectorAll('.scroll-entry').forEach(e => e.classList.remove('playing'));
-  const realIdx = grimoire.findIndex(g => g.id === item.id);
-  if (realIdx >= 0) document.getElementById(`entry-${item.id}`)?.classList.add('playing');
-
+  document.querySelectorAll('.scroll-entry').forEach(e=>e.classList.remove('playing'));
+  document.getElementById(`entry-${item.id}`)?.classList.add('playing');
   document.getElementById('nowImprinting').classList.add('show');
-  document.getElementById('niMeta').textContent = `${item.voice_name} · ${item.tone}`;
-  document.getElementById('niText').textContent = item.text;
-  document.getElementById('niProgress').style.width = '0%';
-  document.getElementById('niElapsed').textContent = '0:00';
-  document.getElementById('niRemaining').textContent = '0:00';
-  document.getElementById('niQueue').textContent = `${idx + 1} of ${playlist.length}`;
-  document.getElementById('niPlayBtn').innerHTML = '&#9646;&#9646;';
+  document.getElementById('niMeta').textContent=`${item.voice_name} · ${item.tone}`;
+  document.getElementById('niText').textContent=item.text;
+  document.getElementById('niProgress').style.width='0%';
+  document.getElementById('niElapsed').textContent='0:00';
+  document.getElementById('niRemaining').textContent='0:00';
+  document.getElementById('niQueue').textContent=`${idx+1} of ${playlist.length}`;
+  document.getElementById('niPlayBtn').innerHTML='&#9646;&#9646;';
   document.getElementById('orb').classList.add('playing');
-
-  // Fetch & decode audio
   try {
-    const res = await fetch(item.audio_url);
-    const arrayBuf = await res.arrayBuffer();
-    if (!libAudioCtx) libAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    if (libAudioCtx.state === 'suspended') await libAudioCtx.resume();
-    libBuffer = await libAudioCtx.decodeAudioData(arrayBuf);
-    libStartTime = libAudioCtx.currentTime;
-    libPauseOffset = 0;
-    playLibBuffer();
-    libPlaying = true; libPaused = false;
-
-    if (libProgressTimer) clearInterval(libProgressTimer);
-    libProgressTimer = setInterval(() => {
-      if (libPaused || !libPlaying) return;
-      const elapsed = libAudioCtx.currentTime - libStartTime + libPauseOffset;
-      const dur = libBuffer.duration;
-      const pct = Math.min((elapsed / dur) * 100, 100);
-      document.getElementById('niProgress').style.width = pct + '%';
-      document.getElementById('niElapsed').textContent = formatTime(elapsed);
-      document.getElementById('niRemaining').textContent = formatTime(dur - elapsed);
-    }, 200);
-
-  } catch(e) { showToast('Could not load audio'); nextTrack(); }
+    const res=await fetch(item.audio_url);
+    const ab=await res.arrayBuffer();
+    if(!libAudioCtx) libAudioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    if(libAudioCtx.state==='suspended') await libAudioCtx.resume();
+    libBuffer=await libAudioCtx.decodeAudioData(ab);
+    libPauseOffset=0; playLibBuffer(); libPlaying=true; libPaused=false;
+    if(libProgressTimer) clearInterval(libProgressTimer);
+    libProgressTimer=setInterval(()=>{
+      if(libPaused||!libPlaying)return;
+      const el=libAudioCtx.currentTime-libStartTime;
+      const dur=libBuffer.duration;
+      document.getElementById('niProgress').style.width=Math.min((el/dur)*100,100)+'%';
+      document.getElementById('niElapsed').textContent=formatTime(el);
+      document.getElementById('niRemaining').textContent=formatTime(dur-el);
+    },200);
+  } catch(e){showToast('Could not load audio');nextTrack();}
 }
-
 function playLibBuffer() {
-  libSource = libAudioCtx.createBufferSource();
-  libSource.buffer = libBuffer;
+  libSource=libAudioCtx.createBufferSource(); libSource.buffer=libBuffer;
   libSource.connect(libAudioCtx.destination);
-  libSource.start(0, libPauseOffset);
-  libStartTime = libAudioCtx.currentTime - libPauseOffset;
-  libSource.onended = () => {
-    if (!libPlaying) return;
-    if (playMode === 'repeat') { libPauseOffset = 0; playLibBuffer(); }
-    else { nextTrack(); }
-  };
+  libSource.start(0,libPauseOffset);
+  libStartTime=libAudioCtx.currentTime-libPauseOffset;
+  libSource.onended=()=>{if(!libPlaying)return;if(playMode==='repeat'){libPauseOffset=0;playLibBuffer();}else{playIndex++;playTrack(playIndex);}};
 }
-
 function toggleLibraryPlay() {
-  if (!libPlaying && !libPaused) return;
-  if (libPlaying && !libPaused) {
-    // pause
-    libPauseOffset = libAudioCtx.currentTime - libStartTime + libPauseOffset;
-    try { libSource.stop(); } catch(e) {}
-    libAudioCtx.suspend();
-    libPaused = true; libPlaying = false;
-    document.getElementById('niPlayBtn').innerHTML = '&#9654;';
+  if(!libPlaying&&!libPaused)return;
+  if(libPlaying&&!libPaused){
+    libPauseOffset=libAudioCtx.currentTime-libStartTime;
+    try{libSource.stop();}catch(e){} libAudioCtx.suspend();
+    libPaused=true;libPlaying=false;
+    document.getElementById('niPlayBtn').innerHTML='&#9654;';
     document.getElementById('orb').classList.remove('playing');
   } else {
-    // resume
-    libAudioCtx.resume();
-    playLibBuffer();
-    libPlaying = true; libPaused = false;
-    document.getElementById('niPlayBtn').innerHTML = '&#9646;&#9646;';
+    libAudioCtx.resume(); playLibBuffer();
+    libPlaying=true;libPaused=false;
+    document.getElementById('niPlayBtn').innerHTML='&#9646;&#9646;';
     document.getElementById('orb').classList.add('playing');
   }
 }
-
-function nextTrack() {
-  if (playMode === 'repeat') { libPauseOffset = 0; playLibBuffer(); return; }
-  playIndex++;
-  if (playIndex >= playlist.length) { stopLibrary(); return; }
-  playTrack(playIndex);
+function nextTrack(){if(playMode==='repeat'){libPauseOffset=0;playLibBuffer();return;}playIndex++;playTrack(playIndex);}
+function prevTrack(){playIndex=Math.max(0,playIndex-1);libPauseOffset=0;playTrack(playIndex);}
+function stopLibraryAudio(){
+  if(libSource){try{libSource.stop();}catch(e){}libSource=null;}
+  if(libProgressTimer){clearInterval(libProgressTimer);libProgressTimer=null;}
+  libPlaying=false;libPaused=false;libPauseOffset=0;
 }
-
-function prevTrack() {
-  playIndex = Math.max(0, playIndex - 1);
-  libPauseOffset = 0;
-  playTrack(playIndex);
-}
-
-function stopLibraryAudio() {
-  if (libSource) { try { libSource.stop(); } catch(e) {} libSource = null; }
-  if (libProgressTimer) { clearInterval(libProgressTimer); libProgressTimer = null; }
-  libPlaying = false; libPaused = false; libPauseOffset = 0;
-}
-
-function stopLibrary() {
+function stopLibrary(){
   stopLibraryAudio();
   document.getElementById('nowImprinting').classList.remove('show');
   document.getElementById('orb').classList.remove('playing');
-  document.querySelectorAll('.scroll-entry').forEach(e => e.classList.remove('playing'));
+  document.querySelectorAll('.scroll-entry').forEach(e=>e.classList.remove('playing'));
 }
-
-// ── Grimoire entry actions ────────────────────────────────
-function copyEntry(id) {
-  const item = grimoire.find(g => g.id === id);
-  if (item) navigator.clipboard.writeText(item.text).then(() => showToast('Copied'));
-}
-
-async function deleteEntry(id, audioUrl) {
-  if (!confirm('Delete this autosuggestion from your grimoire?')) return;
-  try {
-    await deleteRecord(id, audioUrl);
-    grimoire = grimoire.filter(g => g.id !== id);
-    // stop if playing
-    const playingItem = playlist[playIndex];
-    if (playingItem?.id === id) stopLibrary();
-    renderGrimoire();
-    showToast('Removed from grimoire');
-  } catch(e) { showToast('Delete failed'); }
+function copyGrimoireEntry(id){const item=grimoire.find(g=>g.id===id);if(item)navigator.clipboard.writeText(item.text).then(()=>showToast('Copied'));}
+async function deleteEntry(id,audioUrl){
+  if(!confirm('Delete this from your grimoire?'))return;
+  try{
+    await deleteRecord(id,audioUrl);
+    grimoire=grimoire.filter(g=>g.id!==id);
+    const pi=playlist[playIndex];if(pi?.id===id)stopLibrary();
+    renderGrimoire();showToast('Removed from grimoire');
+  }catch(e){showToast('Delete failed');}
 }
 
 // ── Init ──────────────────────────────────────────────────
