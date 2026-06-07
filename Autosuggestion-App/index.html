@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Autosuggestion">
+<meta name="theme-color" content="#0a0805">
 <title>Autosuggestion Generator</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -25,12 +29,21 @@
   .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold-dim)); }
   .divider::after { background: linear-gradient(to left, transparent, var(--gold-dim)); }
   .divider-gem { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); }
+
+  /* Nav */
   .nav-tabs { display: flex; gap: 0; margin-bottom: 24px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-  .nav-tab { flex: 1; padding: 10px; font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim); background: var(--surface); border: none; cursor: pointer; transition: all 0.2s; text-align: center; }
+  .nav-tab { flex: 1; padding: 11px 6px; font-family: 'Cinzel', serif; font-size: 8.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); background: var(--surface); border: none; cursor: pointer; transition: all 0.2s; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .nav-tab svg { width: 14px; height: 14px; }
   .nav-tab:hover { background: var(--surface-hover); color: var(--text); }
   .nav-tab.active { background: rgba(201,168,76,0.12); color: var(--gold-light); border-bottom: 1px solid var(--gold); }
+  .nav-tab.active svg { stroke: var(--gold-light); }
+  .nav-tab svg { stroke: var(--text-dim); fill: none; transition: stroke 0.2s; }
+  .nav-tab:hover svg { stroke: var(--text); }
+
   .page { display: none; }
   .page.active { display: block; }
+
+  /* Keys */
   .keys-panel { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 18px; position: relative; overflow: hidden; }
   .keys-panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
   .keys-title { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.35em; color: var(--gold); text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
@@ -49,6 +62,8 @@
   .keys-btn.primary { background: rgba(201,168,76,0.1); border-color: var(--gold-dim); color: var(--gold-light); }
   .keys-btn.primary:hover { background: rgba(201,168,76,0.18); border-color: var(--gold); }
   .keys-note { font-size: 10px; color: var(--text-dim); margin-top: 10px; font-style: italic; opacity: 0.65; }
+
+  /* Form */
   .form-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 30px 36px; position: relative; overflow: hidden; margin-bottom: 18px; }
   .form-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
   .card-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.35em; color: var(--gold); text-transform: uppercase; margin-bottom: 18px; opacity: 0.8; }
@@ -67,21 +82,28 @@
   .voice-btn .v-name { display: block; font-weight: 400; font-size: 12px; margin-bottom: 1px; }
   .voice-btn .v-desc { display: block; font-size: 10px; opacity: 0.6; }
   .voice-btn.active .v-desc { opacity: 0.85; }
-  .btn-primary { width: 100%; margin-top: 24px; padding: 15px; background: linear-gradient(135deg, #b8912e, #e8c97a, #b8912e); background-size: 200% 100%; border: none; border-radius: var(--radius); color: #0a0805; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: background-position 0.4s, transform 0.15s, box-shadow 0.2s; }
+
+  /* Buttons */
+  .btn-primary { width: 100%; margin-top: 24px; padding: 15px; background: linear-gradient(135deg, #b8912e, #e8c97a, #b8912e); background-size: 200% 100%; border: none; border-radius: var(--radius); color: #0a0805; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: background-position 0.4s, transform 0.15s, box-shadow 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; }
   .btn-primary:hover { background-position: right center; box-shadow: 0 0 28px rgba(201,168,76,0.22); transform: translateY(-1px); }
   .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+  .btn-primary svg { width: 13px; height: 13px; fill: #0a0805; }
+
   .loading-wrap { display: none; text-align: center; padding: 36px 0; flex-direction: column; align-items: center; gap: 14px; }
   .loading-wrap.show { display: flex; }
-  .flame { font-size: 30px; animation: pulse 1.2s ease-in-out infinite; }
+  .loading-flame { width: 30px; height: 30px; animation: pulse 1.2s ease-in-out infinite; }
   .loading-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: var(--text-dim); }
+
+  /* Result */
   .result-wrap { margin-top: 0; display: none; opacity: 0; transition: opacity 0.5s; }
   .result-wrap.show { display: block; }
   .result-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 30px 36px; position: relative; overflow: hidden; }
   .result-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
-  .result-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 18px; opacity: 0.7; }
+  .result-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 18px; opacity: 0.7; display: flex; align-items: center; gap: 8px; }
+  .result-label svg { width: 10px; height: 10px; fill: var(--gold); opacity: 0.7; }
   .result-text { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 300; line-height: 1.85; color: var(--text); }
 
-  /* Voice switcher on result */
+  /* Voice switcher */
   .voice-switch-row { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
   .voice-switch-label { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.3em; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 10px; }
   .voice-switch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
@@ -91,10 +113,12 @@
   .vs-btn .vn { display: block; font-weight: 400; font-size: 11px; }
   .vs-btn .vd { display: block; font-size: 9px; opacity: 0.6; }
 
+  /* Session player */
   .session-player { margin-top: 20px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; display: none; }
   .session-player.show { display: block; }
   .session-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-  .session-title { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; }
+  .session-title { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; display: flex; align-items: center; gap: 7px; }
+  .session-title svg { width: 9px; height: 9px; fill: var(--gold); }
   .loop-counter { font-family: 'Cormorant Garamond', serif; font-size: 13px; color: var(--text-dim); font-style: italic; }
   .loop-dots { display: flex; gap: 10px; margin-bottom: 18px; }
   .loop-dot { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-size: 9px; color: var(--text-dim); transition: all 0.4s; }
@@ -112,15 +136,29 @@
   .alpha-vol label { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.25em; color: var(--gold-dim); }
   input[type=range] { -webkit-appearance: none; width: 80px; height: 3px; background: var(--border); border-radius: 2px; outline: none; padding: 0; border: none; }
   input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); cursor: pointer; }
-  .session-controls { display: flex; gap: 8px; flex-wrap: wrap; }
-  .ctrl-btn { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300; padding: 8px 16px; cursor: pointer; transition: all 0.2s; }
+
+  /* Session control buttons — SVG icon style */
+  .session-controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .ctrl-btn { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300; padding: 8px 16px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 7px; }
+  .ctrl-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
   .ctrl-btn:hover { background: var(--surface-hover); color: var(--gold-light); border-color: var(--gold-dim); }
+  .ctrl-btn:hover svg { stroke: var(--gold-light); fill: var(--gold-light); }
   .ctrl-btn.primary { background: rgba(201,168,76,0.12); border-color: var(--gold-dim); color: var(--gold-light); }
+  .ctrl-btn.primary svg { stroke: var(--gold-light); fill: var(--gold-light); }
   .ctrl-btn.primary:hover { background: rgba(201,168,76,0.18); border-color: var(--gold); }
   .ctrl-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .ctrl-btn:disabled svg { opacity: 0.35; }
+  .ctrl-btn svg.play-icon { fill: currentColor; stroke: none; }
+  .ctrl-btn svg.pause-icon { fill: currentColor; stroke: none; }
+  .ctrl-btn svg.stop-icon { fill: currentColor; stroke: none; }
+  .ctrl-btn svg.repeat-icon { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Action buttons */
   .actions-row { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
-  .action-btn { display: flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300; padding: 8px 14px; cursor: pointer; transition: all 0.2s; }
+  .action-btn { display: flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300; padding: 8px 14px; cursor: pointer; transition: all 0.2s; }
+  .action-btn svg { width: 12px; height: 12px; fill: none; stroke: var(--text-dim); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; transition: stroke 0.2s; }
   .action-btn:hover { background: var(--surface-hover); color: var(--gold-light); border-color: var(--gold-dim); }
+  .action-btn:hover svg { stroke: var(--gold-light); }
   .action-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
   /* Grimoire */
@@ -128,14 +166,21 @@
   .grimoire-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; color: var(--text); }
   .grimoire-title em { font-style: italic; color: var(--gold-light); }
   .grimoire-controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .grim-btn { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-dim); font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.2em; padding: 7px 14px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; }
+  .grim-btn { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-dim); font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.2em; padding: 7px 14px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
+  .grim-btn svg { width: 10px; height: 10px; fill: none; stroke: var(--text-dim); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; transition: all 0.2s; }
+  .grim-btn svg.play-fill { fill: var(--text-dim); stroke: none; }
   .grim-btn:hover { background: var(--surface-hover); color: var(--gold-light); border-color: var(--gold-dim); }
+  .grim-btn:hover svg { stroke: var(--gold-light); }
+  .grim-btn:hover svg.play-fill { fill: var(--gold-light); stroke: none; }
   .grim-btn.active { background: rgba(201,168,76,0.12); border-color: var(--gold); color: var(--gold-light); }
+  .grim-btn.active svg { stroke: var(--gold-light); }
+
+  /* Now Imprinting */
   .now-imprinting { background: var(--bg2); border: 1px solid var(--gold-dim); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 24px; position: relative; overflow: hidden; display: none; }
   .now-imprinting.show { display: block; }
   .now-imprinting::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
   .orb-wrap { display: flex; justify-content: center; margin-bottom: 20px; }
-  .orb { width: 64px; height: 64px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #e8c97a, #8a6f34, #2a1f08); box-shadow: 0 0 0 0 rgba(201,168,76,0); transition: box-shadow 0.3s; position: relative; }
+  .orb { width: 64px; height: 64px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #e8c97a, #8a6f34, #2a1f08); position: relative; }
   .orb.playing { animation: orbPulse 2s ease-in-out infinite; }
   .orb::after { content: ''; position: absolute; inset: 4px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.3); }
   .ni-meta { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; text-align: center; opacity: 0.7; }
@@ -143,12 +188,16 @@
   .ni-progress-track { width: 100%; height: 2px; background: var(--surface); border-radius: 2px; margin-bottom: 6px; }
   .ni-progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold-dim), var(--gold)); border-radius: 2px; width: 0%; transition: width 0.3s linear; }
   .ni-time { display: flex; justify-content: space-between; font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-dim); margin-bottom: 16px; }
-  .ni-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 16px; }
-  .ni-btn { background: none; border: 1px solid var(--border); border-radius: 50%; color: var(--text-dim); width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 13px; transition: all 0.2s; }
-  .ni-btn:hover { border-color: var(--gold-dim); color: var(--gold-light); background: var(--surface); }
-  .ni-btn.main { width: 48px; height: 48px; font-size: 16px; border-color: var(--gold-dim); color: var(--gold-light); background: rgba(201,168,76,0.08); }
+  .ni-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 12px; }
+  .ni-btn { background: none; border: 1px solid var(--border); border-radius: 50%; color: var(--text-dim); width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+  .ni-btn svg { width: 13px; height: 13px; }
+  .ni-btn:hover { border-color: var(--gold-dim); background: var(--surface); }
+  .ni-btn.main { width: 50px; height: 50px; border-color: var(--gold-dim); background: rgba(201,168,76,0.08); }
+  .ni-btn.main svg { width: 16px; height: 16px; }
   .ni-btn.main:hover { background: rgba(201,168,76,0.18); border-color: var(--gold); }
-  .ni-queue { font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-dim); text-align: center; margin-top: 10px; }
+  .ni-queue { font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-dim); text-align: center; margin-top: 8px; }
+
+  /* Scroll entries */
   .scroll-list { display: flex; flex-direction: column; gap: 2px; }
   .scroll-entry { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; transition: all 0.2s; cursor: pointer; position: relative; overflow: hidden; }
   .scroll-entry::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: transparent; transition: background 0.2s; }
@@ -161,7 +210,8 @@
   .scroll-entry.playing .scroll-entry-text { color: var(--gold-light); }
   .scroll-entry-meta { font-family: 'Cinzel', serif; font-size: 7.5px; letter-spacing: 0.25em; color: var(--gold-dim); text-transform: uppercase; margin-top: 6px; }
   .scroll-entry-actions { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
-  .se-btn { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 12px; padding: 4px; transition: color 0.2s; }
+  .se-btn { background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 5px; transition: color 0.2s; display: flex; align-items: center; justify-content: center; }
+  .se-btn svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
   .se-btn:hover { color: var(--gold); }
   .se-btn.delete:hover { color: #c0675f; }
   .playing-indicator { display: none; align-items: center; gap: 3px; margin-right: 4px; }
@@ -171,20 +221,22 @@
   .bar:nth-child(2) { height: 14px; animation-delay: 0.15s; }
   .bar:nth-child(3) { height: 10px; animation-delay: 0.3s; }
   .empty-grimoire { text-align: center; padding: 60px 20px; }
-  .empty-grimoire-icon { font-size: 40px; margin-bottom: 16px; opacity: 0.4; }
+  .empty-grimoire-svg { margin: 0 auto 16px; opacity: 0.3; }
   .empty-grimoire-text { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 300; color: var(--text-dim); font-style: italic; }
   .empty-grimoire-sub { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-dim); opacity: 0.6; margin-top: 8px; }
   .loading-overlay { text-align: center; padding: 40px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: var(--text-dim); }
   .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(16px); background: var(--bg3); border: 1px solid var(--gold-dim); border-radius: var(--radius); color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.2em; padding: 10px 22px; opacity: 0; transition: all 0.3s; z-index: 100; pointer-events: none; white-space: nowrap; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+
+  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
   @keyframes dotPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.4); } 50% { box-shadow: 0 0 0 5px rgba(201,168,76,0); } }
-  @keyframes alphaPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+  @keyframes alphaPulse { 0%,100% { opacity:1;transform:scale(1); } 50% { opacity:0.5;transform:scale(0.8); } }
   @keyframes orbPulse { 0%,100% { box-shadow: 0 0 20px 4px rgba(201,168,76,0.2); } 50% { box-shadow: 0 0 40px 12px rgba(201,168,76,0.4); } }
-  @keyframes barDance { 0%,100% { transform: scaleY(0.5); } 50% { transform: scaleY(1); } }
+  @keyframes barDance { 0%,100% { transform:scaleY(0.5); } 50% { transform:scaleY(1); } }
   @media (max-width: 520px) {
     .form-card, .result-card { padding: 22px 18px; }
     .fields-grid, .tone-grid, .voice-grid, .voice-switch-grid { grid-template-columns: repeat(2, 1fr); }
+    .nav-tab { font-size: 7.5px; padding: 9px 4px; }
   }
 </style>
 </head>
@@ -198,32 +250,28 @@
   </div>
 
   <div class="nav-tabs">
-    <button class="nav-tab active" onclick="showPage('generate', this)">✦ Generate</button>
-    <button class="nav-tab" onclick="showPage('custom', this)">✍ Custom</button>
-    <button class="nav-tab" onclick="showPage('grimoire', this)">📜 Grimoire</button>
-    <button class="nav-tab" onclick="showPage('settings', this)">⚙ Settings</button>
+    <button class="nav-tab active" onclick="showPage('generate',this)">
+      <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="5,3 19,12 5,21"/></svg>Generate
+    </button>
+    <button class="nav-tab" onclick="showPage('custom',this)">
+      <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Custom
+    </button>
+    <button class="nav-tab" onclick="showPage('grimoire',this)">
+      <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Grimoire
+    </button>
+    <button class="nav-tab" onclick="showPage('settings',this)">
+      <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings
+    </button>
   </div>
 
-  <!-- ── GENERATE PAGE ── -->
+  <!-- GENERATE PAGE -->
   <div class="page active" id="page-generate">
     <div class="form-card">
       <div class="fields-grid">
-        <div class="field full">
-          <label>Your Goal or Desire</label>
-          <textarea id="goal" placeholder="e.g. Build a successful mobile app business..." rows="2"></textarea>
-        </div>
-        <div class="field">
-          <label>Amount / Metric</label>
-          <input type="text" id="amount" placeholder="e.g. $10,000/mo">
-        </div>
-        <div class="field">
-          <label>Timeframe</label>
-          <input type="text" id="timeframe" placeholder="e.g. by December 2025">
-        </div>
-        <div class="field full">
-          <label>Dominant Emotion</label>
-          <input type="text" id="emotion" placeholder="e.g. confident, abundant, unstoppable, free">
-        </div>
+        <div class="field full"><label>Your Goal or Desire</label><textarea id="goal" placeholder="e.g. Build a successful mobile app business..." rows="2"></textarea></div>
+        <div class="field"><label>Amount / Metric</label><input type="text" id="amount" placeholder="e.g. $10,000/mo"></div>
+        <div class="field"><label>Timeframe</label><input type="text" id="timeframe" placeholder="e.g. by December 2025"></div>
+        <div class="field full"><label>Dominant Emotion</label><input type="text" id="emotion" placeholder="e.g. confident, abundant, unstoppable, free"></div>
         <div class="field full">
           <label>Tone Style</label>
           <div class="tone-grid">
@@ -238,7 +286,7 @@
         <div class="field full">
           <label>Voice</label>
           <div class="voice-grid" id="genVoiceGrid">
-            <button class="voice-btn active" data-voice="MqDiOA32qyUugsYsKa2Q"><span class="v-name">My Voice</span><span class="v-desc">Your clone ✦</span></button>
+            <button class="voice-btn active" data-voice="MqDiOA32qyUugsYsKa2Q"><span class="v-name">My Voice</span><span class="v-desc">Your clone</span></button>
             <button class="voice-btn" data-voice="pNInz6obpgDQGcFmaJgB"><span class="v-name">Adam</span><span class="v-desc">Deep &amp; authoritative</span></button>
             <button class="voice-btn" data-voice="21m00Tcm4TlvDq8ikWAM"><span class="v-name">Rachel</span><span class="v-desc">Calm &amp; warm</span></button>
             <button class="voice-btn" data-voice="AZnzlk1XvdvUeBnXmlld"><span class="v-name">Domi</span><span class="v-desc">Strong &amp; confident</span></button>
@@ -247,23 +295,26 @@
           </div>
         </div>
       </div>
-      <button class="btn-primary" id="generateBtn" onclick="generate()">✦ Generate My Autosuggestion</button>
+      <button class="btn-primary" id="generateBtn" onclick="generate()">
+        <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>Generate My Autosuggestion
+      </button>
       <div class="loading-wrap" id="loadingWrap">
-        <div class="flame">🔥</div>
+        <svg class="loading-flame" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c0 6-8 8-8 14a8 8 0 0 0 16 0c0-6-8-8-8-14z"/><path d="M12 12c0 3-3 4-3 6a3 3 0 0 0 6 0c0-2-3-3-3-6z" fill="rgba(201,168,76,0.3)"/></svg>
         <p class="loading-text" id="loadingText">Imprinting your desire upon the subconscious mind...</p>
       </div>
     </div>
 
     <div class="result-wrap" id="resultWrap">
       <div class="result-card">
-        <div class="result-label">✦ Your Autosuggestion</div>
+        <div class="result-label">
+          <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+          Your Autosuggestion
+        </div>
         <div class="result-text" id="resultText"></div>
-
-        <!-- Inline voice switcher — change voice without regenerating text -->
         <div class="voice-switch-row">
           <div class="voice-switch-label">Change Voice</div>
           <div class="voice-switch-grid" id="resultVoiceGrid">
-            <button class="vs-btn active" data-voice="MqDiOA32qyUugsYsKa2Q" data-name="My Voice"><span class="vn">My Voice</span><span class="vd">Your clone ✦</span></button>
+            <button class="vs-btn active" data-voice="MqDiOA32qyUugsYsKa2Q" data-name="My Voice"><span class="vn">My Voice</span><span class="vd">Your clone</span></button>
             <button class="vs-btn" data-voice="pNInz6obpgDQGcFmaJgB" data-name="Adam"><span class="vn">Adam</span><span class="vd">Deep &amp; auth.</span></button>
             <button class="vs-btn" data-voice="21m00Tcm4TlvDq8ikWAM" data-name="Rachel"><span class="vn">Rachel</span><span class="vd">Calm &amp; warm</span></button>
             <button class="vs-btn" data-voice="AZnzlk1XvdvUeBnXmlld" data-name="Domi"><span class="vn">Domi</span><span class="vd">Strong</span></button>
@@ -271,17 +322,17 @@
             <button class="vs-btn" data-voice="ErXwobaYiN019PkySvjV" data-name="Antoni"><span class="vn">Antoni</span><span class="vd">Smooth</span></button>
           </div>
         </div>
-
         <div class="session-player" id="sessionPlayer">
           <div class="session-header">
-            <div class="session-title">✦ Imprinting Session</div>
+            <div class="session-title">
+              <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+              Imprinting Session
+            </div>
             <div class="loop-counter" id="loopCounter">Ready</div>
           </div>
           <div class="loop-dots">
-            <div class="loop-dot" id="dot-1">1</div>
-            <div class="loop-dot" id="dot-2">2</div>
-            <div class="loop-dot" id="dot-3">3</div>
-            <div class="loop-dot" id="dot-4">4</div>
+            <div class="loop-dot" id="dot-1">1</div><div class="loop-dot" id="dot-2">2</div>
+            <div class="loop-dot" id="dot-3">3</div><div class="loop-dot" id="dot-4">4</div>
             <div class="loop-dot" id="dot-5">5</div>
           </div>
           <div class="progress-wrap">
@@ -289,29 +340,40 @@
             <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
           </div>
           <div class="alpha-row">
-            <div class="alpha-label"><div class="alpha-dot" id="alphaDot"></div>Alpha waves &nbsp;·&nbsp; 10 Hz binaural</div>
+            <div class="alpha-label"><div class="alpha-dot" id="alphaDot"></div>Alpha waves · 10 Hz binaural</div>
             <div class="alpha-vol"><label>Volume</label><input type="range" id="alphaVol" min="0" max="100" value="30" oninput="setAlphaVolume(this.value)"></div>
           </div>
           <div class="session-controls">
-            <button class="ctrl-btn primary" id="playBtn" onclick="startSession()">▶ Begin Session</button>
-            <button class="ctrl-btn" id="pauseBtn" onclick="pauseSession()" disabled>⏸ Pause</button>
-            <button class="ctrl-btn" id="stopBtn" onclick="stopSession()" disabled>⏹ Stop</button>
+            <button class="ctrl-btn primary" id="playBtn" onclick="startSession()">
+              <svg class="play-icon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>Begin Session
+            </button>
+            <button class="ctrl-btn" id="pauseBtn" onclick="pauseSession()" disabled>
+              <svg class="pause-icon" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>Pause
+            </button>
+            <button class="ctrl-btn" id="stopBtn" onclick="stopSession()" disabled>
+              <svg class="stop-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>Stop
+            </button>
           </div>
         </div>
-
         <div class="actions-row">
-          <button class="action-btn" onclick="copyText()">📋 Copy</button>
-          <button class="action-btn" id="saveBtn" onclick="saveToGrimoire()">📜 Save to Grimoire</button>
-          <button class="action-btn" onclick="regenerate()">↻ Regenerate</button>
+          <button class="action-btn" onclick="copyText()">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy
+          </button>
+          <button class="action-btn" id="saveBtn" onclick="saveToGrimoire()">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Save to Grimoire
+          </button>
+          <button class="action-btn" onclick="regenerate()">
+            <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>Regenerate
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── CUSTOM TEXT PAGE ── -->
+  <!-- CUSTOM PAGE -->
   <div class="page" id="page-custom">
     <div class="form-card">
-      <div class="card-label">✍ Write Your Own Autosuggestion</div>
+      <div class="card-label">Write Your Own Autosuggestion</div>
       <div class="field full" style="margin-bottom:18px;">
         <label>Your Autosuggestion</label>
         <textarea id="customText" placeholder="Write your own affirmation in first person... I am, I have, I attract..." rows="6"></textarea>
@@ -319,7 +381,7 @@
       <div class="field full">
         <label>Voice</label>
         <div class="voice-grid" id="customVoiceGrid">
-          <button class="voice-btn active" data-voice="MqDiOA32qyUugsYsKa2Q"><span class="v-name">My Voice</span><span class="v-desc">Your clone ✦</span></button>
+          <button class="voice-btn active" data-voice="MqDiOA32qyUugsYsKa2Q"><span class="v-name">My Voice</span><span class="v-desc">Your clone</span></button>
           <button class="voice-btn" data-voice="pNInz6obpgDQGcFmaJgB"><span class="v-name">Adam</span><span class="v-desc">Deep &amp; authoritative</span></button>
           <button class="voice-btn" data-voice="21m00Tcm4TlvDq8ikWAM"><span class="v-name">Rachel</span><span class="v-desc">Calm &amp; warm</span></button>
           <button class="voice-btn" data-voice="AZnzlk1XvdvUeBnXmlld"><span class="v-name">Domi</span><span class="v-desc">Strong &amp; confident</span></button>
@@ -327,27 +389,32 @@
           <button class="voice-btn" data-voice="ErXwobaYiN019PkySvjV"><span class="v-name">Antoni</span><span class="v-desc">Smooth &amp; measured</span></button>
         </div>
       </div>
-      <button class="btn-primary" id="customBtn" onclick="prepareCustom()">▶ Prepare &amp; Preview</button>
+      <button class="btn-primary" id="customBtn" onclick="prepareCustom()">
+        <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>Prepare &amp; Preview
+      </button>
       <div class="loading-wrap" id="customLoadingWrap">
-        <div class="flame">🔥</div>
+        <svg class="loading-flame" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c0 6-8 8-8 14a8 8 0 0 0 16 0c0-6-8-8-8-14z"/><path d="M12 12c0 3-3 4-3 6a3 3 0 0 0 6 0c0-2-3-3-3-6z" fill="rgba(201,168,76,0.3)"/></svg>
         <p class="loading-text">Preparing your voice...</p>
       </div>
     </div>
-
     <div class="result-wrap" id="customResultWrap">
       <div class="result-card">
-        <div class="result-label">✦ Your Custom Autosuggestion</div>
+        <div class="result-label">
+          <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+          Your Custom Autosuggestion
+        </div>
         <div class="result-text" id="customResultText"></div>
         <div class="session-player" id="customSessionPlayer">
           <div class="session-header">
-            <div class="session-title">✦ Imprinting Session</div>
+            <div class="session-title">
+              <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+              Imprinting Session
+            </div>
             <div class="loop-counter" id="customLoopCounter">Ready</div>
           </div>
           <div class="loop-dots">
-            <div class="loop-dot" id="cdot-1">1</div>
-            <div class="loop-dot" id="cdot-2">2</div>
-            <div class="loop-dot" id="cdot-3">3</div>
-            <div class="loop-dot" id="cdot-4">4</div>
+            <div class="loop-dot" id="cdot-1">1</div><div class="loop-dot" id="cdot-2">2</div>
+            <div class="loop-dot" id="cdot-3">3</div><div class="loop-dot" id="cdot-4">4</div>
             <div class="loop-dot" id="cdot-5">5</div>
           </div>
           <div class="progress-wrap">
@@ -355,32 +422,50 @@
             <div class="progress-track"><div class="progress-fill" id="customProgressFill"></div></div>
           </div>
           <div class="alpha-row">
-            <div class="alpha-label"><div class="alpha-dot" id="customAlphaDot"></div>Alpha waves &nbsp;·&nbsp; 10 Hz binaural</div>
+            <div class="alpha-label"><div class="alpha-dot" id="customAlphaDot"></div>Alpha waves · 10 Hz binaural</div>
             <div class="alpha-vol"><label>Volume</label><input type="range" id="customAlphaVol" min="0" max="100" value="30" oninput="setCustomAlphaVolume(this.value)"></div>
           </div>
           <div class="session-controls">
-            <button class="ctrl-btn primary" id="customPlayBtn" onclick="startCustomSession()">▶ Begin Session</button>
-            <button class="ctrl-btn" id="customPauseBtn" onclick="pauseCustomSession()" disabled>⏸ Pause</button>
-            <button class="ctrl-btn" id="customStopBtn" onclick="stopCustomSession()" disabled>⏹ Stop</button>
+            <button class="ctrl-btn primary" id="customPlayBtn" onclick="startCustomSession()">
+              <svg class="play-icon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>Begin Session
+            </button>
+            <button class="ctrl-btn" id="customPauseBtn" onclick="pauseCustomSession()" disabled>
+              <svg class="pause-icon" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>Pause
+            </button>
+            <button class="ctrl-btn" id="customStopBtn" onclick="stopCustomSession()" disabled>
+              <svg class="stop-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>Stop
+            </button>
           </div>
         </div>
         <div class="actions-row">
-          <button class="action-btn" onclick="copyCustomText()">📋 Copy</button>
-          <button class="action-btn" id="customSaveBtn" onclick="saveCustomToGrimoire()">📜 Save to Grimoire</button>
+          <button class="action-btn" onclick="copyCustomText()">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy
+          </button>
+          <button class="action-btn" id="customSaveBtn" onclick="saveCustomToGrimoire()">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Save to Grimoire
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── GRIMOIRE PAGE ── -->
+  <!-- GRIMOIRE PAGE -->
   <div class="page" id="page-grimoire">
     <div class="grimoire-header">
       <div class="grimoire-title">Your <em>Grimoire</em></div>
       <div class="grimoire-controls">
-        <button class="grim-btn active" id="modeSeq" onclick="setPlayMode('sequential')">In Order</button>
-        <button class="grim-btn" id="modeShuffle" onclick="setPlayMode('shuffle')">Shuffle</button>
-        <button class="grim-btn" id="modeRepeat" onclick="setPlayMode('repeat')">Repeat</button>
-        <button class="grim-btn" onclick="playAll()">▶ Play All</button>
+        <button class="grim-btn active" id="modeSeq" onclick="setPlayMode('sequential')">
+          <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>In Order
+        </button>
+        <button class="grim-btn" id="modeShuffle" onclick="setPlayMode('shuffle')">
+          <svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>Shuffle
+        </button>
+        <button class="grim-btn" id="modeRepeat" onclick="setPlayMode('repeat')">
+          <svg class="repeat-icon" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>Repeat
+        </button>
+        <button class="grim-btn" onclick="playAll()">
+          <svg class="play-fill" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>Play All
+        </button>
       </div>
     </div>
     <div class="now-imprinting" id="nowImprinting">
@@ -390,19 +475,25 @@
       <div class="ni-progress-track"><div class="ni-progress-fill" id="niProgress"></div></div>
       <div class="ni-time"><span id="niElapsed">0:00</span><span id="niRemaining">0:00</span></div>
       <div class="ni-controls">
-        <button class="ni-btn" onclick="prevTrack()">&#9664;&#9664;</button>
-        <button class="ni-btn main" id="niPlayBtn" onclick="toggleLibraryPlay()">&#9646;&#9646;</button>
-        <button class="ni-btn" onclick="nextTrack()">&#9654;&#9654;</button>
+        <button class="ni-btn" onclick="prevTrack()">
+          <svg viewBox="0 0 24 24" fill="var(--text-dim)" stroke="none"><polygon points="19,20 9,12 19,4"/><line x1="5" y1="4" x2="5" y2="20" stroke="var(--text-dim)" stroke-width="2" fill="none"/></svg>
+        </button>
+        <button class="ni-btn main" id="niPlayBtn" onclick="toggleLibraryPlay()">
+          <svg id="niPlayIcon" viewBox="0 0 24 24" fill="var(--gold-light)" stroke="none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </button>
+        <button class="ni-btn" onclick="nextTrack()">
+          <svg viewBox="0 0 24 24" fill="var(--text-dim)" stroke="none"><polygon points="5,4 15,12 5,20"/><line x1="19" y1="4" x2="19" y2="20" stroke="var(--text-dim)" stroke-width="2" fill="none"/></svg>
+        </button>
       </div>
       <div class="ni-queue" id="niQueue"></div>
     </div>
     <div id="grimoireContent"><div class="loading-overlay">Loading your grimoire...</div></div>
   </div>
 
-  <!-- ── SETTINGS PAGE ── -->
+  <!-- SETTINGS PAGE -->
   <div class="page" id="page-settings">
     <div class="keys-panel">
-      <div class="keys-title">API Keys <span class="keys-saved-badge" id="savedBadge">✓ Saved</span></div>
+      <div class="keys-title">API Keys <span class="keys-saved-badge" id="savedBadge">Keys Saved</span></div>
       <div class="key-row"><label>Anthropic</label><input type="password" class="key-input" id="anthropicKey" placeholder="sk-ant-..." autocomplete="off"></div>
       <div class="key-row"><label>ElevenLabs</label><input type="password" class="key-input" id="elevenKey" placeholder="ElevenLabs key..." autocomplete="off"></div>
       <div class="keys-actions">
@@ -416,583 +507,337 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ── Config ──────────────────────────────────────────────
 const SUPABASE_URL = 'https://lrcwmgoizevjcuwwzfij.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_n6sb4NaOOOXnTNkk_o8VPA_qLpOCCz-';
-const BUCKET       = 'autosuggestions';
+const BUCKET = 'autosuggestions';
 
-// ── Generate page state ─────────────────────────────────
-let selectedTone      = 'Classic Napoleon Hill';
-let selectedVoiceId   = 'MqDiOA32qyUugsYsKa2Q';
-let selectedVoiceName = 'My Voice';
-let currentText       = '';
-let audioBlob         = null;
-let voiceBuffer       = null;
-let audioCtx          = null;
-let alphaNodes        = {};
-let voiceSource       = null;
-let sessionActive     = false;
-let sessionPaused     = false;
-let currentLoop       = 0;
-const totalLoops      = 5;
-let progressTimer     = null;
+// State
+let selectedTone='Classic Napoleon Hill', selectedVoiceId='MqDiOA32qyUugsYsKa2Q', selectedVoiceName='My Voice';
+let currentText='', audioBlob=null, voiceBuffer=null, audioCtx=null, alphaNodes={}, voiceSource=null;
+let sessionActive=false, sessionPaused=false, currentLoop=0, progressTimer=null;
+const totalLoops=5;
+let customVoiceId='MqDiOA32qyUugsYsKa2Q', customVoiceName='My Voice';
+let customAudioBlob=null, customVoiceBuffer=null, customAudioCtx=null, customAlphaNodes={}, customVoiceSrc=null;
+let customSessionAct=false, customSessionPaused=false, customLoop=0, customProgressTimer=null;
+let grimoire=[], playlist=[], playIndex=-1, playMode='sequential';
+let libAudioCtx=null, libSource=null, libBuffer=null, libPlaying=false, libPaused=false;
+let libProgressTimer=null, libStartTime=0, libPauseOffset=0;
+const loadingMsgs=['Imprinting your desire upon the subconscious mind...','Channeling the infinite intelligence...','Burning your desire into being...','Aligning your thoughts with your destiny...'];
 
-// ── Custom page state ───────────────────────────────────
-let customVoiceId     = 'MqDiOA32qyUugsYsKa2Q';
-let customVoiceName   = 'My Voice';
-let customAudioBlob   = null;
-let customVoiceBuffer = null;
-let customAudioCtx    = null;
-let customAlphaNodes  = {};
-let customVoiceSrc    = null;
-let customSessionAct  = false;
-let customSessionPaused = false;
-let customLoop        = 0;
-let customProgressTimer = null;
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+function formatTime(s){s=Math.max(0,s);const m=Math.floor(s/60),sec=Math.floor(s%60);return`${m}:${sec.toString().padStart(2,'0')}`;}
+function getAnthropicKey(){return document.getElementById('anthropicKey').value.trim();}
+function getElevenKey(){return document.getElementById('elevenKey').value.trim();}
 
-// ── Grimoire state ──────────────────────────────────────
-let grimoire     = [];
-let playlist     = [];
-let playIndex    = -1;
-let playMode     = 'sequential';
-let libAudioCtx  = null;
-let libSource    = null;
-let libBuffer    = null;
-let libPlaying   = false;
-let libPaused    = false;
-let libProgressTimer = null;
-let libStartTime = 0;
-let libPauseOffset = 0;
-
-const loadingMsgs = [
-  'Imprinting your desire upon the subconscious mind...',
-  'Channeling the infinite intelligence...',
-  'Burning your desire into being...',
-  'Aligning your thoughts with your destiny...'
-];
-
-// ── Helpers ─────────────────────────────────────────────
-function showToast(msg) {
-  const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
-function formatTime(s) {
-  s = Math.max(0, s); const m = Math.floor(s/60); const sec = Math.floor(s%60);
-  return `${m}:${sec.toString().padStart(2,'0')}`;
-}
-function getAnthropicKey() { return document.getElementById('anthropicKey').value.trim(); }
-function getElevenKey()    { return document.getElementById('elevenKey').value.trim(); }
-
-// ── Nav ──────────────────────────────────────────────────
-function showPage(page, tabEl) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+function showPage(page,tabEl){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById(`page-${page}`).classList.add('active');
-  if (tabEl) tabEl.classList.add('active');
-  if (page === 'grimoire') loadGrimoire();
+  if(tabEl)tabEl.classList.add('active');
+  if(page==='grimoire')loadGrimoire();
 }
 
-// ── Keys ─────────────────────────────────────────────────
-function loadKeys() {
-  const ak = localStorage.getItem('as_anthropic_key');
-  const ek = localStorage.getItem('as_eleven_key');
-  if (ak) { document.getElementById('anthropicKey').value = ak; document.getElementById('anthropicKey').classList.add('saved'); }
-  if (ek) { document.getElementById('elevenKey').value = ek; document.getElementById('elevenKey').classList.add('saved'); }
-  if (ak || ek) document.getElementById('savedBadge').classList.add('show');
+function loadKeys(){
+  const ak=localStorage.getItem('as_anthropic_key'),ek=localStorage.getItem('as_eleven_key');
+  if(ak){document.getElementById('anthropicKey').value=ak;document.getElementById('anthropicKey').classList.add('saved');}
+  if(ek){document.getElementById('elevenKey').value=ek;document.getElementById('elevenKey').classList.add('saved');}
+  if(ak||ek)document.getElementById('savedBadge').classList.add('show');
 }
-function saveKeys() {
-  const ak = document.getElementById('anthropicKey').value.trim();
-  const ek = document.getElementById('elevenKey').value.trim();
-  if (ak) { localStorage.setItem('as_anthropic_key', ak); document.getElementById('anthropicKey').classList.add('saved'); }
-  if (ek) { localStorage.setItem('as_eleven_key', ek); document.getElementById('elevenKey').classList.add('saved'); }
+function saveKeys(){
+  const ak=document.getElementById('anthropicKey').value.trim(),ek=document.getElementById('elevenKey').value.trim();
+  if(ak){localStorage.setItem('as_anthropic_key',ak);document.getElementById('anthropicKey').classList.add('saved');}
+  if(ek){localStorage.setItem('as_eleven_key',ek);document.getElementById('elevenKey').classList.add('saved');}
   document.getElementById('savedBadge').classList.add('show');
-  showToast('Keys saved ✦');
+  showToast('Keys saved');
 }
-function clearKeys() {
-  localStorage.removeItem('as_anthropic_key'); localStorage.removeItem('as_eleven_key');
-  ['anthropicKey','elevenKey'].forEach(id => { document.getElementById(id).value = ''; document.getElementById(id).classList.remove('saved'); });
-  document.getElementById('savedBadge').classList.remove('show');
-  showToast('Keys cleared');
-}
-
-// ── Tone buttons ─────────────────────────────────────────
-document.querySelectorAll('.tone-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active'); selectedTone = btn.dataset.tone;
-  });
-});
-
-// ── Generate page voice buttons ──────────────────────────
-document.querySelectorAll('#genVoiceGrid .voice-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#genVoiceGrid .voice-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    selectedVoiceId = btn.dataset.voice;
-    selectedVoiceName = btn.querySelector('.v-name').textContent;
-    // Also sync result voice switcher
-    document.querySelectorAll('#resultVoiceGrid .vs-btn').forEach(b => {
-      b.classList.toggle('active', b.dataset.voice === selectedVoiceId);
-    });
-    killGenerateAudio();
-  });
-});
-
-// ── Result voice switcher (change voice WITHOUT regenerating text) ──
-document.querySelectorAll('#resultVoiceGrid .vs-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    if (btn.dataset.voice === selectedVoiceId) return; // already selected
-    document.querySelectorAll('#resultVoiceGrid .vs-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    selectedVoiceId = btn.dataset.voice;
-    selectedVoiceName = btn.dataset.name;
-    // sync top voice grid too
-    document.querySelectorAll('#genVoiceGrid .voice-btn').forEach(b => {
-      b.classList.toggle('active', b.dataset.voice === selectedVoiceId);
-    });
-    killGenerateAudio();
-    resetSessionUI();
-    showToast(`Voice → ${selectedVoiceName}`);
-  });
-});
-
-// ── Custom page voice buttons ─────────────────────────────
-document.querySelectorAll('#customVoiceGrid .voice-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#customVoiceGrid .voice-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    customVoiceId = btn.dataset.voice;
-    customVoiceName = btn.querySelector('.v-name').textContent;
-    killCustomAudio();
-  });
-});
-
-// ── Kill audio helpers ───────────────────────────────────
-function killGenerateAudio() {
-  if (sessionActive) { sessionActive = false; }
-  if (voiceSource) { try { voiceSource.stop(); } catch(e) {} voiceSource = null; }
-  if (audioCtx) { try { audioCtx.close(); } catch(e) {} audioCtx = null; }
-  stopAlphaWaves();
-  audioBlob = null; voiceBuffer = null;
-}
-function killCustomAudio() {
-  if (customSessionAct) { customSessionAct = false; }
-  if (customVoiceSrc) { try { customVoiceSrc.stop(); } catch(e) {} customVoiceSrc = null; }
-  if (customAudioCtx) { try { customAudioCtx.close(); } catch(e) {} customAudioCtx = null; }
-  stopCustomAlphaWaves();
-  customAudioBlob = null; customVoiceBuffer = null;
+function clearKeys(){
+  localStorage.removeItem('as_anthropic_key');localStorage.removeItem('as_eleven_key');
+  ['anthropicKey','elevenKey'].forEach(id=>{document.getElementById(id).value='';document.getElementById(id).classList.remove('saved');});
+  document.getElementById('savedBadge').classList.remove('show');showToast('Keys cleared');
 }
 
-// ── Generate text ─────────────────────────────────────────
-async function generate() {
-  const goal = document.getElementById('goal').value.trim();
-  if (!goal) { showToast('Please describe your goal or desire'); return; }
-  const ak = getAnthropicKey();
-  if (!ak) { showToast('Add your Anthropic key in Settings'); return; }
+document.querySelectorAll('.tone-btn').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('.tone-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');selectedTone=btn.dataset.tone;
+}));
+document.querySelectorAll('#genVoiceGrid .voice-btn').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('#genVoiceGrid .voice-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');selectedVoiceId=btn.dataset.voice;selectedVoiceName=btn.querySelector('.v-name').textContent;
+  document.querySelectorAll('#resultVoiceGrid .vs-btn').forEach(b=>b.classList.toggle('active',b.dataset.voice===selectedVoiceId));
   killGenerateAudio();
-  const btn = document.getElementById('generateBtn');
-  document.getElementById('loadingText').textContent = loadingMsgs[Math.floor(Math.random() * loadingMsgs.length)];
-  btn.disabled = true; document.getElementById('loadingWrap').classList.add('show');
-  document.getElementById('resultWrap').classList.remove('show');
-  const amount = document.getElementById('amount').value.trim();
-  const timeframe = document.getElementById('timeframe').value.trim();
-  const emotion = document.getElementById('emotion').value.trim();
-  const prompt = `You are an expert in Napoleon Hill's "Think and Grow Rich," specifically the Autosuggestion chapter. Generate a powerful 4-5 sentence personal autosuggestion.
-Goal/Desire: ${goal}${amount ? '\nAmount/Metric: ' + amount : ''}${timeframe ? '\nTimeframe: ' + timeframe : ''}${emotion ? '\nDominant Emotion: ' + emotion : ''}
-Tone Style: ${selectedTone}
-Rules:
-- Write in first person (I am, I have, I attract)
-- Be specific, vivid, and emotionally charged
-- Include the amount/metric and timeframe if provided
-- Embody the emotion deeply throughout
-- Match the tone style exactly
-- 4-5 sentences only — no preamble, no explanation, just the autosuggestion
-- End with a declaration of deep conviction or gratitude
-- Output plain text only — no markdown, no hashtags, no bullet points, no special formatting`;
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': ak, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
-      body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 1000, messages: [{ role: 'user', content: prompt }] })
-    });
-    if (!res.ok) { const e = await res.json().catch(()=>{}); throw new Error(e?.error?.message || `API ${res.status}`); }
-    const data = await res.json();
-    currentText = data.content?.[0]?.text?.trim().replace(/^#+\s*/gm,'').replace(/\*\*/g,'') || '';
-    document.getElementById('loadingWrap').classList.remove('show'); btn.disabled = false;
-    if (currentText) {
-      document.getElementById('resultText').textContent = currentText;
-      const rw = document.getElementById('resultWrap');
-      rw.classList.add('show'); setTimeout(() => { rw.style.opacity = '1'; }, 10);
-      document.getElementById('sessionPlayer').classList.add('show');
-      resetSessionUI();
-    } else { showToast('Something went wrong — try again'); }
-  } catch(e) {
-    document.getElementById('loadingWrap').classList.remove('show'); btn.disabled = false;
-    showToast(e.message || 'Error generating text');
-  }
-}
-function regenerate() { killGenerateAudio(); generate(); }
-function copyText() { if (currentText) navigator.clipboard.writeText(currentText).then(() => showToast('Copied')); }
+}));
+document.querySelectorAll('#resultVoiceGrid .vs-btn').forEach(btn=>btn.addEventListener('click',()=>{
+  if(btn.dataset.voice===selectedVoiceId)return;
+  document.querySelectorAll('#resultVoiceGrid .vs-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');selectedVoiceId=btn.dataset.voice;selectedVoiceName=btn.dataset.name;
+  document.querySelectorAll('#genVoiceGrid .voice-btn').forEach(b=>b.classList.toggle('active',b.dataset.voice===selectedVoiceId));
+  killGenerateAudio();resetSessionUI();showToast(`Voice — ${selectedVoiceName}`);
+}));
+document.querySelectorAll('#customVoiceGrid .voice-btn').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('#customVoiceGrid .voice-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');customVoiceId=btn.dataset.voice;customVoiceName=btn.querySelector('.v-name').textContent;
+  killCustomAudio();
+}));
 
-// ── ElevenLabs fetch ──────────────────────────────────────
-async function fetchElevenLabsAudio(text, voiceId) {
-  const key = getElevenKey();
-  if (!key) { showToast('Add your ElevenLabs key in Settings'); return null; }
-  const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
-    method: 'POST',
-    headers: { 'xi-api-key': key, 'Content-Type': 'application/json', 'Accept': 'audio/mpeg' },
-    body: JSON.stringify({ text, model_id: 'eleven_turbo_v2', voice_settings: { stability: 0.55, similarity_boost: 0.80, style: 0.20, use_speaker_boost: true } })
-  });
-  if (!res.ok) { let msg = 'ElevenLabs error'; try { const j = await res.json(); msg = j?.detail?.message || j?.detail || msg; } catch {} throw new Error(msg); }
+function killGenerateAudio(){
+  sessionActive=false;
+  if(voiceSource){try{voiceSource.stop();}catch(e){}voiceSource=null;}
+  if(audioCtx){try{audioCtx.close();}catch(e){}audioCtx=null;}
+  stopAlphaWaves();audioBlob=null;voiceBuffer=null;
+}
+function killCustomAudio(){
+  customSessionAct=false;
+  if(customVoiceSrc){try{customVoiceSrc.stop();}catch(e){}customVoiceSrc=null;}
+  if(customAudioCtx){try{customAudioCtx.close();}catch(e){}customAudioCtx=null;}
+  stopCustomAlphaWaves();customAudioBlob=null;customVoiceBuffer=null;
+}
+
+async function generate(){
+  const goal=document.getElementById('goal').value.trim();
+  if(!goal){showToast('Please describe your goal or desire');return;}
+  const ak=getAnthropicKey();if(!ak){showToast('Add your Anthropic key in Settings');return;}
+  killGenerateAudio();
+  const btn=document.getElementById('generateBtn');
+  document.getElementById('loadingText').textContent=loadingMsgs[Math.floor(Math.random()*loadingMsgs.length)];
+  btn.disabled=true;document.getElementById('loadingWrap').classList.add('show');
+  document.getElementById('resultWrap').classList.remove('show');
+  const amount=document.getElementById('amount').value.trim(),timeframe=document.getElementById('timeframe').value.trim(),emotion=document.getElementById('emotion').value.trim();
+  const prompt=`You are an expert in Napoleon Hill's "Think and Grow Rich," specifically the Autosuggestion chapter. Generate a powerful 4-5 sentence personal autosuggestion.\nGoal/Desire: ${goal}${amount?'\nAmount/Metric: '+amount:''}${timeframe?'\nTimeframe: '+timeframe:''}${emotion?'\nDominant Emotion: '+emotion:''}\nTone Style: ${selectedTone}\nRules:\n- Write in first person (I am, I have, I attract)\n- Be specific, vivid, and emotionally charged\n- Include the amount/metric and timeframe if provided\n- Embody the emotion deeply throughout\n- Match the tone style exactly\n- 4-5 sentences only — no preamble, no explanation, just the autosuggestion\n- End with a declaration of deep conviction or gratitude\n- Output plain text only — no markdown, no hashtags, no bullet points, no special formatting`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':ak,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    if(!res.ok){const e=await res.json().catch(()=>{});throw new Error(e?.error?.message||`API ${res.status}`);}
+    const data=await res.json();
+    currentText=data.content?.[0]?.text?.trim().replace(/^#+\s*/gm,'').replace(/\*\*/g,'')||'';
+    document.getElementById('loadingWrap').classList.remove('show');btn.disabled=false;
+    if(currentText){
+      document.getElementById('resultText').textContent=currentText;
+      const rw=document.getElementById('resultWrap');rw.classList.add('show');setTimeout(()=>{rw.style.opacity='1';},10);
+      document.getElementById('sessionPlayer').classList.add('show');resetSessionUI();
+    }else{showToast('Something went wrong — try again');}
+  }catch(e){document.getElementById('loadingWrap').classList.remove('show');btn.disabled=false;showToast(e.message||'Error generating text');}
+}
+function regenerate(){killGenerateAudio();generate();}
+function copyText(){if(currentText)navigator.clipboard.writeText(currentText).then(()=>showToast('Copied'));}
+
+async function fetchElevenLabsAudio(text,voiceId){
+  const key=getElevenKey();if(!key){showToast('Add your ElevenLabs key in Settings');return null;}
+  const res=await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,{method:'POST',headers:{'xi-api-key':key,'Content-Type':'application/json','Accept':'audio/mpeg'},body:JSON.stringify({text,model_id:'eleven_turbo_v2',voice_settings:{stability:0.55,similarity_boost:0.80,style:0.20,use_speaker_boost:true}})});
+  if(!res.ok){let msg='ElevenLabs error';try{const j=await res.json();msg=j?.detail?.message||j?.detail||msg;}catch{}throw new Error(msg);}
   return await res.blob();
 }
 
-// ── Supabase upload (fixed) ───────────────────────────────
-async function uploadAudio(blob, filename) {
-  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${filename}`, {
-    method: 'POST',
-    headers: {
-      'apikey': SUPABASE_KEY,
-      'Authorization': `Bearer ${SUPABASE_KEY}`,
-      'Content-Type': 'audio/mpeg',
-      'x-upsert': 'true'
-    },
-    body: blob
-  });
-  if (!res.ok) {
-    const err = await res.text().catch(() => 'unknown');
-    throw new Error(`Storage upload failed: ${err}`);
-  }
-  return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${filename}`;
+async function uploadAudio(blob,filename){
+  const res=await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${filename}`,{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Content-Type':'audio/mpeg','x-upsert':'true'},body:blob});
+  if(!res.ok){const err=await res.text().catch(()=>'unknown');throw new Error(`Upload failed: ${err}`);}
+  return`${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${filename}`;
 }
-
-async function insertRecord(record) {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/autosuggestions`, {
-    method: 'POST',
-    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
-    body: JSON.stringify(record)
-  });
-  if (!res.ok) { const e = await res.json().catch(()=>{}); throw new Error(e?.message || 'DB insert failed'); }
+async function insertRecord(record){
+  const res=await fetch(`${SUPABASE_URL}/rest/v1/autosuggestions`,{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(record)});
+  if(!res.ok){const e=await res.json().catch(()=>{});throw new Error(e?.message||'DB insert failed');}
   return await res.json();
 }
-
-async function deleteRecord(id, audioUrl) {
-  const filename = audioUrl?.split(`/${BUCKET}/`)[1];
-  if (filename) {
-    await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${filename}`, {
-      method: 'DELETE',
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
-    });
-  }
-  await fetch(`${SUPABASE_URL}/rest/v1/autosuggestions?id=eq.${id}`, {
-    method: 'DELETE',
-    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
-  });
+async function deleteRecord(id,audioUrl){
+  const filename=audioUrl?.split(`/${BUCKET}/`)[1];
+  if(filename)await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${filename}`,{method:'DELETE',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}});
+  await fetch(`${SUPABASE_URL}/rest/v1/autosuggestions?id=eq.${id}`,{method:'DELETE',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}});
 }
 
-// ── Save to Grimoire ──────────────────────────────────────
-async function saveToGrimoire() {
-  if (!currentText) return;
-  const btn = document.getElementById('saveBtn');
-  btn.disabled = true; btn.textContent = '⏳ Saving...';
-  try {
-    if (!audioBlob) audioBlob = await fetchElevenLabsAudio(currentText, selectedVoiceId);
-    if (!audioBlob) { btn.disabled = false; btn.textContent = '📜 Save to Grimoire'; return; }
-    const filename = `${Date.now()}_${selectedVoiceId.slice(0,8)}.mp3`;
-    const audioUrl = await uploadAudio(audioBlob, filename);
-    await insertRecord({ text: currentText, goal: document.getElementById('goal').value.trim(), tone: selectedTone, voice_id: selectedVoiceId, voice_name: selectedVoiceName, audio_url: audioUrl, created_at: new Date().toISOString() });
-    btn.textContent = '✓ Saved!'; setTimeout(() => { btn.textContent = '📜 Save to Grimoire'; btn.disabled = false; }, 2000);
-    showToast('Saved to your Grimoire ✦');
-  } catch(e) {
-    btn.disabled = false; btn.textContent = '📜 Save to Grimoire';
-    showToast(e.message || 'Save failed');
-  }
+async function saveToGrimoire(){
+  if(!currentText)return;
+  const btn=document.getElementById('saveBtn');btn.disabled=true;btn.innerHTML=`<svg viewBox="0 0 24 24" style="width:12px;height:12px;animation:spin 1s linear infinite;fill:none;stroke:currentColor;stroke-width:2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>Saving...`;
+  try{
+    if(!audioBlob)audioBlob=await fetchElevenLabsAudio(currentText,selectedVoiceId);
+    if(!audioBlob){btn.disabled=false;btn.innerHTML=`<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Save to Grimoire`;return;}
+    const filename=`${Date.now()}_${selectedVoiceId.slice(0,8)}.mp3`;
+    const audioUrl=await uploadAudio(audioBlob,filename);
+    await insertRecord({text:currentText,goal:document.getElementById('goal').value.trim(),tone:selectedTone,voice_id:selectedVoiceId,voice_name:selectedVoiceName,audio_url:audioUrl,created_at:new Date().toISOString()});
+    btn.innerHTML=`<svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2"><polyline points="20 6 9 17 4 12"/></svg>Saved`;
+    setTimeout(()=>{btn.innerHTML=`<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Save to Grimoire`;btn.disabled=false;},2000);
+    showToast('Saved to your Grimoire');
+  }catch(e){btn.disabled=false;btn.innerHTML=`<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Save to Grimoire`;showToast(e.message||'Save failed');}
 }
 
-// ── Alpha waves (generate page) ───────────────────────────
-function startAlphaWaves() {
-  if (!audioCtx) return;
-  const gainNode = audioCtx.createGain();
-  const vol = document.getElementById('alphaVol').value / 100 * 0.12;
-  gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-  gainNode.gain.linearRampToValueAtTime(vol, audioCtx.currentTime + 3);
-  gainNode.connect(audioCtx.destination);
-  const merger = audioCtx.createChannelMerger(2); merger.connect(gainNode);
-  const lo = audioCtx.createOscillator(); lo.type = 'sine'; lo.frequency.value = 200;
-  const lg = audioCtx.createGain(); lg.gain.value = 1; lo.connect(lg); lg.connect(merger,0,0);
-  const ro = audioCtx.createOscillator(); ro.type = 'sine'; ro.frequency.value = 210;
-  const rg = audioCtx.createGain(); rg.gain.value = 1; ro.connect(rg); rg.connect(merger,0,1);
-  lo.start(); ro.start();
-  alphaNodes = { lo, ro, gainNode };
+function startAlphaWaves(){
+  if(!audioCtx)return;
+  const gn=audioCtx.createGain(),vol=document.getElementById('alphaVol').value/100*0.12;
+  gn.gain.setValueAtTime(0,audioCtx.currentTime);gn.gain.linearRampToValueAtTime(vol,audioCtx.currentTime+3);
+  gn.connect(audioCtx.destination);
+  const mg=audioCtx.createChannelMerger(2);mg.connect(gn);
+  const lo=audioCtx.createOscillator();lo.type='sine';lo.frequency.value=200;
+  const lg=audioCtx.createGain();lg.gain.value=1;lo.connect(lg);lg.connect(mg,0,0);
+  const ro=audioCtx.createOscillator();ro.type='sine';ro.frequency.value=210;
+  const rg=audioCtx.createGain();rg.gain.value=1;ro.connect(rg);rg.connect(mg,0,1);
+  lo.start();ro.start();alphaNodes={lo,ro,gainNode:gn};
   document.getElementById('alphaDot').classList.add('pulsing');
 }
-function stopAlphaWaves() {
-  if (alphaNodes.gainNode && audioCtx) {
-    try { alphaNodes.gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.5); } catch(e) {}
-    setTimeout(() => { try { alphaNodes.lo.stop(); alphaNodes.ro.stop(); } catch(e) {} alphaNodes = {}; }, 600);
-  }
+function stopAlphaWaves(){
+  if(alphaNodes.gainNode&&audioCtx){try{alphaNodes.gainNode.gain.linearRampToValueAtTime(0,audioCtx.currentTime+0.5);}catch(e){}setTimeout(()=>{try{alphaNodes.lo.stop();alphaNodes.ro.stop();}catch(e){}alphaNodes={};},600);}
   document.getElementById('alphaDot').classList.remove('pulsing');
 }
-function setAlphaVolume(val) {
-  if (alphaNodes.gainNode && audioCtx) alphaNodes.gainNode.gain.linearRampToValueAtTime(val/100*0.12, audioCtx.currentTime+0.1);
-}
+function setAlphaVolume(val){if(alphaNodes.gainNode&&audioCtx)alphaNodes.gainNode.gain.linearRampToValueAtTime(val/100*0.12,audioCtx.currentTime+0.1);}
 
-// ── Session player (generate page) ───────────────────────
-function setDot(n, state) {
-  const d = document.getElementById(`dot-${n}`);
-  d.className = 'loop-dot' + (state==='active'?' active':state==='done'?' done':'');
-}
-function resetSessionUI() {
-  for (let i=1;i<=5;i++) setDot(i,'');
-  document.getElementById('loopCounter').textContent = 'Ready';
-  document.getElementById('progressFill').style.width = '0%';
-  document.getElementById('progressLabel').textContent = '—';
-  document.getElementById('timeLabel').textContent = '—';
-  document.getElementById('playBtn').disabled = false;
-  document.getElementById('playBtn').textContent = '▶ Begin Session';
-  document.getElementById('pauseBtn').disabled = true;
-  document.getElementById('stopBtn').disabled = true;
+function setDot(n,s){const d=document.getElementById(`dot-${n}`);d.className='loop-dot'+(s==='active'?' active':s==='done'?' done':'');}
+function resetSessionUI(){
+  for(let i=1;i<=5;i++)setDot(i,'');
+  document.getElementById('loopCounter').textContent='Ready';
+  document.getElementById('progressFill').style.width='0%';
+  document.getElementById('progressLabel').textContent='—';document.getElementById('timeLabel').textContent='—';
+  const pb=document.getElementById('playBtn');pb.disabled=false;pb.innerHTML=`<svg class="play-icon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>Begin Session`;
+  document.getElementById('pauseBtn').disabled=true;document.getElementById('stopBtn').disabled=true;
   document.getElementById('alphaDot').classList.remove('pulsing');
-  currentLoop = 0; sessionActive = false; sessionPaused = false;
-  if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
-}
-async function startSession() {
-  if (!currentText) return;
-  killGenerateAudio();
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if (audioCtx.state === 'suspended') await audioCtx.resume();
-  document.getElementById('playBtn').disabled = true;
-  document.getElementById('playBtn').textContent = '⏳ Preparing...';
-  try {
-    audioBlob = await fetchElevenLabsAudio(currentText, selectedVoiceId);
-    if (!audioBlob) { resetSessionUI(); return; }
-    const buf = await audioBlob.arrayBuffer();
-    voiceBuffer = await audioCtx.decodeAudioData(buf);
-  } catch(e) { showToast(e.message || 'Voice fetch failed'); resetSessionUI(); return; }
-  sessionActive = true; sessionPaused = false; currentLoop = 0;
-  document.getElementById('playBtn').disabled = true;
-  document.getElementById('pauseBtn').disabled = false;
-  document.getElementById('stopBtn').disabled = false;
-  startAlphaWaves(); playLoop();
-}
-function playLoop() {
-  if (!sessionActive || currentLoop >= totalLoops) { if (currentLoop >= totalLoops) finishSession(); return; }
-  currentLoop++;
-  for (let i=1;i<=5;i++) { if (i<currentLoop) setDot(i,'done'); else if (i===currentLoop) setDot(i,'active'); else setDot(i,''); }
-  document.getElementById('loopCounter').textContent = `Loop ${currentLoop} of ${totalLoops}`;
-  const duration = voiceBuffer.duration; const startTime = audioCtx.currentTime;
-  voiceSource = audioCtx.createBufferSource(); voiceSource.buffer = voiceBuffer;
-  const vg = audioCtx.createGain();
-  vg.gain.setValueAtTime(0,startTime); vg.gain.linearRampToValueAtTime(0.9,startTime+0.3);
-  vg.gain.setValueAtTime(0.9,startTime+duration-0.5); vg.gain.linearRampToValueAtTime(0,startTime+duration);
-  voiceSource.connect(vg); vg.connect(audioCtx.destination); voiceSource.start(startTime);
-  if (progressTimer) clearInterval(progressTimer);
-  document.getElementById('progressFill').style.width = '0%';
-  document.getElementById('progressLabel').textContent = `Loop ${currentLoop} / ${totalLoops}`;
-  progressTimer = setInterval(() => {
-    if (sessionPaused) return;
-    const el = audioCtx.currentTime - startTime;
-    document.getElementById('progressFill').style.width = Math.min((el/duration)*100,100)+'%';
-    document.getElementById('timeLabel').textContent = formatTime(duration-el)+' remaining';
-  }, 200);
-  voiceSource.onended = () => {
-    if (!sessionActive) return;
-    clearInterval(progressTimer); document.getElementById('progressFill').style.width='100%';
-    setDot(currentLoop,'done'); setTimeout(()=>{ if(sessionActive&&!sessionPaused) playLoop(); },800);
-  };
-}
-function pauseSession() {
-  if (!audioCtx) return;
-  if (!sessionPaused) { audioCtx.suspend(); sessionPaused=true; document.getElementById('pauseBtn').textContent='▶ Resume'; document.getElementById('alphaDot').classList.remove('pulsing'); }
-  else { audioCtx.resume(); sessionPaused=false; document.getElementById('pauseBtn').textContent='⏸ Pause'; document.getElementById('alphaDot').classList.add('pulsing'); }
-}
-function stopSession() {
-  sessionActive=false;
-  if (voiceSource) { try{voiceSource.stop();}catch(e){} voiceSource=null; }
-  stopAlphaWaves();
-  if (audioCtx) audioCtx.suspend();
-  if (progressTimer) { clearInterval(progressTimer); progressTimer=null; }
-  resetSessionUI();
-}
-function finishSession() {
-  sessionActive=false; stopAlphaWaves();
-  for(let i=1;i<=5;i++) setDot(i,'done');
-  document.getElementById('loopCounter').textContent='Session Complete ✦';
-  document.getElementById('progressFill').style.width='100%';
-  document.getElementById('progressLabel').textContent='All 5 loops complete';
-  document.getElementById('timeLabel').textContent='—';
-  document.getElementById('playBtn').disabled=false; document.getElementById('playBtn').textContent='↻ Repeat Session';
-  document.getElementById('pauseBtn').disabled=true; document.getElementById('stopBtn').disabled=true;
+  currentLoop=0;sessionActive=false;sessionPaused=false;
   if(progressTimer){clearInterval(progressTimer);progressTimer=null;}
-  showToast('Session complete — your desire is imprinted ✦');
+}
+async function startSession(){
+  if(!currentText)return;
+  killGenerateAudio();
+  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended')await audioCtx.resume();
+  const pb=document.getElementById('playBtn');pb.disabled=true;pb.innerHTML=`<svg class="play-icon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>Preparing...`;
+  try{
+    audioBlob=await fetchElevenLabsAudio(currentText,selectedVoiceId);
+    if(!audioBlob){resetSessionUI();return;}
+    voiceBuffer=await audioCtx.decodeAudioData(await audioBlob.arrayBuffer());
+  }catch(e){showToast(e.message||'Voice fetch failed');resetSessionUI();return;}
+  sessionActive=true;sessionPaused=false;currentLoop=0;
+  pb.disabled=true;document.getElementById('pauseBtn').disabled=false;document.getElementById('stopBtn').disabled=false;
+  startAlphaWaves();playLoop();
+}
+function playLoop(){
+  if(!sessionActive||currentLoop>=totalLoops){if(currentLoop>=totalLoops)finishSession();return;}
+  currentLoop++;
+  for(let i=1;i<=5;i++){if(i<currentLoop)setDot(i,'done');else if(i===currentLoop)setDot(i,'active');else setDot(i,'');}
+  document.getElementById('loopCounter').textContent=`Loop ${currentLoop} of ${totalLoops}`;
+  const dur=voiceBuffer.duration,st=audioCtx.currentTime;
+  voiceSource=audioCtx.createBufferSource();voiceSource.buffer=voiceBuffer;
+  const vg=audioCtx.createGain();
+  vg.gain.setValueAtTime(0,st);vg.gain.linearRampToValueAtTime(0.9,st+0.3);
+  vg.gain.setValueAtTime(0.9,st+dur-0.5);vg.gain.linearRampToValueAtTime(0,st+dur);
+  voiceSource.connect(vg);vg.connect(audioCtx.destination);voiceSource.start(st);
+  if(progressTimer)clearInterval(progressTimer);
+  document.getElementById('progressFill').style.width='0%';
+  document.getElementById('progressLabel').textContent=`Loop ${currentLoop} / ${totalLoops}`;
+  progressTimer=setInterval(()=>{if(sessionPaused)return;const el=audioCtx.currentTime-st;document.getElementById('progressFill').style.width=Math.min((el/dur)*100,100)+'%';document.getElementById('timeLabel').textContent=formatTime(dur-el)+' remaining';},200);
+  voiceSource.onended=()=>{if(!sessionActive)return;clearInterval(progressTimer);document.getElementById('progressFill').style.width='100%';setDot(currentLoop,'done');setTimeout(()=>{if(sessionActive&&!sessionPaused)playLoop();},800);};
+}
+function pauseSession(){
+  if(!audioCtx)return;
+  if(!sessionPaused){audioCtx.suspend();sessionPaused=true;document.getElementById('pauseBtn').innerHTML=`<svg class="play-icon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>Resume`;document.getElementById('alphaDot').classList.remove('pulsing');}
+  else{audioCtx.resume();sessionPaused=false;document.getElementById('pauseBtn').innerHTML=`<svg class="pause-icon" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>Pause`;document.getElementById('alphaDot').classList.add('pulsing');}
+}
+function stopSession(){
+  sessionActive=false;if(voiceSource){try{voiceSource.stop();}catch(e){}voiceSource=null;}
+  stopAlphaWaves();if(audioCtx)audioCtx.suspend();if(progressTimer){clearInterval(progressTimer);progressTimer=null;}resetSessionUI();
+}
+function finishSession(){
+  sessionActive=false;stopAlphaWaves();for(let i=1;i<=5;i++)setDot(i,'done');
+  document.getElementById('loopCounter').textContent='Session Complete';
+  document.getElementById('progressFill').style.width='100%';document.getElementById('progressLabel').textContent='All 5 loops complete';document.getElementById('timeLabel').textContent='—';
+  const pb=document.getElementById('playBtn');pb.disabled=false;pb.innerHTML=`<svg class="repeat-icon" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>Repeat Session`;
+  document.getElementById('pauseBtn').disabled=true;document.getElementById('stopBtn').disabled=true;
+  if(progressTimer){clearInterval(progressTimer);progressTimer=null;}
+  showToast('Session complete — your desire is imprinted');
 }
 
-// ── Custom page ───────────────────────────────────────────
-function copyCustomText() { const t=document.getElementById('customText').value.trim(); if(t) navigator.clipboard.writeText(t).then(()=>showToast('Copied')); }
-
-async function prepareCustom() {
-  const text = document.getElementById('customText').value.trim();
-  if (!text) { showToast('Write your autosuggestion first'); return; }
-  killCustomAudio();
-  const btn = document.getElementById('customBtn');
-  btn.disabled=true; document.getElementById('customLoadingWrap').classList.add('show');
-  document.getElementById('customResultWrap').classList.remove('show');
-  try {
-    customAudioBlob = await fetchElevenLabsAudio(text, customVoiceId);
-    if (!customAudioBlob) { btn.disabled=false; document.getElementById('customLoadingWrap').classList.remove('show'); return; }
-    customAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const buf = await customAudioBlob.arrayBuffer();
-    customVoiceBuffer = await customAudioCtx.decodeAudioData(buf);
-    document.getElementById('customResultText').textContent = text;
-    document.getElementById('customLoadingWrap').classList.remove('show'); btn.disabled=false;
-    const rw = document.getElementById('customResultWrap');
-    rw.classList.add('show'); setTimeout(()=>{rw.style.opacity='1';},10);
-    document.getElementById('customSessionPlayer').classList.add('show');
-    resetCustomSessionUI();
-    showToast('Voice ready — begin your session ✦');
-  } catch(e) {
-    btn.disabled=false; document.getElementById('customLoadingWrap').classList.remove('show');
-    showToast(e.message||'Voice fetch failed');
-  }
+function copyCustomText(){const t=document.getElementById('customText').value.trim();if(t)navigator.clipboard.writeText(t).then(()=>showToast('Copied'));}
+async function prepareCustom(){
+  const text=document.getElementById('customText').value.trim();if(!text){showToast('Write your autosuggestion first');return;}
+  killCustomAudio();const btn=document.getElementById('customBtn');
+  btn.disabled=true;document.getElementById('customLoadingWrap').classList.add('show');document.getElementById('customResultWrap').classList.remove('show');
+  try{
+    customAudioBlob=await fetchElevenLabsAudio(text,customVoiceId);if(!customAudioBlob){btn.disabled=false;document.getElementById('customLoadingWrap').classList.remove('show');return;}
+    customAudioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    customVoiceBuffer=await customAudioCtx.decodeAudioData(await customAudioBlob.arrayBuffer());
+    document.getElementById('customResultText').textContent=text;
+    document.getElementById('customLoadingWrap').classList.remove('show');btn.disabled=false;
+    const rw=document.getElementById('customResultWrap');rw.classList.add('show');setTimeout(()=>{rw.style.opacity='1';},10);
+    document.getElementById('customSessionPlayer').classList.add('show');resetCustomSessionUI();
+    showToast('Voice ready — begin your session');
+  }catch(e){btn.disabled=false;document.getElementById('customLoadingWrap').classList.remove('show');showToast(e.message||'Voice fetch failed');}
 }
 
-function setCDot(n, state) {
-  const d=document.getElementById(`cdot-${n}`);
-  d.className='loop-dot'+(state==='active'?' active':state==='done'?' done':'');
-}
-function resetCustomSessionUI() {
-  for(let i=1;i<=5;i++) setCDot(i,'');
+function setCDot(n,s){const d=document.getElementById(`cdot-${n}`);d.className='loop-dot'+(s==='active'?' active':s==='done'?' done':'');}
+function resetCustomSessionUI(){
+  for(let i=1;i<=5;i++)setCDot(i,'');
   document.getElementById('customLoopCounter').textContent='Ready';
   document.getElementById('customProgressFill').style.width='0%';
-  document.getElementById('customProgressLabel').textContent='—';
-  document.getElementById('customTimeLabel').textContent='—';
-  document.getElementById('customPlayBtn').disabled=false; document.getElementById('customPlayBtn').textContent='▶ Begin Session';
-  document.getElementById('customPauseBtn').disabled=true; document.getElementById('customStopBtn').disabled=true;
+  document.getElementById('customProgressLabel').textContent='—';document.getElementById('customTimeLabel').textContent='—';
+  const pb=document.getElementById('customPlayBtn');pb.disabled=false;pb.innerHTML=`<svg class="play-icon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>Begin Session`;
+  document.getElementById('customPauseBtn').disabled=true;document.getElementById('customStopBtn').disabled=true;
   document.getElementById('customAlphaDot').classList.remove('pulsing');
-  customLoop=0; customSessionAct=false; customSessionPaused=false;
-  if(customProgressTimer){clearInterval(customProgressTimer);customProgressTimer=null;}
+  customLoop=0;customSessionAct=false;customSessionPaused=false;if(customProgressTimer){clearInterval(customProgressTimer);customProgressTimer=null;}
 }
-
-function startCustomAlphaWaves() {
-  if(!customAudioCtx) return;
-  const gn=customAudioCtx.createGain(); const vol=document.getElementById('customAlphaVol').value/100*0.12;
-  gn.gain.setValueAtTime(0,customAudioCtx.currentTime); gn.gain.linearRampToValueAtTime(vol,customAudioCtx.currentTime+3);
-  gn.connect(customAudioCtx.destination);
-  const mg=customAudioCtx.createChannelMerger(2); mg.connect(gn);
-  const lo=customAudioCtx.createOscillator(); lo.type='sine'; lo.frequency.value=200;
-  const lg=customAudioCtx.createGain(); lg.gain.value=1; lo.connect(lg); lg.connect(mg,0,0);
-  const ro=customAudioCtx.createOscillator(); ro.type='sine'; ro.frequency.value=210;
-  const rg=customAudioCtx.createGain(); rg.gain.value=1; ro.connect(rg); rg.connect(mg,0,1);
-  lo.start(); ro.start();
-  customAlphaNodes={lo,ro,gainNode:gn};
-  document.getElementById('customAlphaDot').classList.add('pulsing');
+function startCustomAlphaWaves(){
+  if(!customAudioCtx)return;
+  const gn=customAudioCtx.createGain(),vol=document.getElementById('customAlphaVol').value/100*0.12;
+  gn.gain.setValueAtTime(0,customAudioCtx.currentTime);gn.gain.linearRampToValueAtTime(vol,customAudioCtx.currentTime+3);gn.connect(customAudioCtx.destination);
+  const mg=customAudioCtx.createChannelMerger(2);mg.connect(gn);
+  const lo=customAudioCtx.createOscillator();lo.type='sine';lo.frequency.value=200;const lg=customAudioCtx.createGain();lg.gain.value=1;lo.connect(lg);lg.connect(mg,0,0);
+  const ro=customAudioCtx.createOscillator();ro.type='sine';ro.frequency.value=210;const rg=customAudioCtx.createGain();rg.gain.value=1;ro.connect(rg);rg.connect(mg,0,1);
+  lo.start();ro.start();customAlphaNodes={lo,ro,gainNode:gn};document.getElementById('customAlphaDot').classList.add('pulsing');
 }
-function stopCustomAlphaWaves() {
-  if(customAlphaNodes.gainNode&&customAudioCtx){
-    try{customAlphaNodes.gainNode.gain.linearRampToValueAtTime(0,customAudioCtx.currentTime+0.5);}catch(e){}
-    setTimeout(()=>{try{customAlphaNodes.lo.stop();customAlphaNodes.ro.stop();}catch(e){}customAlphaNodes={};},600);
-  }
+function stopCustomAlphaWaves(){
+  if(customAlphaNodes.gainNode&&customAudioCtx){try{customAlphaNodes.gainNode.gain.linearRampToValueAtTime(0,customAudioCtx.currentTime+0.5);}catch(e){}setTimeout(()=>{try{customAlphaNodes.lo.stop();customAlphaNodes.ro.stop();}catch(e){}customAlphaNodes={};},600);}
   document.getElementById('customAlphaDot').classList.remove('pulsing');
 }
-function setCustomAlphaVolume(val) {
-  if(customAlphaNodes.gainNode&&customAudioCtx) customAlphaNodes.gainNode.gain.linearRampToValueAtTime(val/100*0.12,customAudioCtx.currentTime+0.1);
-}
-
-async function startCustomSession() {
+function setCustomAlphaVolume(val){if(customAlphaNodes.gainNode&&customAudioCtx)customAlphaNodes.gainNode.gain.linearRampToValueAtTime(val/100*0.12,customAudioCtx.currentTime+0.1);}
+async function startCustomSession(){
   if(!customVoiceBuffer){showToast('Prepare voice first');return;}
-  if(customAudioCtx.state==='suspended') await customAudioCtx.resume();
-  customSessionAct=true; customSessionPaused=false; customLoop=0;
-  document.getElementById('customPlayBtn').disabled=true;
-  document.getElementById('customPauseBtn').disabled=false;
-  document.getElementById('customStopBtn').disabled=false;
-  startCustomAlphaWaves(); playCustomLoop();
+  if(customAudioCtx.state==='suspended')await customAudioCtx.resume();
+  customSessionAct=true;customSessionPaused=false;customLoop=0;
+  document.getElementById('customPlayBtn').disabled=true;document.getElementById('customPauseBtn').disabled=false;document.getElementById('customStopBtn').disabled=false;
+  startCustomAlphaWaves();playCustomLoop();
 }
-function playCustomLoop() {
+function playCustomLoop(){
   if(!customSessionAct||customLoop>=totalLoops){if(customLoop>=totalLoops)finishCustomSession();return;}
   customLoop++;
   for(let i=1;i<=5;i++){if(i<customLoop)setCDot(i,'done');else if(i===customLoop)setCDot(i,'active');else setCDot(i,'');}
   document.getElementById('customLoopCounter').textContent=`Loop ${customLoop} of ${totalLoops}`;
-  const dur=customVoiceBuffer.duration; const st=customAudioCtx.currentTime;
-  customVoiceSrc=customAudioCtx.createBufferSource(); customVoiceSrc.buffer=customVoiceBuffer;
-  const vg=customAudioCtx.createGain();
-  vg.gain.setValueAtTime(0,st); vg.gain.linearRampToValueAtTime(0.9,st+0.3);
-  vg.gain.setValueAtTime(0.9,st+dur-0.5); vg.gain.linearRampToValueAtTime(0,st+dur);
-  customVoiceSrc.connect(vg); vg.connect(customAudioCtx.destination); customVoiceSrc.start(st);
-  if(customProgressTimer) clearInterval(customProgressTimer);
-  document.getElementById('customProgressFill').style.width='0%';
-  document.getElementById('customProgressLabel').textContent=`Loop ${customLoop} / ${totalLoops}`;
-  customProgressTimer=setInterval(()=>{
-    if(customSessionPaused)return;
-    const el=customAudioCtx.currentTime-st;
-    document.getElementById('customProgressFill').style.width=Math.min((el/dur)*100,100)+'%';
-    document.getElementById('customTimeLabel').textContent=formatTime(dur-el)+' remaining';
-  },200);
-  customVoiceSrc.onended=()=>{
-    if(!customSessionAct)return;
-    clearInterval(customProgressTimer); document.getElementById('customProgressFill').style.width='100%';
-    setCDot(customLoop,'done'); setTimeout(()=>{if(customSessionAct&&!customSessionPaused)playCustomLoop();},800);
-  };
+  const dur=customVoiceBuffer.duration,st=customAudioCtx.currentTime;
+  customVoiceSrc=customAudioCtx.createBufferSource();customVoiceSrc.buffer=customVoiceBuffer;
+  const vg=customAudioCtx.createGain();vg.gain.setValueAtTime(0,st);vg.gain.linearRampToValueAtTime(0.9,st+0.3);vg.gain.setValueAtTime(0.9,st+dur-0.5);vg.gain.linearRampToValueAtTime(0,st+dur);
+  customVoiceSrc.connect(vg);vg.connect(customAudioCtx.destination);customVoiceSrc.start(st);
+  if(customProgressTimer)clearInterval(customProgressTimer);document.getElementById('customProgressFill').style.width='0%';document.getElementById('customProgressLabel').textContent=`Loop ${customLoop} / ${totalLoops}`;
+  customProgressTimer=setInterval(()=>{if(customSessionPaused)return;const el=customAudioCtx.currentTime-st;document.getElementById('customProgressFill').style.width=Math.min((el/dur)*100,100)+'%';document.getElementById('customTimeLabel').textContent=formatTime(dur-el)+' remaining';},200);
+  customVoiceSrc.onended=()=>{if(!customSessionAct)return;clearInterval(customProgressTimer);document.getElementById('customProgressFill').style.width='100%';setCDot(customLoop,'done');setTimeout(()=>{if(customSessionAct&&!customSessionPaused)playCustomLoop();},800);};
 }
-function pauseCustomSession() {
+function pauseCustomSession(){
   if(!customAudioCtx)return;
-  if(!customSessionPaused){customAudioCtx.suspend();customSessionPaused=true;document.getElementById('customPauseBtn').textContent='▶ Resume';document.getElementById('customAlphaDot').classList.remove('pulsing');}
-  else{customAudioCtx.resume();customSessionPaused=false;document.getElementById('customPauseBtn').textContent='⏸ Pause';document.getElementById('customAlphaDot').classList.add('pulsing');}
+  if(!customSessionPaused){customAudioCtx.suspend();customSessionPaused=true;document.getElementById('customPauseBtn').innerHTML=`<svg class="play-icon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>Resume`;document.getElementById('customAlphaDot').classList.remove('pulsing');}
+  else{customAudioCtx.resume();customSessionPaused=false;document.getElementById('customPauseBtn').innerHTML=`<svg class="pause-icon" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>Pause`;document.getElementById('customAlphaDot').classList.add('pulsing');}
 }
-function stopCustomSession() {
-  customSessionAct=false;
-  if(customVoiceSrc){try{customVoiceSrc.stop();}catch(e){}customVoiceSrc=null;}
-  stopCustomAlphaWaves();
-  if(customAudioCtx)customAudioCtx.suspend();
-  if(customProgressTimer){clearInterval(customProgressTimer);customProgressTimer=null;}
-  resetCustomSessionUI();
+function stopCustomSession(){
+  customSessionAct=false;if(customVoiceSrc){try{customVoiceSrc.stop();}catch(e){}customVoiceSrc=null;}
+  stopCustomAlphaWaves();if(customAudioCtx)customAudioCtx.suspend();if(customProgressTimer){clearInterval(customProgressTimer);customProgressTimer=null;}resetCustomSessionUI();
 }
-function finishCustomSession() {
-  customSessionAct=false; stopCustomAlphaWaves();
-  for(let i=1;i<=5;i++)setCDot(i,'done');
-  document.getElementById('customLoopCounter').textContent='Session Complete ✦';
-  document.getElementById('customProgressFill').style.width='100%';
-  document.getElementById('customProgressLabel').textContent='All 5 loops complete';
-  document.getElementById('customTimeLabel').textContent='—';
-  document.getElementById('customPlayBtn').disabled=false; document.getElementById('customPlayBtn').textContent='↻ Repeat Session';
-  document.getElementById('customPauseBtn').disabled=true; document.getElementById('customStopBtn').disabled=true;
-  if(customProgressTimer){clearInterval(customProgressTimer);customProgressTimer=null;}
-  showToast('Session complete — your desire is imprinted ✦');
+function finishCustomSession(){
+  customSessionAct=false;stopCustomAlphaWaves();for(let i=1;i<=5;i++)setCDot(i,'done');
+  document.getElementById('customLoopCounter').textContent='Session Complete';document.getElementById('customProgressFill').style.width='100%';document.getElementById('customProgressLabel').textContent='All 5 loops complete';document.getElementById('customTimeLabel').textContent='—';
+  const pb=document.getElementById('customPlayBtn');pb.disabled=false;pb.innerHTML=`<svg class="repeat-icon" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>Repeat Session`;
+  document.getElementById('customPauseBtn').disabled=true;document.getElementById('customStopBtn').disabled=true;if(customProgressTimer){clearInterval(customProgressTimer);customProgressTimer=null;}
+  showToast('Session complete — your desire is imprinted');
 }
-
-async function saveCustomToGrimoire() {
-  const text = document.getElementById('customText').value.trim();
-  if(!text||!customAudioBlob) return;
-  const btn=document.getElementById('customSaveBtn');
-  btn.disabled=true; btn.textContent='⏳ Saving...';
-  try {
+async function saveCustomToGrimoire(){
+  const text=document.getElementById('customText').value.trim();if(!text||!customAudioBlob)return;
+  const btn=document.getElementById('customSaveBtn');btn.disabled=true;btn.innerHTML=`<svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>Saving...`;
+  try{
     const filename=`${Date.now()}_${customVoiceId.slice(0,8)}.mp3`;
     const audioUrl=await uploadAudio(customAudioBlob,filename);
     await insertRecord({text,goal:'Custom',tone:'Custom',voice_id:customVoiceId,voice_name:customVoiceName,audio_url:audioUrl,created_at:new Date().toISOString()});
-    btn.textContent='✓ Saved!'; setTimeout(()=>{btn.textContent='📜 Save to Grimoire';btn.disabled=false;},2000);
-    showToast('Saved to your Grimoire ✦');
-  } catch(e) {
-    btn.disabled=false; btn.textContent='📜 Save to Grimoire';
-    showToast(e.message||'Save failed');
-  }
+    btn.innerHTML=`<svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2"><polyline points="20 6 9 17 4 12"/></svg>Saved`;
+    setTimeout(()=>{btn.innerHTML=`<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Save to Grimoire`;btn.disabled=false;},2000);
+    showToast('Saved to your Grimoire');
+  }catch(e){btn.disabled=false;btn.innerHTML=`<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Save to Grimoire`;showToast(e.message||'Save failed');}
 }
 
-// ── Grimoire ──────────────────────────────────────────────
-async function loadGrimoire() {
+async function loadGrimoire(){
   document.getElementById('grimoireContent').innerHTML='<div class="loading-overlay">Loading your grimoire...</div>';
-  try {
-    const res=await fetch(`${SUPABASE_URL}/rest/v1/autosuggestions?order=created_at.desc`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}});
-    if(!res.ok) throw new Error('Load failed');
-    grimoire=await res.json(); renderGrimoire();
-  } catch(e) {
-    document.getElementById('grimoireContent').innerHTML='<div class="loading-overlay">Could not load grimoire.</div>';
-  }
+  try{const res=await fetch(`${SUPABASE_URL}/rest/v1/autosuggestions?order=created_at.desc`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}});if(!res.ok)throw new Error();grimoire=await res.json();renderGrimoire();}
+  catch(e){document.getElementById('grimoireContent').innerHTML='<div class="loading-overlay">Could not load grimoire.</div>';}
 }
-function renderGrimoire() {
+function renderGrimoire(){
   const el=document.getElementById('grimoireContent');
-  if(!grimoire.length){
-    el.innerHTML=`<div class="empty-grimoire"><div class="empty-grimoire-icon">📜</div><div class="empty-grimoire-text">Your grimoire is empty</div><div class="empty-grimoire-sub">Generate and save your first autosuggestion</div></div>`;
-    return;
-  }
+  if(!grimoire.length){el.innerHTML=`<div class="empty-grimoire"><svg class="empty-grimoire-svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--gold-dim)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><div class="empty-grimoire-text">Your grimoire is empty</div><div class="empty-grimoire-sub">Generate and save your first autosuggestion</div></div>`;return;}
   el.innerHTML=`<div class="scroll-list">${grimoire.map((item,idx)=>`
     <div class="scroll-entry" id="entry-${item.id}" onclick="playFromGrimoire(${idx})">
       <div class="scroll-entry-top">
@@ -1001,107 +846,70 @@ function renderGrimoire() {
             <div class="playing-indicator"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
             <div class="scroll-entry-text">${item.text}</div>
           </div>
-          <div class="scroll-entry-meta">${item.tone} &nbsp;·&nbsp; ${item.voice_name} &nbsp;·&nbsp; ${new Date(item.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</div>
+          <div class="scroll-entry-meta">${item.tone} · ${item.voice_name} · ${new Date(item.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</div>
         </div>
         <div class="scroll-entry-actions" onclick="event.stopPropagation()">
-          <button class="se-btn" onclick="copyGrimoireEntry('${item.id}')">📋</button>
-          <button class="se-btn delete" onclick="deleteEntry('${item.id}','${item.audio_url}')">✕</button>
+          <button class="se-btn" onclick="copyGrimoireEntry('${item.id}')" title="Copy"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+          <button class="se-btn delete" onclick="deleteEntry('${item.id}','${item.audio_url}')" title="Delete"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
         </div>
       </div>
     </div>`).join('')}</div>`;
 }
-function setPlayMode(mode) {
+function setPlayMode(mode){
   playMode=mode;
   ['modeSeq','modeShuffle','modeRepeat'].forEach(id=>document.getElementById(id).classList.remove('active'));
   document.getElementById(mode==='sequential'?'modeSeq':mode==='shuffle'?'modeShuffle':'modeRepeat').classList.add('active');
 }
-function buildPlaylist(startIdx) {
-  if(playMode==='shuffle'){playlist=[...grimoire].sort(()=>Math.random()-0.5);playIndex=0;}
-  else{playlist=[...grimoire];playIndex=startIdx;}
-}
-function playAll() { if(!grimoire.length){showToast('Your grimoire is empty');return;} buildPlaylist(0); playTrack(0); }
-function playFromGrimoire(idx) { buildPlaylist(idx); playTrack(playIndex); }
-
-async function playTrack(idx) {
+function buildPlaylist(startIdx){if(playMode==='shuffle'){playlist=[...grimoire].sort(()=>Math.random()-0.5);playIndex=0;}else{playlist=[...grimoire];playIndex=startIdx;}}
+function playAll(){if(!grimoire.length){showToast('Your grimoire is empty');return;}buildPlaylist(0);playTrack(0);}
+function playFromGrimoire(idx){buildPlaylist(idx);playTrack(playIndex);}
+async function playTrack(idx){
   if(idx<0||idx>=playlist.length){stopLibrary();return;}
-  const item=playlist[idx];
-  stopLibraryAudio();
+  const item=playlist[idx];stopLibraryAudio();
   document.querySelectorAll('.scroll-entry').forEach(e=>e.classList.remove('playing'));
   document.getElementById(`entry-${item.id}`)?.classList.add('playing');
   document.getElementById('nowImprinting').classList.add('show');
   document.getElementById('niMeta').textContent=`${item.voice_name} · ${item.tone}`;
   document.getElementById('niText').textContent=item.text;
-  document.getElementById('niProgress').style.width='0%';
-  document.getElementById('niElapsed').textContent='0:00';
-  document.getElementById('niRemaining').textContent='0:00';
+  document.getElementById('niProgress').style.width='0%';document.getElementById('niElapsed').textContent='0:00';document.getElementById('niRemaining').textContent='0:00';
   document.getElementById('niQueue').textContent=`${idx+1} of ${playlist.length}`;
-  document.getElementById('niPlayBtn').innerHTML='&#9646;&#9646;';
+  document.getElementById('niPlayIcon').innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
   document.getElementById('orb').classList.add('playing');
-  try {
-    const res=await fetch(item.audio_url);
-    const ab=await res.arrayBuffer();
-    if(!libAudioCtx) libAudioCtx=new (window.AudioContext||window.webkitAudioContext)();
-    if(libAudioCtx.state==='suspended') await libAudioCtx.resume();
-    libBuffer=await libAudioCtx.decodeAudioData(ab);
-    libPauseOffset=0; playLibBuffer(); libPlaying=true; libPaused=false;
-    if(libProgressTimer) clearInterval(libProgressTimer);
-    libProgressTimer=setInterval(()=>{
-      if(libPaused||!libPlaying)return;
-      const el=libAudioCtx.currentTime-libStartTime;
-      const dur=libBuffer.duration;
-      document.getElementById('niProgress').style.width=Math.min((el/dur)*100,100)+'%';
-      document.getElementById('niElapsed').textContent=formatTime(el);
-      document.getElementById('niRemaining').textContent=formatTime(dur-el);
-    },200);
-  } catch(e){showToast('Could not load audio');nextTrack();}
+  try{
+    const res=await fetch(item.audio_url);const ab=await res.arrayBuffer();
+    if(!libAudioCtx)libAudioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    if(libAudioCtx.state==='suspended')await libAudioCtx.resume();
+    libBuffer=await libAudioCtx.decodeAudioData(ab);libPauseOffset=0;playLibBuffer();libPlaying=true;libPaused=false;
+    if(libProgressTimer)clearInterval(libProgressTimer);
+    libProgressTimer=setInterval(()=>{if(libPaused||!libPlaying)return;const el=libAudioCtx.currentTime-libStartTime;const dur=libBuffer.duration;document.getElementById('niProgress').style.width=Math.min((el/dur)*100,100)+'%';document.getElementById('niElapsed').textContent=formatTime(el);document.getElementById('niRemaining').textContent=formatTime(dur-el);},200);
+  }catch(e){showToast('Could not load audio');nextTrack();}
 }
-function playLibBuffer() {
-  libSource=libAudioCtx.createBufferSource(); libSource.buffer=libBuffer;
-  libSource.connect(libAudioCtx.destination);
-  libSource.start(0,libPauseOffset);
-  libStartTime=libAudioCtx.currentTime-libPauseOffset;
+function playLibBuffer(){
+  libSource=libAudioCtx.createBufferSource();libSource.buffer=libBuffer;libSource.connect(libAudioCtx.destination);
+  libSource.start(0,libPauseOffset);libStartTime=libAudioCtx.currentTime-libPauseOffset;
   libSource.onended=()=>{if(!libPlaying)return;if(playMode==='repeat'){libPauseOffset=0;playLibBuffer();}else{playIndex++;playTrack(playIndex);}};
 }
-function toggleLibraryPlay() {
+function toggleLibraryPlay(){
   if(!libPlaying&&!libPaused)return;
   if(libPlaying&&!libPaused){
-    libPauseOffset=libAudioCtx.currentTime-libStartTime;
-    try{libSource.stop();}catch(e){} libAudioCtx.suspend();
-    libPaused=true;libPlaying=false;
-    document.getElementById('niPlayBtn').innerHTML='&#9654;';
-    document.getElementById('orb').classList.remove('playing');
-  } else {
-    libAudioCtx.resume(); playLibBuffer();
-    libPlaying=true;libPaused=false;
-    document.getElementById('niPlayBtn').innerHTML='&#9646;&#9646;';
-    document.getElementById('orb').classList.add('playing');
+    libPauseOffset=libAudioCtx.currentTime-libStartTime;try{libSource.stop();}catch(e){}libAudioCtx.suspend();
+    libPaused=true;libPlaying=false;document.getElementById('niPlayIcon').innerHTML='<polygon points="5,3 19,12 5,21"/>';document.getElementById('orb').classList.remove('playing');
+  }else{
+    libAudioCtx.resume();playLibBuffer();libPlaying=true;libPaused=false;
+    document.getElementById('niPlayIcon').innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';document.getElementById('orb').classList.add('playing');
   }
 }
 function nextTrack(){if(playMode==='repeat'){libPauseOffset=0;playLibBuffer();return;}playIndex++;playTrack(playIndex);}
 function prevTrack(){playIndex=Math.max(0,playIndex-1);libPauseOffset=0;playTrack(playIndex);}
-function stopLibraryAudio(){
-  if(libSource){try{libSource.stop();}catch(e){}libSource=null;}
-  if(libProgressTimer){clearInterval(libProgressTimer);libProgressTimer=null;}
-  libPlaying=false;libPaused=false;libPauseOffset=0;
-}
-function stopLibrary(){
-  stopLibraryAudio();
-  document.getElementById('nowImprinting').classList.remove('show');
-  document.getElementById('orb').classList.remove('playing');
-  document.querySelectorAll('.scroll-entry').forEach(e=>e.classList.remove('playing'));
-}
+function stopLibraryAudio(){if(libSource){try{libSource.stop();}catch(e){}libSource=null;}if(libProgressTimer){clearInterval(libProgressTimer);libProgressTimer=null;}libPlaying=false;libPaused=false;libPauseOffset=0;}
+function stopLibrary(){stopLibraryAudio();document.getElementById('nowImprinting').classList.remove('show');document.getElementById('orb').classList.remove('playing');document.querySelectorAll('.scroll-entry').forEach(e=>e.classList.remove('playing'));}
 function copyGrimoireEntry(id){const item=grimoire.find(g=>g.id===id);if(item)navigator.clipboard.writeText(item.text).then(()=>showToast('Copied'));}
 async function deleteEntry(id,audioUrl){
   if(!confirm('Delete this from your grimoire?'))return;
-  try{
-    await deleteRecord(id,audioUrl);
-    grimoire=grimoire.filter(g=>g.id!==id);
-    const pi=playlist[playIndex];if(pi?.id===id)stopLibrary();
-    renderGrimoire();showToast('Removed from grimoire');
-  }catch(e){showToast('Delete failed');}
+  try{await deleteRecord(id,audioUrl);grimoire=grimoire.filter(g=>g.id!==id);const pi=playlist[playIndex];if(pi?.id===id)stopLibrary();renderGrimoire();showToast('Removed');}
+  catch(e){showToast('Delete failed');}
 }
 
-// ── Init ──────────────────────────────────────────────────
 loadKeys();
 </script>
 </body>
