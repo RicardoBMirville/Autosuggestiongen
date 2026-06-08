@@ -521,11 +521,7 @@ let sessionActive=false, sessionPaused=false, currentLoop=0, progressTimer=null;
 const totalLoops=5;
 let customVoiceId='MqDiOA32qyUugsYsKa2Q', customVoiceName='My Voice';
 let customAudioBlob=null, customVoiceBuffer=null, customAudioCtx=null, customAlphaNodes={}, customVoiceSrc=null;
-let customSessionAct=false, customSessionPaused=false, customLoop=0, customProgressTimer=null;
-let grimoire=[], playlist=[], playIndex=-1, playMode='sequential';
-let libAudioCtx=null, libSource=null, libBuffer=null, libPlaying=false, libPaused=false;
-let libProgressTimer=null, libStartTime=0, libPauseOffset=0;
-const loadingMsgs=['Imprinting your desire upon the subconscious mind...','Channeling the infinite intelligence...','Burning your desire into being...','Aligning your thoughts with your destiny...'];
+['Imprinting your desire upon the subconscious mind...','Channeling the infinite intelligence...','Burning your desire into being...','Aligning your thoughts with your destiny...'];
 
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
 function formatTime(s){s=Math.max(0,s);const m=Math.floor(s/60),sec=Math.floor(s%60);return`${m}:${sec.toString().padStart(2,'0')}`;}
@@ -882,7 +878,7 @@ async function playTrack(idx){
     const res=await fetch(item.audio_url);const ab=await res.arrayBuffer();
     if(!libAudioCtx)libAudioCtx=new(window.AudioContext||window.webkitAudioContext)();
     if(libAudioCtx.state==='suspended')await libAudioCtx.resume();
-    libBuffer=await libAudioCtx.decodeAudioData(ab);libPauseOffset=0;playLibBuffer();libPlaying=true;libPaused=false;
+    libBuffer=await libAudioCtx.decodeAudioData(ab);libPauseOffset=0;startLibAlpha();playLibBuffer();libPlaying=true;libPaused=false;
     if(libProgressTimer)clearInterval(libProgressTimer);
     libProgressTimer=setInterval(()=>{if(libPaused||!libPlaying)return;const el=libAudioCtx.currentTime-libStartTime;const dur=libBuffer.duration;document.getElementById('niProgress').style.width=Math.min((el/dur)*100,100)+'%';document.getElementById('niElapsed').textContent=formatTime(el);document.getElementById('niRemaining').textContent=formatTime(dur-el);},200);
   }catch(e){showToast('Could not load audio');nextTrack();}
@@ -896,15 +892,36 @@ function toggleLibraryPlay(){
   if(!libPlaying&&!libPaused)return;
   if(libPlaying&&!libPaused){
     libPauseOffset=libAudioCtx.currentTime-libStartTime;try{libSource.stop();}catch(e){}libAudioCtx.suspend();
-    libPaused=true;libPlaying=false;document.getElementById('niPlayIcon').innerHTML='<polygon points="5,3 19,12 5,21"/>';document.getElementById('orb').classList.remove('playing');
+    libPaused=true;libPlaying=false;stopLibAlpha();document.getElementById('niPlayIcon').innerHTML='<polygon points="5,3 19,12 5,21"/>';document.getElementById('orb').classList.remove('playing');
   }else{
-    libAudioCtx.resume();playLibBuffer();libPlaying=true;libPaused=false;
+    libAudioCtx.resume();startLibAlpha();playLibBuffer();libPlaying=true;libPaused=false;
     document.getElementById('niPlayIcon').innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';document.getElementById('orb').classList.add('playing');
   }
 }
 function nextTrack(){if(playMode==='repeat'){libPauseOffset=0;playLibBuffer();return;}playIndex++;playTrack(playIndex);}
 function prevTrack(){playIndex=Math.max(0,playIndex-1);libPauseOffset=0;playTrack(playIndex);}
-function stopLibraryAudio(){if(libSource){try{libSource.stop();}catch(e){}libSource=null;}if(libProgressTimer){clearInterval(libProgressTimer);libProgressTimer=null;}libPlaying=false;libPaused=false;libPauseOffset=0;}
+function startLibAlpha(){
+  if(!libAudioCtx)return;
+  stopLibAlpha();
+  const gn=libAudioCtx.createGain();
+  gn.gain.setValueAtTime(0,libAudioCtx.currentTime);
+  gn.gain.linearRampToValueAtTime(0.08,libAudioCtx.currentTime+3);
+  gn.connect(libAudioCtx.destination);
+  const mg=libAudioCtx.createChannelMerger(2);mg.connect(gn);
+  const lo=libAudioCtx.createOscillator();lo.type='sine';lo.frequency.value=200;
+  const lg=libAudioCtx.createGain();lg.gain.value=1;lo.connect(lg);lg.connect(mg,0,0);
+  const ro=libAudioCtx.createOscillator();ro.type='sine';ro.frequency.value=210;
+  const rg=libAudioCtx.createGain();rg.gain.value=1;ro.connect(rg);rg.connect(mg,0,1);
+  lo.start();ro.start();
+  libAlphaNodes={lo,ro,gainNode:gn};
+}
+function stopLibAlpha(){
+  if(libAlphaNodes.gainNode&&libAudioCtx){
+    try{libAlphaNodes.gainNode.gain.linearRampToValueAtTime(0,libAudioCtx.currentTime+1);}catch(e){}
+    setTimeout(()=>{try{libAlphaNodes.lo.stop();libAlphaNodes.ro.stop();}catch(e){}libAlphaNodes={};},1100);
+  }
+}
+function stopLibraryAudio(){if(libSource){try{libSource.stop();}catch(e){}libSource=null;}if(libProgressTimer){clearInterval(libProgressTimer);libProgressTimer=null;}stopLibAlpha();libPlaying=false;libPaused=false;libPauseOffset=0;}
 function stopLibrary(){stopLibraryAudio();document.getElementById('nowImprinting').classList.remove('show');document.getElementById('orb').classList.remove('playing');document.querySelectorAll('.scroll-entry').forEach(e=>e.classList.remove('playing'));}
 function copyGrimoireEntry(id){const item=grimoire.find(g=>g.id===id);if(item)navigator.clipboard.writeText(item.text).then(()=>showToast('Copied'));}
 async function deleteEntry(id,audioUrl){
