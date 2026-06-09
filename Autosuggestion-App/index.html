@@ -521,7 +521,11 @@ let sessionActive=false, sessionPaused=false, currentLoop=0, progressTimer=null;
 const totalLoops=5;
 let customVoiceId='MqDiOA32qyUugsYsKa2Q', customVoiceName='My Voice';
 let customAudioBlob=null, customVoiceBuffer=null, customAudioCtx=null, customAlphaNodes={}, customVoiceSrc=null;
-['Imprinting your desire upon the subconscious mind...','Channeling the infinite intelligence...','Burning your desire into being...','Aligning your thoughts with your destiny...'];
+let customSessionAct=false, customSessionPaused=false, customLoop=0, customProgressTimer=null;
+let grimoire=[], playlist=[], playIndex=-1, playMode='sequential';
+let libAudioCtx=null, libSource=null, libBuffer=null, libPlaying=false, libPaused=false;
+let libProgressTimer=null, libStartTime=0, libPauseOffset=0, libAlphaNodes={};
+const loadingMsgs=['Imprinting your desire upon the subconscious mind...','Channeling the infinite intelligence...','Burning your desire into being...','Aligning your thoughts with your destiny...'];
 
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
 function formatTime(s){s=Math.max(0,s);const m=Math.floor(s/60),sec=Math.floor(s%60);return`${m}:${sec.toString().padStart(2,'0')}`;}
